@@ -1,0 +1,136 @@
+<section class="login_part">
+  <div class="container">
+    <div class="row align-items-center" style="margin-top: -15px;">
+      <div class="col-lg-6 col-md-6">
+        <div class="login_part_text text-center" style="margin-top: 6rem;">
+          <div class="login_part_text_iner">
+            <h2>New to our Shop?</h2>
+            <p>There are advances being made in science and technology
+              everyday, and a good example of this is the</p>
+            <a href="/signup" class="btn_3">Create an Account</a>
+            <a href="/" class="btn_3">Back to Home</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="login_part_form">
+          <div class="login_part_form_iner">
+            <h4 style="padding-left: 6rem;">Welcome Back !
+              <br />
+              Please Sign in now
+            </h4>
+            <form class="row contact_form" action="/login" method="post" id="userLogin" novalidate="novalidate">
+
+              {{#if wrongpassword}}
+              <p class="text-danger">WRONG PASSWORD</p>
+              {{/if}}
+              {{#if userNotFound}}
+              <p class="text-danger">NO USER EXIST</p>
+              {{/if}}
+              {{#if userBlocked}}
+              <p class="text-danger">YOU ARE BLOCKED BY THE ADMIN</p>
+              {{/if}}
+              <div class="col-md-12 form-group p_star">
+                <input type="email" class="form-control" id="name" name="email" value="ajuaju12@gmail.com"
+                  placeholder="Email" />
+              </div>
+              <div class="col-md-12 form-group p_star">
+                <input type="password" class="form-control" id="password" name="password" value="12345"
+                  placeholder="Password" />
+              </div>
+              <div class="col-md-12 form-group">
+                {{!-- <div class="creat_account d-flex align-items-center">
+                  <input type="checkbox" id="f-option" name="selector" />
+                  <label for="f-option">Remember me</label>
+                </div> --}}
+                <button type="submit" value="submit" class="btn_3">
+                  log in
+                </button>
+              </div>
+            </form>
+            <form action="/otppage" method="post"  id="otp">
+              {{#if usernotfound}}
+              <p class="text-danger">NO USER EXISTED WITH THIS MOBILE NUMBER</p>
+              {{/if}}
+              <div class="row">
+                <h5 clas="login_part_form_iner" style="margin-left: 9rem;">Log In With OTP</h5>
+                <input type="number" class="form-control" id="number" style="margin-top:2rem ;" name="mobile" value=""
+                  placeholder="Enter Your Number" />
+                <button type="submit  " style="margin-top: 3rem; width:100%" value="submit" class="btn_3"> Get otp
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{! validation }}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+
+<style>
+  .error {
+    color: red;
+    border: 1px solid red;
+  }
+</style>
+
+<script>
+
+  
+  $("#userLogin").validate({
+    rules: {
+      email: {
+        required: true,
+        minlength: 5
+      },
+      password:
+      {
+        required: true,
+        minlength: 5,
+        maxlength: 15
+      },
+      number:
+      {
+        required:true
+      }
+    },
+    messages:
+    {
+      password: { required: "Please Enter Your Password" },
+      email: {
+        required: 'Please Enter Your Email'
+      }
+    }
+  })
+  </script>
+{{!-- 
+<script>
+ $('#otp').validate({
+    rules: {
+      number: {
+        required: true
+      },
+      messages: {
+        number: {
+          required: 'Enter Mobile Number'
+        }
+      }
+
+    }
+
+
+
+
+  })
+
+
+</script> --}}
+
+  
+ 
+

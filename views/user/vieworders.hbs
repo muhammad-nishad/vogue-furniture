@@ -1,0 +1,67 @@
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<div class="main-content ">
+  <div class="container p-5">
+    <!-- Table -->
+    <div class="row">
+
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <h3 class="mb-0 d-flex justify-content-center">ORDER HISTORY</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush" id="orderManagement">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">PRODUCT</th>
+                  <th scope="col">QUANTITY</th>
+                  <th scope="col"> PRICE</th>
+                  <th scope="col">TOTAL PRICE</th>
+                  <th scope="col">PAYMENT</th>
+                  <th scope="col">STATUS</th>
+                  <th scope="col">DATE OF ORDER</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each orders}}
+                <tr onclick="location.href='/orderDetails/{{this._id}}'">
+                  <th scope="row">
+                    <div class="media align-items-center">
+                      <a href="/view-single-order/{{this._id}}" class="avatar rounded-circle mr-3">
+                        <img alt="Image placeholder"   src="/product-images/{{this.product_image}}"
+                          style="width:100% ;height:5rem" >
+                      </a>
+                      <div class="media-body">
+                      </div>
+                    </div>
+                  </th>
+                  <td>
+                    <span class="mb-0 text-sm">{{product_quantity}}</span>
+                  </td>
+                  <td>
+                    {{this.product_price}}
+                  </td>
+                  <td>
+                      <i class="bg-warning"></i> {{this.totalAmount}}
+                    </span>
+                  </td>
+                  <td>
+                    {{this.payment}}
+                  </td>
+                  <td>
+                    {{this.status}}
+                  </td>
+                  <td>
+                    {{this.date}}
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

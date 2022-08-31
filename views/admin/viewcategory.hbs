@@ -1,0 +1,174 @@
+<div class=" container pt-4">
+  <table class="table table-striped table-hover" id="bannertable">
+    <thead>
+      <tr>
+        <th scope="col">CATEGORY NAME</th>
+        <th scope="col">CATEGORY DESCRIPTION</th>
+        <th scope="col">IMAGE</th>
+        <th scope="col">EDIT</th>
+        <th scope="col">DELETE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each allCategory}}
+      <tr>
+        <td>{{this.categoryName}}</td>
+        <td>{{this.categoryDescription}}</td>
+        <td> <img src="/product-images/{{this.image}}" style="width: 80px;" alt=""></td>
+        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleeModal{{this._id}}">
+            Edit
+          </button></td>
+        <td><a href="/admin/deletecategory/{{this._id}}" class="btn btn-danger text-white"
+            onclick=" return  confirm('Do You Want To Delete {{this.categoryName}} ')">Delete</a> </td>
+      </tr>
+      {{#if categoryexist}}
+      <p class="text text-danger ">THE CATEGORY IS ALREDY EXISTED</p>
+      {{/if}}
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleeModal{{this._id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Edit Category</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container ">
+                <form action="/admin/editcategory/{{this._id}}" method="post">
+                  <div class="mb-3">
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="categoryName" name="categoryName"
+                        value="{{this.categoryName}}" placeholder="Category Name" />
+                    </div>
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="categoryDescription" name="categoryDescription"
+                        value="{{this.categoryDescription}}" placeholder="Category Description" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+    </tbody>
+  </table>
+</div>
+<!-- Button trigger modal -->
+<div class="text-center">
+  <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModalCenter">
+    ADD CATEGORY
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title   " id="exampleModalLongTitle">ADD CATEGORY</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container ">
+          <form action="/admin/addcategory/{{category._id}}" method="post" id="viewcategory"
+            enctype="multipart/form-data">
+            <div class="mb-3">
+              <div class="col-md-12 form-group ">
+                <input type="text" class="form-control" id="categoryName" name="categoryName" value=""
+                  placeholder="Category Name" />
+              </div>
+              <div class="col-md-12 form-group ">
+                <input type="text" class="form-control" id="categoryDescription" name="categoryDescription" value=""
+                  placeholder="Category Description" />
+              </div>
+              <div class="col-md-12 form-group p_star w-50">
+                <label for="formFile" class="form-label"></label>
+                <input class="form-control" type="file" id="formFile" name="image">
+              </div>
+              {{!-- div here --}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <script type="text/javascript" charset="utf8"
+      src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function () {
+
+
+        $('#bannertable').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+      });
+
+
+      var table = $('#bannertable').DataTable();
+    </script>
+
+
+
+    {{! validation }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+
+
+    <style>
+      .error {
+        color: red;
+        border: 1px solid red;
+      }
+    </style>
+
+    <script>
+
+
+      $('#viewcategory').validate({
+        rules: {
+          categoryName: {
+            required: true
+          },
+          categoryDescription: {
+            required: true
+          },
+          formFile: {
+            required: true
+          }
+
+        },
+        messages: {
+          categoryName: {
+            required: 'Please Enter Category Name'
+          },
+          categoryDescription: {
+            required: 'Please Enter Category Desciption '
+          },
+          formFile: {
+            required: 'ki'
+          }
+
+
+        }
+
+      })
+
+    </script>

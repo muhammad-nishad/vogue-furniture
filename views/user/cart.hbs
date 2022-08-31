@@ -1,0 +1,178 @@
+{{#if cartEmpty}}
+<h1>cart Empty</h1>
+{{else}}
+<!--================Cart Area =================-->
+<div class="row container" style=" max-width: 100rem; width: 100%;">
+    <section class="col-md-8 cart_area padding_top" style="margin-top: 60px;">
+        <div class="container" style=" max-width: 100rem; width: 100%;">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="">
+                                            <img class="img-fluid" src="/product-images/{{this.product.images.[0]}}"
+                                                style=" width: 7rem;height: 100px;" alt="" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{this.product.Name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>{{this.product.Price}}</h5>
+                                </td>
+                                <td>
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary btn-minus"
+                                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm  text-center"
+                                            id="{{this.product._id}}" value="{{this.quantity}}" disabled>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-dark btn-plus"
+                                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>{{total this.product.Price this.quantity}}</h5>
+                                </td>
+                                <td>
+                                    <a href="/deletecart/{{product._id}}" class="btn btn-danger"
+                                        onclick="return  confirm('Do You Want To Delete This Item')"> DELETE</a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </section>
+    <div class="col-md-4" style="margin-top: 190px;">
+        <form class="mb-5"  id="coupenarea">
+            <div class="input-group">
+                <input type="text" class="form-control p-4" name="coupencode" placeholder="Coupon Code">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" style="background-color: #ff3368">Apply
+                        Coupon</button>
+                </div>
+            </div>
+        </form>
+        <div class="card border-secondary mb-5">
+            <div class="card-header  border-0" style="background-color: #82c9cc;">
+                <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3 pt-1">
+                    <h6 class="font-weight-medium">Subtotal</h6>
+                    <h6 class="font-weight-medium">Rs.<span id="subtotal">{{totalAmount}}</span></h6>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h6 class="font-weight-medium">Coupen Discount</h6>
+                    <h6 class=" font-weight-medium">Rs.<span id="coupendiscount"> 00</span></h6>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h6 class="font-weight-medium">Delivery Charge</h6>
+                    <h6 class=" font-weight-medium">Rs.100<span id="shipping"></span></h6>
+                </div>
+            </div>
+            <div class="card-footer border-secondary bg-transparent">
+                <div class="d-flex justify-content-between mt-2">
+                    <h5 class="font-weight-bold">Total</h5>
+                    <h5 class="font-weight-bold">Rs.<span id="GrandTotal">{{subtotal totalAmount 100 }}</span></h5>
+                </div>
+                <a href="/checkout" class="btn btn-block btn-primary my-3 py-3"
+                    style="background-color: #ff3368">Proceed To Checkout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+
+    <!--================End Cart Area =================-->
+    <script>
+        function changeQuantity(cartId, proId, count) {
+            let quantity = parseInt(document.getElementById(proId).value)
+            count = parseInt(count)
+            $.ajax({
+                url: '/change-product-quantity',
+                data: {
+                    cart: cartId,
+                    product: proId,
+                    count: count,
+                    quantity: quantity
+                },
+                method: 'post',
+                success: (response) => {
+                    console.log(response)
+                    if (response.response.removeProduct) {
+                        swal({
+                            title: "Are you sure?",
+                            text: "Are you sure you want to remove this item?",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    swal("Your item is remooved from the cart", {
+                                        icon: "success",
+                                    });
+                                    location.reload()
+                                } else {
+                                    swal("Your imaginary file is safe!");
+                                }
+                            });
+
+                    } else {
+                        document.getElementById(proId).value = quantity + count
+                        console.log(quantity, proId, count)
+                        window.location.reload()
+                    }
+                }
+
+            })
+        }
+
+        //coupen adding//
+
+        $('#coupenarea').submit((e) => {
+            e.preventDefault();
+            $.ajax({
+                url: '/apply-coupen',
+                method: 'post',
+                data: $('#coupenarea').serialize(),
+                success: (response) => {
+                    if (response.status) {
+                        document.getElementById('coupendiscount').innerHTML = response.discountPrice
+                        document.getElementById('GrandTotal').innerHTML = response.discount + 100
+
+                    } else {
+                        swal("invalid", "this coupon invalidfggggfkgfgfhgfhgghfghfhgfjkdhgkjfdhghgfhgfhgkdfh", "warning")
+                    }
+                }
+            })
+        })
+
+
+
+    </script>

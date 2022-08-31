@@ -1,0 +1,168 @@
+<div class=" container pt-4">
+  <table class="table table-striped table-hover" id="bannerTable">
+    <thead>
+      <tr>
+        <th scope="col">BANNER NAME</th>
+        <th scope="col">BANNER DESCRIPTION</th>
+        <th scope="col">IMAGE</th>
+        <th scope="col">EDIT</th>
+        <th scope="col">DELETE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{#each allbanner}}
+        <td>{{this.Bannername}}</td>
+        <td>{{this.Bannerdescription}}</td>
+        <td> <img src="/product-images/{{this.image}}" style="width: 80px;" alt=""></td>
+        <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterrrr{{this._id}}">
+        Edit
+      </button></td>
+        {{!-- <td><a href="/admin/editbanner/{{this._id}}" class="btn btn-primary  text-white">Edit</a> </td> --}}
+        <td><a href="/admin/deletebanner/{{this._id}}" class="btn btn-danger  text-white"
+            onclick="return confirm('Do you want to Delete {{this.Bannername}}') ">Delete</a> </td>
+      </tr>
+     
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenterrrr{{this._id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Edit Banner</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container ">
+                <form action="/admin/editbanner/{{this._id}} " method="post" enctype="multipart/form-data">
+                  <div class="mb-3">
+                    <div class="col-md-12 form-group p_star">
+                      <input type="text" class="form-control" id="Bannername" name="Bannername"
+                        value="{{this.Bannername}}" placeholder="Banner Name" />
+                    </div>
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="Bannerdescription" name="Bannerdescription"
+                        value="{{this.Bannerdescription}}" placeholder="Banner Description" />
+                    </div>
+                    <div class="col-md-12 form-group p_star ">
+                      <label for="formFile" class="form-label"></label>
+                      <input class="form-control" type="file" id="formFile" name="image" value="{{this.image}}">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </tbody>
+  </table>
+
+
+  <!-- Button trigger modal -->
+  <div class="text-center">
+    <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModalCenter">
+      ADD BANNER
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title   " id="exampleModalLongTitle">Add banner</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container ">
+            <form action="/admin/addbanner" method="post" enctype="multipart/form-data" id="addbanner">
+              <div class="mb-3">
+                <div class="col-md-12 form-group p_star ">
+                  <input type="text" class="form-control" id="Bannername" name="Bannername" placeholder="Banner Name" />
+                </div>
+                <div class="col-md-12 form-group p_star ">
+                  <input type="text" class="form-control" id="Bannerdescription" name="Bannerdescription"
+                    placeholder="Banner Description" />
+                </div>
+                <div class="col-md-12 form-group p_star ">
+                  <label for="formFile" class="form-label"></label>
+                  <input class="form-control" type="file" id="formFile" name="image">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+      <script>
+        $(document).ready(function () {
+
+
+          $('#bannerTable').wrap('<div id="hide" style="display:none"/>');
+
+          $('#hide').css('display', 'block');
+        });
+
+
+        var table = $('#bannerTable').DataTable();
+      </script>
+
+
+      {{! validation }}
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+
+
+      <style>
+        .error {
+          color: red;
+          border: 1px solid red;
+        }
+      </style>
+
+      <script>
+
+
+        $('#addbanner').validate({
+          rules: {
+            Bannername: {
+              required: true
+            },
+            Bannerdescription: {
+              required: true
+            }
+
+          },
+          messages: {
+            Bannername: {
+              required: 'Please Enter Category Name'
+            },
+            Bannerdescription: {
+              required: 'Please Enter Category Desciption '
+            }
+
+          }
+
+        })
+
+      </script>

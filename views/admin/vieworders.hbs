@@ -1,0 +1,109 @@
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<div class="main-content">
+    <div class="container pt-4">
+        <!-- Table -->
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <h3 class="mb-0 d-flex justify-content-center"></h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush" id="orderManagement">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">CUSTOMER</th>
+                                    <th scope="col">PRODUCTS</th>
+                                    <th scope="col">PRICE</th>
+                                    <th scope="col">QUANTITY</th>
+                                    <th scope="col">TOTAL PRICE</th>
+                                    <th scope="col">PAYMENT METHOD</th>
+                                    <th scope="col">PAYMENT STATUS</th>
+                                    <th scope="col">DELIVERY STATUS</th>
+                                    <th scope="col">DATE OF ORDER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each allOrders}}
+                                
+                                    {{!-- <th scope="row">
+                                        <div class="media align-items-center">
+                                            <a href="#" class="avatar rounded-circle mr-3">
+                                                <img alt="Image placeholder"
+                                                    src="/product-images/{{this.product_image}}"
+                                                    style="width:100% ;height:5rem">
+                                            </a>
+                                            <div class="media-body">
+                                            </div>
+                                        </div>
+                                    </th> --}}
+                                    <td>
+                                        <span class="mb-0 text-sm">{{this.Name}}</span><span> {{this.lastname}}</span>
+                                    </td>
+                                    <td>
+                                        {{this.productname}}
+                                    </td>
+                                    <td>
+                                        {{this.price}}
+                                    </td>
+                                    <td>
+                                        {{this.quantity}}
+                                    </td>
+                                    <td>
+                                        {{this.totalAmount}}
+                                    </td>
+                                    <td>
+                                        {{this.payment}}
+                                    </td>
+                                    <td>
+                                        {{this.status}}
+                                    </td>
+                                    <td>
+                                        <div class="form-group ">
+                                            <label for="category"></label>
+                                            <select class="custom-select tm-select-accounts" aria-label="Default select example" id="{{this._id}}-select" onchange="statusChange('{{this._id}}')">
+                                                <option value="placed" {{#isEqual this.status 'placed'}} selected {{/isEqual}}> placed</option>
+                                                <option value="shipped" {{#isEqual this.status 'shipped'}} selected {{/isEqual}}>shipped</option>
+                                                <option value="out for delivery" {{#isEqual this.status 'out for delivery'}} selected {{/isEqual}}>out for delivery</option>
+                                                <option value="delivered" {{#isEqual this.status 'delivered'}} selected {{/isEqual}}>delivered</option>
+                                                
+                                            </select>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        {{this.date}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        $('#orderManagement').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+    });
+
+
+    var table = $('#orderManagement').DataTable();
+
+
+    function statusChange(orderId){
+        const status =  document.getElementById(orderId+'-select').value
+        console.log(status)
+        axios.post('/admin/changeOrderStatus',{orderId,status}).then(e =>{
+            console.log(e)
+        })
+    }
+</script>

@@ -1,0 +1,140 @@
+<div class="container justify-content-center pt-5">
+    <div class="card card-1">
+        {{!-- <div class="card-header bg-white">
+            <div class="media flex-sm-row flex-column-reverse justify-content-between  ">
+                <div class="col my-auto">
+                    <h4 class="mb-0">Thanks for your Order, <span class="change-color">{{this.user}}</span>
+                        {{this.lname}} <span></span>!
+                    </h4>
+                </div>
+                <div class="col-auto text-center  my-auto pl-0 pt-sm-4"> <img
+                        class="img-fluid my-auto align-items-center mb-0 pt-3" src="/images/order success.jpg"
+                        width="115" height="115">
+                    <p class="mb-4 pt-0 Glasses">Better Future With FUTURA</p>
+                </div>
+            </div>
+        </div> --}}
+        <div class="card-body">
+            <div class="row justify-content-between mb-3">
+                <div class="col-auto">
+                    <h6 class="color-1 mb-0 change-color">Receipt</h6>
+                </div>
+                <div class="col-auto  "> <small>Receipt Voucher : {{orderdetails._id}}</small> </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card card-2">
+                        <div class="card-body">
+                            {{#each item}}
+                            <div class="media">
+                                <div class="sq align-self-center "> <img
+                                        class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
+                                        src="/product-images/{{this.image}}" width="135" height="135" />
+                                </div>
+                                <div class="media-body my-auto text-right">
+                                    <div class="row  my-auto flex-column flex-md-row">
+                                        <div class="col my-auto">
+                                            <h6 class="mb-0"> {{this.product}}</h6>
+                                        </div>
+                                        <div class="col-auto my-auto"> <small>Brand: {{this.product}}</small></div>
+                                        {{!-- <div class="col my-auto"> <small>Size :
+                                                {{product.Category.CategoryName}}</small></div> --}}
+                                        <div class="col my-auto"> <small>Qty : {{this.quantitty.[0]}}</small></div>
+                                        <div class="col my-auto">
+                                            <h6 class="mb-0">Rs.{{this.price}}</h6>
+                                        </div>
+                                      
+                                            
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                            
+                       
+                            {{/each}}
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                 <h6>total amount :Rs {{item.[0].totalAmount}}</h6>
+                            </div>
+                            <hr class="my-3 ">
+                        
+                            <div class="row">
+                                <div class="col-md-3 mb-3"> <small> Track Order <span><i class=" ml-2 fa fa-refresh"
+                                                aria-hidden="true"></i></span></small> </div>
+                                <div class="col mt-auto">
+                                    <div class="progress my-auto">
+                                        <div class="progress-bar progress-bar  rounded" {{#isEqual item.[0].status "placed"
+                                            }} style="width: 13%" aria-valuenow="25" {{/isEqual}} {{#isEqual
+                                            item.[0].status "shipped" }} style="width: 50%" aria-valuenow="25" {{/isEqual}}
+                                            {{#isEqual item.[0].status "out for delivery" }} style="width: 73%" aria-valuenow="25"
+                                            {{/isEqual}} {{#isEqual item.[0].status "delivered" }} style="width: 100%"
+                                            aria-valuenow="25" {{/isEqual}} role="progressbar" aria-valuemin="0"
+                                            aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="media row justify-content-between ">
+                                        <div class="col-auto text-right"><span> <small
+                                                    class="text-right mr-sm-2">Processing</small> <i
+                                                    class="fa fa-circle active"></i> </span></div>
+                                        <div class="col-auto text-right"><span> <small
+                                                    class="text-right mr-sm-2">Shipped</small> <i
+                                                    class="fa fa-circle active"></i> </span></div>
+                                        <div class="flex-col"> <span> <small class="text-right mr-sm-2">Out for
+                                                    Delivery</small><i class="fa fa-circle active"></i></span></div>
+                                        <div class="col-auto flex-col-auto"><small
+                                                class="text-right mr-sm-2">Delivered</small><span> <i
+                                                    class="fa fa-circle"></i></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{!-- {{#each item}} --}}
+
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="row justify-content-between">
+                        <div class="col-auto">
+                            <p class="mb-1"><b>
+                                    <h4>Delivery Address</h4>
+                                </b></p>
+                        </div>
+                    </div>
+                    <div class="flex-sm-col col d-flex">
+                        <p class="mb-1"><b>Name :</b></p>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">{{item.[0].address.Name}}</p>
+                        </div>
+                    </div>
+                    <div class="flex-sm-col col d-flex">
+                        <p class="mb-1"><b>Mobile :</b></p>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">{{item.[0].address.Mobile}}</p>
+                        </div>
+                    </div>
+                    <div class="flex-sm-col col d-flex">
+                        <p class="mb-1"><b>Address Line :</b></p>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">{{item.[0].address.Address}}</p>
+                        </div>
+                    </div>
+                    <div class="flex-sm-col col d-flex">
+                        <p class="mb-1"><b>Pin Code :</b></p>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">{{item.[0].address.Pincode}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{!-- {{/each}} --}}
+            {{!-- <div class="row invoice ">
+                <button class="btn btn-primary" onclick="downloadInvoice({{json order}})">Download Invoice</button>
+            </div> --}}
+        </div>
+    </div>
+</div>

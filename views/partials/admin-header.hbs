@@ -1,0 +1,57 @@
+<div class='dashboard'>
+  <div class="dashboard-nav">
+    <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="#" class="brand-logo"><i
+          class="fas fa-anchor"></i> <span>VOGUE </span></a></header>
+    <nav class="dashboard-nav-list"><a href="/admin/" class="dashboard-nav-item"><i class="fas fa-home"></i>
+        Home </a><a href="#" class="dashboard-nav-item active"><i class="fas fa-tachometer-alt"></i> dashboard
+      </a>
+      <div class='dashboard-nav-dropdown'><a href="/admin/userdetails"
+          class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i> Users </a>
+      </div>
+      <div class='dashboard-nav-dropdown'><a href="/admin/viewcategory"
+          class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i> Categorys </a>
+      </div>
+      <div class='dashboard-nav-dropdown'><a href="/admin/viewproduct"
+          class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i>
+          Products </a>
+      </div>
+      <div class='dashboard-nav-dropdown'><a href="/admin/viewcoupens"
+          class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i>
+          Coupens </a>
+      </div>
+      <div class='dashboard-nav-dropdown'><a href="/admin/vieworders"
+          class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i>
+          Orders </a>
+      </div>
+      <div class='dashboard-nav-dropdown'><a href="/admin/viewbanner"
+          class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Banners
+        </a>
+      </div>
+      <div class="nav-item-divider"></div>
+      <a href="/admin/logout" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+    </nav>
+  </div>
+  <div class='dashboard-app'>
+    <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a></header>
+
+    <script>
+      const mobileScreen = window.matchMedia("(max-width: 990px )");
+      $(document).ready(function () {
+        $(".dashboard-nav-dropdown-toggle").click(function () {
+          $(this).closest(".dashboard-nav-dropdown")
+            .toggleClass("show")
+            .find(".dashboard-nav-dropdown")
+            .removeClass("show");
+          $(this).parent()
+            .siblings()
+            .removeClass("show");
+        });
+        $(".menu-toggle").click(function () {
+          if (mobileScreen.matches) {
+            $(".dashboard-nav").toggleClass("mobile-show");
+          } else {
+            $(".dashboard").toggleClass("dashboard-compact");
+          }
+        });
+      });
+    </script>

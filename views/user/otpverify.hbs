@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 mx-auto">
+      <div id="first">
+        <div class="myform form ">
+          <div class="logo mb-3" >
+            <form action="/otpverify" method="post" id="otpform" style="
+            padding-top:10rem">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Enter The OTP</label>
+                <input type="text" name="mobile" id="mobile" value="{{mobile}}" class="invisible">
+                <input type="text" name="otp" id="otp" class="form-control" aria-describedby="emailHelp" placeholder="">
+              </div>
+              <div class="col-md-12 text-center ">
+                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm mt-4 mb-2">Verify OTP</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link rel="stylesheet" href="stylesheets/login.css" type="text/css">
+  <script>
+    $(document).ready(function () {
+      $("#otpform").validate({
+        rules: {
+          otp: {
+            required: true,
+            number: true,
+            minlength: 6,
+            maxlength: 6
+          }
+        }
+      })
+    })
+  </script>

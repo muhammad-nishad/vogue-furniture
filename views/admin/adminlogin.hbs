@@ -1,0 +1,121 @@
+{{!-- 
+ <link rel="icon" href="img/favicon.png" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<!-- animate CSS -->
+<link rel="stylesheet" href="css/animate.css" />
+<!-- owl carousel CSS -->
+<link rel="stylesheet" href="css/owl.carousel.min.css" />
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/all.css" />
+<!-- flaticon CSS -->
+<link rel="stylesheet" href="css/flaticon.css" />
+<link rel="stylesheet" href="css/themify-icons.css" />
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/magnific-popup.css" />
+<!-- swiper CSS -->
+<link rel="stylesheet" href="css/slick.css" />
+<!-- style CSS -->
+<link rel="stylesheet" href="css/style.css" /> --}}
+
+<section class="login_part">
+  <div class="container">
+    <div class="row align-items-center" style="margin-top: -15px;">
+      <div class="col-lg-6 col-md-6">
+        <div class="login_part_text text-center" style="margin-top: 6rem;">
+          <div class="login_part_text_iner">
+            <h2>ADMIN</h2>
+            <p>There are advances being made in science and technology
+              everyday, and a good example of this is the</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="login_part_form">
+          <div class="login_part_form_iner">
+            <h4 style="padding-left: 6rem;">Welcome Back !
+              <br />
+              Please Sign in now
+            </h4>
+            <form class="row contact_form" action="/admin/login" method="post"  novalidate="novalidate"  id="adminLogin" >
+
+
+              {{#if invalid}}
+
+              <p class="text-danger">WRONG PASSWORD</p>
+              {{/if}}
+
+              {{#if notfound}}
+
+              <p class="text-danger" >NO ADMIN EXISTED WITH THIS EMAIL</p>
+              {{/if}}
+
+              <div class="col-md-12 form-group p_star">
+                <input type="email" class="form-control" id="Email" name="Email" 
+                  placeholder="Email" />
+              </div>
+              <div class="col-md-12 form-group p_star">
+                <input type="password" class="form-control" id="Password" name="Password" 
+                  placeholder="Password" />
+              </div>
+              <div class="col-md-12 form-group">
+                <button type="submit" value="submit" class="btn_3">
+                  log in
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+    {{! validation }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+
+
+    <style>
+      .error {
+        color: red;
+        border: 1px solid red;
+      }
+    </style>
+
+    <script>
+
+
+      $('#adminLogin').validate({
+        rules: {
+          Email: {
+            required: true
+          },
+          Password: {
+            required: true
+          }
+         
+
+        },
+        messages: {
+          Email: {
+            required: ' Enter Your Email'
+          },
+          Password: {
+            required: 'Enter Your Password '
+          }
+
+
+        }
+
+      })
+
+    </script>
+
+
+
+    

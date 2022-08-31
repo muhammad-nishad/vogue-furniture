@@ -1,0 +1,43 @@
+{{#if wishlistEmpty}}
+
+<h1>empty</h1>
+{{else}}
+
+
+
+
+<div class="container p-5">
+    <div class="card shadow-lg">
+        <div class="card-header" style="font-size: 140%;">
+            My Wishlist
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                {{#each Products}}
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="/singleproduct/{{this.product._id}}"><img
+                                    src="/product-images/{{this.product.images.[0]}}" alt=""
+                                    style=" width: 7rem;height: 100px;"> </a>
+                        </td>
+                        <td>{{this.product.productId}}</td>
+                        <td>{{this.product.Price}}</td>
+                        <td> <a href="/deletewishlist/{{this.product._id}}"><i class="fa fa-trash"
+                                    aria-hidden="true"></i></a></td>
+                    </tr>
+                </tbody>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+</div>
+{{/if}}

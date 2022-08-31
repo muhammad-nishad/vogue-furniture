@@ -1,0 +1,458 @@
+<div class="container">
+  <div class="main-body " style="margin-top:8rem;">
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" alt="Admin"
+                class="rounded-circle" width="150">
+              <div class="mt-2">
+                <h5>{{FullName}}</h5>
+                <p>{{Email}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-2">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <button type="button" class=" col-12 btn   text-center " data-toggle="modal"
+                data-target="#exampleModalCentery"> <i class="fa fa-pencil-square" aria-hidden="true"></i></i>&nbsp
+                &nbsp Edit Profile &nbsp</button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <button type="button" class=" col-12 btn   text-center " data-toggle="modal"
+                data-target="#exampleModadfdflCenter">
+                <i class="fa fa-address-book-o" aria-hidden="true"></i> &nbsp Edit Password
+              </button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <button type="button" class=" col-12 btn   text-center " data-toggle="modal"
+                data-target="#exampleModalLong">
+                <i class="fa fa-address-book-o" aria-hidden="true"></i> &nbsp Add Address
+              </button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <a href="/view-orders" class=" col-12 btn   text-center link-dark ">
+                <i class="fa fa-file-code-o" aria-hidden="true"></i>&nbsp &nbsp My Orders &nbsp
+              </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <a href="/logout" class=" col-12 btn   text-center link-dark ">
+                <i class="fa fa-power-off" aria-hidden="true"></i></i>&nbsp &nbsp Logout &nbsp &nbsp
+                &nbsp&nbsp
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">First Name</h6>
+              </div>
+              {{#with userdetails}}
+              <div class="col-sm-9 font-weight-normal">
+                {{fname}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Last Name</h6>
+              </div>
+              <div class="col-sm-9 font-weight-normal">
+                {{lname}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 font-weight-normal">
+                {{email}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Mobile</h6>
+              </div>
+              <div class="col-sm-9 font-weight-normal">
+                {{mobile}}
+              </div>
+            </div>
+            {{/with}}
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-12">
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCentery" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/editprofile" method="post">
+                        <div class="mb-3">
+                          <div class="col-md-12 form-group p_star ">
+                            <input type="text" class="form-control" id="fname" name="fname"
+                              value="{{userdetails.fname}}" placeholder="First Name" />
+                          </div>
+                          <div class="col-md-12 form-group p_star ">
+                            <input type="text" class="form-control" id="lname" name="lname"
+                              value="{{userdetails.lname}}" placeholder="Last Name" />
+                          </div>
+                          <div class="col-md-12 form-group p_star ">
+                            <input type="text" class="form-control" id="email" name="email"
+                              value="{{userdetails.email}}" placeholder="email" />
+                          </div>
+                          <div class="col-md-12 form-group p_star ">
+                            <input type="text" class="form-control" id="mobile" name="mobile"
+                              value="{{userdetails.mobile}}" placeholder="mobile" />
+                          </div>
+                          <div class="btn">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{#each address}}
+      <div class="row">
+        <div class="col-md-12 mb-3 p-1">
+          <div>
+            <div>
+              <label style="width: 100%;">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="card" style="max-height:300px; min-height:300px;overflow-y:hidden;width=100% ">
+                      <div class="card-body shadow">
+                        <input type="radio" name="address" value="" id="">
+                        <h5 class="card-title">{{this.address.Name}} <br></h5>
+                        <p class="card-text">{{this.address.Address}},
+                          <br>
+                          PHONE:{{this.address.Mobile}}
+                          <br>PIN:{{this.address.Pincode}}
+                          <br>ALTERNATIVE PHONE:{{this.address.Phone}}
+                          <br>LANDMARK:{{this.address.Landmark}}
+                        </p>
+                        <div class="row">
+                          <div class="col-6">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target="#exampleModalCenterr{{this._id}}">
+                              Edit
+                            </button>
+                          </div>
+                          <div class="col-6">
+                            <a href="/deleteaddress/{{this._id}}" class="btn btn-danger text-white"
+                              onclick="return  confirm('Do You Want To Delete This Address')  ">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- Button trigger modal -->
+        <div class="modal fade" id="exampleModalCenterr{{this._id}}" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <!-- Modal -->
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12 mb-4">
+                    <div class="card mb-4">
+                      <div class="card-header py-3">
+                        <h5 class="mb-0">Delivery Address</h5>
+                      </div>
+                      <div class="card-body">
+                        <form action="/editaddress/{{this._id}}" method="post">
+                          <!-- 2 column grid layout with text inputs for the first and last names -->
+                          <div class="row mb-4">
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="text" id="Name" name="Name" value="{{address.Name}}"
+                                  class="form-control" />
+                                <label class="form-label" for="form7Example1"> Name</label>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="number" id="Mobile" name="Mobile" value="{{address.Mobile}}"
+                                  class="form-control" />
+                                <label class="form-label" for="form7Example2"> 10-digit mobile number</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row mb-4">
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="number" id="Pincode" name="Pincode" value="{{address.Pincode}}"
+                                  class="form-control" />
+                                <label class="form-label" for="form7Example1"> Pincode</label>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="text" id="Locality" name="Locality" value="{{address.Locality}}"
+                                  class="form-control" />
+                                <label class="form-label" for="form7Example2">Locality</label>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Message input -->
+                          <div class="form-outline mb-4">
+                            <textarea class="form-control" id="Address" name="Address"
+                              rows="4">{{address.Address}} </textarea>
+                            <label class="form-label" for="form7Example7">Address(Area & Street)</label>
+                          </div>
+                          <div class="row mb-4">
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="text" id="Landmark" name="Landmark" value="{{address.Landmark}}"
+                                  class="form-control" />
+                                <label class="form-label" for="form7Example1"> Landmark(Optional)</label>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="number" id="Alternate Phone" name="Phone" value="{{address.Phone}}"
+                                  class="form-control" />
+                                <label class="form-label" for="form7Example2">Alternate Phone (Optional)</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12 mb-4">
+                  <div class="card mb-4">
+                    <div class="card-header py-3">
+                      <h5 class="mb-0">Delivery Address</h5>
+                    </div>
+                    <div class="card-body">
+                      <form action="/addaddress" method="post" id="addaddress">
+                        <!-- 2 column grid layout with text inputs for the first and last names -->
+                        <div class="row mb-4">
+                          <div class="col">
+                            <div class="form-outline">
+                              <input type="text" id="Name" name="Name" class="form-control" />
+                              <label class="form-label" for="form7Example1"> Name</label>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-outline">
+                              <input type="number" id="Mobile" name="Mobile" class="form-control" />
+                              <label class="form-label" for="form7Example2"> 10-digit mobile number</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-4">
+                          <div class="col">
+                            <div class="form-outline">
+                              <input type="number" id="Pincode" name="Pincode" class="form-control" />
+                              <label class="form-label" for="form7Example1"> Pincode</label>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-outline">
+                              <input type="text" id="Locality" name="Locality" class="form-control" />
+                              <label class="form-label" for="form7Example2">Locality</label>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Message input -->
+                        <div class="form-outline mb-4">
+                          <textarea class="form-control" id="Address" name="Address" rows="4"></textarea>
+                          <label class="form-label" for="form7Example7">Address(Area & Street)</label>
+                        </div>
+                        <div class="row mb-4">
+                          <div class="col">
+                            <div class="form-outline">
+                              <input type="text" id="Landmark" name="Landmark" class="form-control" />
+                              <label class="form-label" for="form7Example1"> Landmark(Optional)</label>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-outline">
+                              <input type="number" id="AlternatePhone" name="Phone" class="form-control" />
+                              <label class="form-label" for="form7Example2">Alternate Phone (Optional)</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{#if wrongcurrentpass}}
+      <p class="text-danger"> Your Current Password is Invalid</p>
+      {{/if}}
+      <!-- Button trigger modal -->
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModadfdflCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Edit Password</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <form action="/editpassword" method="post">
+                  <div class="mb-3">
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="fname" name="currentpassword" value=""
+                        placeholder="Enter Your Current Password" />
+                    </div>
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="fname" name="newpassword" value=""
+                        placeholder="Enter Your New Password" />
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-success">Update</button>
+                    </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!-- {{! validation }}
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+ --}}
+
+      <style>
+        .error {
+          color: red;
+          border: 1px solid red;
+        }
+      </style>
+
+      <script>
+
+
+        $('#addaddress').validate({
+          rules: {
+            Name: {
+              required: true,
+              minlength: 3
+            },
+            Mobile: {
+              required: true,
+              minlength: 10,
+              maxlength: 10
+            },
+            Pincode: {
+              required: true,
+              minlength: 6,
+              maxlength: 6
+            },
+            Locality: {
+              required: true
+            },
+            Address: {
+              required: true
+            },
+            Landmark: {
+              required: true
+            }
+
+
+
+          },
+          messages: {
+            Name: {
+              required: 'Enter Your Full Name',
+            },
+            Mobile: {
+              required: ' Enter Your Mobile Number ',
+              minlength: 'The mobile number you entered does not seem to be valid',
+              maxlength: 'The mobile number you entered does not seem to be valid'
+            },
+            Pincode: {
+              required: ' Enter Your Pincode ',
+              minlength: 'The pincode you entered does not seem to be valid',
+              maxlength: 'The pincode you entered does not seem to be valid'
+            },
+            Locality: {
+              required: ' Enter Your Locality '
+            },
+            Address: {
+              required: ' Enter Your Address '
+            },
+            Landmark: {
+              required: ' Enter Your Landmark '
+            }
+
+          }
+
+        })
+
+      </script>

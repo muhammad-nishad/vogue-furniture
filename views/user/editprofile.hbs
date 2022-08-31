@@ -1,0 +1,24 @@
+<div class="container w-50 p-5">
+    <form action="/editprofile" method="post">
+        <div class="mb-3">
+            <div class="col-md-12 form-group p_star w-50">
+                <input type="text" class="form-control" id="fname" name="fname" value="{{userdetails.fname}}"
+                    placeholder="First Name" />
+            </div>
+            <div class="col-md-12 form-group p_star w-50">
+                <input type="text" class="form-control" id="lname" name="lname" value="{{userdetails.lname}}"
+                    placeholder="Last Name" />
+            </div>
+            <div class="col-md-12 form-group p_star w-50">
+                <input type="text" class="form-control" id="email" name="email" value="{{userdetails.email}}"
+                    placeholder="email" />
+            </div>
+            <div class="col-md-12 form-group p_star w-50">
+                <input type="text" class="form-control" id="mobile" name="mobile" value="{{userdetails.mobile}}"
+                    placeholder="mobile" />
+            </div>
+            <div class="btn">
+                <button class="btn-success">UPDATE</button>
+            </div>
+    </form>
+</div>

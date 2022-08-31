@@ -1,0 +1,368 @@
+<!-- Checkout Start -->
+<div class="container-fluid " style="margin-top: 120px;">
+    <div class="col-md-4 row">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn_2 w-100 h-100 mb-3" style="margin-top: -20px;" data-toggle="modal"
+            data-target="#exampleModal"><i class="fa fa-edit"></i>Ship to different Address
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <div class="card mb-4">
+                                    <div class="card-header py-3">
+                                        <h5 class="mb-0">Delivery Address</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="/shippingaddress" method="post" id="shipaddress">
+                                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input type="text" id="Name" name="Name" class="form-control" />
+                                                        <label class="form-label" for="form7Example1"> Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input type="number" id="Mobile" name="Mobile"
+                                                            class="form-control" />
+                                                        <label class="form-label" for="form7Example2"> 10-digit mobile
+                                                            number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input type="number" id="Pincode" name="Pincode"
+                                                            class="form-control" />
+                                                        <label class="form-label" for="form7Example1"> Pincode</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input type="text" id="Locality" name="Locality"
+                                                            class="form-control" />
+                                                        <label class="form-label" for="form7Example2">Locality</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Message input -->
+                                            <div class="form-outline mb-4">
+                                                <textarea class="form-control" id="Address" name="Address"
+                                                    rows="4"></textarea>
+                                                <label class="form-label" for="form7Example7">Address(Area &
+                                                    Street)</label>
+                                            </div>
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input type="text" id="Landmark" name="Landmark"
+                                                            class="form-control" />
+                                                        <label class="form-label" for="form7Example1">
+                                                            Landmark(Optional)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input type="number" id="AlternatePhone" name="Phone"
+                                                            class="form-control" />
+                                                        <label class="form-label" for="form7Example2">Alternate Phone
+                                                            (Optional)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: -12px;">
+    <form id="checkoutform">
+        <div class="card p-3" style="background-color:rgb(225, 229, 230) ;">
+            <div class="row px-xl-5 justify-content-around">
+                <div class="col-lg-5">
+                    <div class="container-fluid">
+                        <div class="card-header">
+                            <h4 class="">SELECT ADDRESS</h4>
+                        </div>
+                        <div class="row">
+                            {{#each allAddress}}
+                            <div class="col-6 mb-3 p-1">
+                                <div>
+                                    <div>
+                                        <label>
+                                            <div class="card"
+                                                style="max-height:250px; min-height:250px;overflow-y:hidden;width: 100%; ">
+                                                <div class="card-body shadow">
+                                                    <input type="radio" name="address" value="{{this._id}}" id="">
+                                                    <h5 class="card-title">{{this.address.Name}} <br></h5>
+                                                    <p class="card-text">{{this.address.Address}},
+                                                        <br>
+                                                        PHONE:{{this.address.Mobile}}
+                                                        <br>PIN:{{this.address.Pincode}}
+                                                        <br>{{this.address.Alternatephone}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-secondary mb-5">
+                        <div class="card-header border-0" style="background: #82c9cc;">
+                            <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="font-weight-medium mb-3">Products</h5>
+                            {{#each cartProducts.cartItems}}
+                            <div class="d-flex justify-content-between">
+                                <p>{{this.product.title}}</p>
+                                <p>helo</p>
+                                <p>Rs.{{total this.quantity this.product.discountPrice}}</p>
+                            </div>
+                            {{/each}}
+                            {{#each products}}
+                            <div>
+                                <p> {{this.product.productId}} </p> <span> Rs{{total this.product.Price this.quantity}}
+                                </span>
+                            </div>
+                            {{/each}}
+                            <hr class="mt-0">
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Subtotal</h6>
+                                <h6 class="font-weight-medium">Rs.<span id="subtotal">{{totalAmount}}</span>
+                                </h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Coupon Discount</h6>
+                                <h6 class=" font-weight-medium">-Rs.<span id="shipping"></span>
+                                </h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Shipping</h6>
+                                <h6 class=" font-weight-medium">Rs.<span id="shipping">100</span>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="card-footer border-secondary bg-transparent">
+                            <div class="d-flex justify-content-between mt-2">
+                                <h5 class="font-weight-bold">Total</h5>
+                                <h5 class="font-weight-bold">Rs.<span id="GrandTotal"></span>{{subtotal totalAmount
+                                    100}}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-secondary mb-5">
+                        <div class="card-header border-0" style="background: #82c9cc;">
+                            <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="">
+                                <div>
+                                    <input type="radio" name="payment" id="COD" value="COD">
+                                    <label for="directcheck">Cash-On-Delivery</label>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div>
+                                    <input type="radio" name="payment" id="netBanking" value="netBanking">
+                                    <label for="banktransfer">Net Banking</label>
+                                    <input type="text" name="userId" value="{{user._id}}" hidden>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-secondary bg-transparent">
+                            <button type="submit"
+                                class="btn btn-lg btn-block btn_2 w-100 font-weight-bold my-3 py-3">Place
+                                Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+<script>
+
+    $("#checkoutform").submit((e) => {
+         console.log('checkout')
+        e.preventDefault()
+        $.ajax({
+            url: '/place-order',
+            method: 'post',
+            data: $('#checkoutform').serialize(),//to get all data
+            success: function (response) {
+                console.log(response)
+                if (response.codSuccess) {
+                    location.href = '/ordersuccess'
+                } else {
+                    razorpayPayment(response)
+
+
+                }
+            }
+        })
+    })
+
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_EszbVocoSJ8uJh", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "vogue furniture",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+
+                verifyPayment(response, order)
+
+            },
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    location.href = '/ordersuccess'
+                } else {
+                    alert('payment failed')
+                }
+            }
+        })
+
+    }
+
+</script>
+{{!-- 
+
+{{! validation }}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script> --}}
+
+
+<style>
+    .error {
+        color: red;
+        border: 1px solid red;
+    }
+</style>
+
+<script>
+
+
+    $('#shipaddress').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 3
+            },
+            Mobile: {
+                required: true,
+                minlength: 10,
+                maxlength:10
+            },
+            Pincode: {
+                required: true,
+                minlength: 6,
+                maxlength:10
+            },
+            Locality: {
+                required: true
+            },
+            Address: {
+                required: true,
+                minlength:5
+                
+            },
+            Landmark: {
+                required: true
+            },
+
+
+
+        },
+        messages: {
+            Name: {
+                required: ' Enter Your Name'
+            },
+            Mobile: {
+                required: ' Enter Your Mobile Number ',
+                minlength:'The mobile number you entered does not seem to be valid',
+                maxlength:'The mobile number you entered does not seem to be valid'
+            },
+            Pincode: {
+                required: ' Enter Your Pincode ',
+                minlength:'The pincode you entered does not seem to be valid',
+                maxlength:'The pincode you entered does not seem to be valid'
+            },
+            Locality: {
+                required: ' Enter Your Locality '
+            },
+            Address: {
+                required: ' Enter Your Address '
+            },
+            Landmark: {
+                required: ' Enter Your Landmark '
+            },
+        }
+    })
+
+</script>
+
+
+
+
+<!-- Checkout End -->
