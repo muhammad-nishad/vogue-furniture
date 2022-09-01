@@ -148,10 +148,19 @@
                             </div>
                             {{/each}}
                             {{#each products}}
-                            <div>
-                                <p> {{this.product.productId}} </p> <span> Rs{{total this.product.Price this.quantity}}
-                                </span>
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">{{this.product.productId}}</h6>
+                                <h6 class="font-weight-medium">Rs.<span id="subtotal">{{total this.product.Price this.quantity}}</span>
+                                </h6>
                             </div>
+                            {{!-- <div>
+                                <p> {{this.product.productId}} </p>
+
+                            </div>
+                            <div>
+                                Rs{{total this.product.Price this.quantity}}
+                            </div> --}}
+
                             {{/each}}
                             <hr class="mt-0">
                             <div class="d-flex justify-content-between mb-3 pt-1">
@@ -198,7 +207,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer border-secondary bg-transparent">
+                        <div class="card-footer border-secondary bg-transparent ">
                             <button type="submit"
                                 class="btn btn-lg btn-block btn_2 w-100 font-weight-bold my-3 py-3">Place
                                 Order</button>
@@ -215,7 +224,7 @@
 <script>
 
     $("#checkoutform").submit((e) => {
-         console.log('checkout')
+        console.log('checkout')
         e.preventDefault()
         $.ajax({
             url: '/place-order',
@@ -285,7 +294,7 @@
     }
 
 </script>
-{{!-- 
+{{!--
 
 {{! validation }}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -312,20 +321,20 @@
             Mobile: {
                 required: true,
                 minlength: 10,
-                maxlength:10
+                maxlength: 10
             },
             Pincode: {
                 required: true,
                 minlength: 6,
-                maxlength:10
+                maxlength: 10
             },
             Locality: {
                 required: true
             },
             Address: {
                 required: true,
-                minlength:5
-                
+                minlength: 5
+
             },
             Landmark: {
                 required: true
@@ -340,13 +349,13 @@
             },
             Mobile: {
                 required: ' Enter Your Mobile Number ',
-                minlength:'The mobile number you entered does not seem to be valid',
-                maxlength:'The mobile number you entered does not seem to be valid'
+                minlength: 'The mobile number you entered does not seem to be valid',
+                maxlength: 'The mobile number you entered does not seem to be valid'
             },
             Pincode: {
                 required: ' Enter Your Pincode ',
-                minlength:'The pincode you entered does not seem to be valid',
-                maxlength:'The pincode you entered does not seem to be valid'
+                minlength: 'The pincode you entered does not seem to be valid',
+                maxlength: 'The pincode you entered does not seem to be valid'
             },
             Locality: {
                 required: ' Enter Your Locality '

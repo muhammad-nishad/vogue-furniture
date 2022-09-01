@@ -1,3 +1,11 @@
+
+<div class="text-center p-4" >
+<button type="button" class="btn btn-success" id="MyButton" >Download Report</button>
+</div>
+
+
+
+
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <div class="main-content">
     <div class="container pt-4">
@@ -85,6 +93,14 @@
     </div>
 </div>
 
+
+
+
+
+
+
+
+
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function () {
@@ -106,4 +122,61 @@
             console.log(e)
         })
     }
+</script>
+<script>
+    //=========== report Generae csv and Download it  =========== //
+
+
+            const objectToCsv = function (data) {
+                const csvRows = [];
+                //get the headers 
+                const headers = Object.keys(data[0]);
+                csvRows.push(headers.join(','));
+
+                //loop over the rows
+
+                for (const row of data) {
+                    const values = headers.map(header => {
+                        const escaped = ('' + row[header]).replace(/"/g, '\\"')
+                        return `"${escaped}"`
+                    })
+                    csvRows.push(values.join(','))
+                }
+                return csvRows.join('\n')
+            }
+            const download = function (data) {
+                const blob = new Blob([data], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.setAttribute('hidden', '');
+                a.setAttribute('href', url);
+                a.setAttribute('download', 'download.csv');
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+            }
+            async function getReport() {
+                let e = await fetch('/admin/reportData')
+                e = await e.json()
+                console.table(e)
+                const data = e.map(row => ({
+                    ProductId: row.product_id,
+                    ProductName: row.product_name,
+                    Customer: row.customer,
+                    CustomerId: row.customer_id,
+                    Category: row.category,
+                    Price: row.price,
+                    Quantity: row.quantity,
+                    Discount: row.discount,
+                    GrandTotal: row.grand_total,
+                    Date: row.date
+                }));
+                const csvData = objectToCsv(data)
+                download(csvData)
+            }
+
+
+            const button = document.getElementById('MyButton');
+            button.addEventListener('click', getReport)
 </script>

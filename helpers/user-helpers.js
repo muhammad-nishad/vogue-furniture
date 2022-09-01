@@ -5,15 +5,15 @@ let { response } = require('express')
 let ObjectID = require('mongodb').ObjectId
 let Razorpay = require('razorpay')
 const { resolve } = require('path')
-
+const env=require('dotenv').config()
 
 
 
 
 let instance = new Razorpay({
 
-    key_id: 'rzp_test_EszbVocoSJ8uJh',
-    key_secret: 'QjINFuPQFRHgHNbVsGXgAVWj'
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
 module.exports = {
@@ -23,15 +23,16 @@ module.exports = {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
             const state = {
                 userexist: false,
-                
+
             }
             if (!user) {
                 userData.password = await bcrypt.hash(userData.password, 10)
-               let user= db.get().collection(collection.USER_COLLECTION).insertOne({ fname: userData.fname, lname: userData.lname, email: userData.email, mobile: userData.mobile, password: userData.password, ActiveStatus: true }).then((data) => {
+                db.get().collection(collection.USER_COLLECTION).insertOne({ fname: userData.fname, lname: userData.lname, email: userData.email, mobile: userData.mobile, password: userData.password, ActiveStatus: true }).then(async(data) => {
                     state.userexist = false
                     // state.usernotefound=true
-                    state.user = user
-                    console.log(state,'state');
+                    let newuser= await db.get().collection(collection.USER_COLLECTION).findOne(data.insertedId)
+                    state.user = newuser
+                    console.log(state, 'state');
                     resolve(state)
                 })
             } else {
@@ -369,7 +370,7 @@ module.exports = {
     verifyPayment: (details) => {
         return new Promise((resolve, reject) => {
             let crypto = require('crypto')
-            let hmac = crypto.createHmac('sha256', 'QjINFuPQFRHgHNbVsGXgAVWj')
+            let hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
             hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]'])
             hmac = hmac.digest('hex')
             if (hmac == details['payment[razorpay_signature]']) {
@@ -513,6 +514,9 @@ module.exports = {
                         product_quantity: '$products.quantity',
                         date: 1
                     }
+                },
+                {
+                    $sort:{date:1}
                 }
             ]).toArray()
             console.log(orders);
@@ -705,8 +709,13 @@ module.exports = {
                             productname: 1,
                             date: 1
                         }
+                    },
+                    {
+                        $sort:{date:1}
                     }
+
                 ]).toArray()
+                 
             console.log(allOrders, 'allorders');
             resolve(allOrders)
         })
@@ -811,7 +820,7 @@ module.exports = {
     getWishlistCount: (userid) => {
         return new Promise(async (resolve, reject) => {
             let count = 0
-            let wishlist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({user: ObjectID(userid) })
+            let wishlist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({ user: ObjectID(userid) })
             if (wishlist) {
                 count = wishlist.products.length
 
@@ -820,30 +829,30 @@ module.exports = {
 
         })
     },
-    changePassword:(data,userId)=>{
-        let response={}
-        return new Promise(async(resolve,reject)=>{
-            let user=await db.get().collection(collection.USER_COLLECTION).findOne({_id:ObjectID(userId)})
+    changePassword: (data, userId) => {
+        let response = {}
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: ObjectID(userId) })
 
-            let status=await bcrypt.compare(data.currentpassword,user.password)
+            let status = await bcrypt.compare(data.currentpassword, user.password)
 
-            if(status){
-                data.newpassword=await bcrypt.hash(data.newpassword,10)
-                db.get().collection(collection.USER_COLLECTION).updateOne({_id:ObjectID(userId)},{
+            if (status) {
+                data.newpassword = await bcrypt.hash(data.newpassword, 10)
+                db.get().collection(collection.USER_COLLECTION).updateOne({ _id: ObjectID(userId) }, {
 
 
-                    $set:{
+                    $set: {
 
-                        password:data.newpassword
+                        password: data.newpassword
                     }
 
-                }).then((response)=>{
+                }).then((response) => {
                     resolve(response)
                 })
 
-            }else{
-                wrongcurrentpass=true
-                response.wrongcurrentpass=wrongcurrentpass
+            } else {
+                wrongcurrentpass = true
+                response.wrongcurrentpass = wrongcurrentpass
 
             }
             resolve(response)

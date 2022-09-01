@@ -2,11 +2,13 @@ let db = require('../config/connection')
 let collection = require('../config/collections');
 const { response } = require('express');
 
+const env=require('dotenv').config()
+
 
 let config = {
-  serviceID: "VA11d4891d0e19a7dc99bd9ca01d456773",
-  accountSID: "AC854c1858bab3f0f6a53993976e5d6d45",
-  authToken: "7226eb3fb4e7fc8510ea9162a5976ae9"
+  serviceID: process.env.TWILIO_SERVICE_SID,
+  accountSID: process.env.TWILIO_ACCOUNT_SID,
+  authToken: process.env.TWILIO_AUTH_TOKEN,
 };
 
 

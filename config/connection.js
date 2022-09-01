@@ -8,8 +8,8 @@ const state={
 
 
 module.exports.connect=function(done){
-     const url='mongodb://localhost:27017'
-     const dbname='furniture'
+     const url=`mongodb+srv://nishadmuhammed:${process.env.DATABASE_PASSWORD}@cluster0.zoic2fb.mongodb.net/vogue-furniture`
+     const dbname='vogue-furniture'
 
 
 mongoClient.connect(url,(err,data)=>{

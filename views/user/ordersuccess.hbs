@@ -8,9 +8,9 @@
                     </h4>
                 </div>
                 <div class="col-auto text-center  my-auto pl-0 pt-sm-4"> <img
-                        class="img-fluid my-auto align-items-center mb-0 pt-3" src="/images/order success.jpg"
+                        class="img-fluid my-auto align-items-center mb-0 pt-3" src="/images/istockphoto-930400892-170667a.jpg"
                         width="115" height="115">
-                    <p class="mb-4 pt-0 Glasses">Better Future With FUTURA</p>
+                    <p class="mb-4 pt-0 Glasses">Better Future With Vougue</p>
                 </div>
             </div>
         </div>
@@ -42,12 +42,15 @@
                                                 {{product.Category.CategoryName}}</small></div> --}}
                                         <div class="col my-auto"> <small>Qty : {{this.quantitty.[0]}}</small></div>
                                         <div class="col my-auto">
-                                            <h6 class="mb-0">Rs.{{this.totalAmount}}</h6>
+                                            <h6 class="mb-0">Rs.{{this.price}}</h6>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {{/each}}
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                <h6>total amount :Rs {{item.[0].totalAmount}}</h6>
+                            </div>
                             <hr class="my-3 ">
                             <div class="row">
                                 <div class="col-md-3 mb-3"> <small> Track Order <span><i class=" ml-2 fa fa-refresh"
@@ -82,7 +85,7 @@
             {{!-- {{#each item}} --}}
 
             <div class="row mt-4">
-                
+
                 <div class="col">
                     <div class="row justify-content-between">
                         <div class="col-auto">
@@ -116,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             {{!-- {{/each}} --}}
             {{!-- <div class="row invoice ">

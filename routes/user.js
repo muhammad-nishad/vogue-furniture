@@ -56,10 +56,11 @@ router.post('/signup', (req, res) => {
     console.log(state,'state');
     if (state.userexist) {
       req.session.userexist = true
-      req.session.loggedIn = true
+    
       req.session.user = state.user
       res.redirect('/signup')
-    } else {
+    } else { 
+       req.session.loggedIn = true
       req.session.user =state.user
       res.redirect('/')
     }
@@ -108,7 +109,7 @@ router.post('/otppage', (req, res) => {
   })
 })
 
-router.post('/otpverify', (req, res) => {
+router.post('/otpverify',async (req, res) => {
   otpHelper.checkOtp(req.body.otp, req.session.mobile).then((response) => {
     if (response == 'approved') {
       req.session.loggedIn = true
@@ -158,6 +159,7 @@ router.get('/userprofile', verifyLogin, async (req, res) => {
 
 router.post('/editprofile', (req, res) => {
   userHelper.updateUserdetails(req.session.user._id, req.body).then((response) => {
+    console.log(response,'userDetails');
     res.redirect('/userprofile')
   })
 })
@@ -368,6 +370,8 @@ router.post('/editpassword', (req, res) => {
   userHelper.changePassword(req.body, req.session.user._id).then((response) => {
     if (response.wrongcurrentpass) {
       req.session.wrongcurrentpass = response.wrongcurrentpass
+      res.redirect('/userprofile')
+    }else{
       res.redirect('/userprofile')
     }
 
