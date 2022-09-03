@@ -28,6 +28,96 @@
   </div>
 </section>
 <!-- banner part start-->
+<section class="banner_part">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="banner_slider owl-carousel">
+                        <div class="single_banner_slider">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-8">
+                                    <div class="banner_text">
+                                        <div class="banner_text_iner">
+                                            <h1>Wood & Cloth
+                                                Sofa</h1>
+                                            <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                                suspendisse ultrices gravida. Risus commodo viverra</p>
+                                            <a href="#" class="btn_2">buy now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner_img d-none d-lg-block">
+                                    <img src="img/banner_img.png" alt="">
+                                </div>
+                            </div>
+                        </div><div class="single_banner_slider">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-8">
+                                    <div class="banner_text">
+                                        <div class="banner_text_iner">
+                                            <h1>Cloth & Wood
+                                                Sofa</h1>
+                                            <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                                suspendisse ultrices gravida. Risus commodo viverra</p>
+                                            <a href="#" class="btn_2">buy now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner_img d-none d-lg-block">
+                                    <img src="img/banner_img.png" alt="">
+                                </div>
+                            </div>
+                        </div><div class="single_banner_slider">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-8">
+                                    <div class="banner_text">
+                                        <div class="banner_text_iner">
+                                            <h1>Wood & Cloth
+                                                Sofa</h1>
+                                            <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                                suspendisse ultrices gravida. Risus commodo viverra</p>
+                                            <a href="#" class="btn_2">buy now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner_img d-none d-lg-block">
+                                    <img src="img/banner_img.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="single_banner_slider">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-8">
+                                    <div class="banner_text">
+                                        <div class="banner_text_iner">
+                                            <h1>Cloth $ Wood Sofa</h1>
+                                            <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                                suspendisse ultrices gravida. Risus commodo viverra</p>
+                                            <a href="#" class="btn_2">buy now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner_img d-none d-lg-block">
+                                    <img src="img/banner_img.png" alt="">
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="slider-counter"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
 
 <!-- feature_part start-->
 <section class="feature_part padding_top">
@@ -35,7 +125,8 @@
     <div class="row justify-content-center">
       <div class="col-lg-6">
         <div class="section_tittle text-center">
-          <h2>Featured Category</h2>
+          <h2>Shop Your Favorite</h2>
+          <h5>Impressive Collection For Your Dream Home</h5>
         </div>
       </div>
     </div>
@@ -43,8 +134,9 @@
       {{#each allCategory}}
       <div class="col-lg-6 col-sm-6">
         <div class="single_feature_post_text">
+          <h3 class="" >{{this.categoryName}}</h3>
           <p>{{this.categoryDescription}}</p>
-          <h3>{{this.categoryDescription}}</h3>
+          
           <a href="/view-allproducts" class="feature_btn">EXPLORE NOW
             <i class="fas fa-play"></i></a>
           <a href="/view-allproducts/{{this.categoryName}}"><img src="/product-images/{{this.image}}"
@@ -79,17 +171,9 @@
                   </td>
                   <div class="single_product_text">
                     <h4>{{this.productId}}</h4>
-                    <h3>{{this.Price}}</h3>
-                    {{!-- <a href="/addwishlist/{{this._id}}"><i class="ti-heart"></i></a> --}}
-
-                    
-                    
+                    <h3 class="font-weight-normal"> Rs {{this.Price}}</h3>
                       <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">+ADD TO CART</button>
-                    
                     <button onclick="addtoWishlist('{{this._id}}')" class="btn btn-outline-dark"  style="border: none;" ><i class="ti-heart"></i></button>
-                    
-
-
                   </div>
                 </div>
               </div>
@@ -171,6 +255,12 @@
       url: '/addwishlist/' + proId,
       method: 'get',
       success: (response) => {
+        if(response.status){
+          $('#WishlistCount').load(location.href +"#WishlistCount");
+          let count=$('#Wishlistcount').html()
+          count=parseInt(count)+1
+          $('#Wishlistcount').html(count)
+        }
 
       }
 

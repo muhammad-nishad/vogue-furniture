@@ -12,14 +12,14 @@
                         <div class="widgets_inner">
                             <ul>
                                 <li>
-                                    <a href="/view-allproducts" class="" >All</a>
+                                    <a href="/view-allproducts" class="">All</a>
                                 </li>
                             </ul>
                             {{#each allCategory}}
                             <ul class="list">
                                 <li>
                                     <a href="/view-allproducts/{{this.categoryName}}">{{this.categoryName}}</a>
-                                    
+
                                 </li>
                             </ul>
                             {{/each}}
@@ -28,70 +28,54 @@
                 </div>
             </div>
             <div class="col-lg-9">
-
-                <div class="row align-items-center latest_product_inner">
-                    <div class="col-lg-4 col-sm-6">
-                        {{#each products}}
+                <div class="row ">
+                    {{#each products}}
+                    <div class="col-md-4">
                         <div class="single_product_item">
-                            <img src="/product-images/{{this.images.[0]}}"style="width: 100%; height: 25vh;object-fit: cover;" alt="">
+                            <img src="/product-images/{{this.images.[0]}}"
+                                style="width: 100%; height: 25vh;object-fit: cover;" alt="">
                             <div class="single_product_text">
                                 <h4>{{this.productId}}</h4>
                                 <h3>{{this.Price}}</h3>
-                                <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">+ADD TO CART</button>
+                                <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">+ADD TO
+                                    CART</button>
                             </div>
                         </div>
-                        {{/each}}
                     </div>
-                    <div class="col-lg-4 col-sm-6">
-                        
-                        <div class="single_product_item">
-                            <img src="/product-images/{{this.images.[0]}}" alt="">
-                            <div class="single_product_text">
-                                <h4>Quartz Belt Watch</h4>
-                                <h3>$150.00</h3>
-                                <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                    {{/each}}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="product_list_slider owl-carousel">
+                                <div class="single_product_list_slider" style="background-color: white; ">
+                                    <div class="row align-items-center justify-content-between">
+                                        {{#each allProduct}}
+                                        <div class="col-lg-12 col-sm-6 align-items-center justify-content-between">
+                                            <div class="single_product_item">
+                                                <td> <a href="/singleproduct/{{this._id}}"> <img
+                                                            src="/product-images/{{this.images.[0]}} "
+                                                            style="width: 100%; height: 25vh;object-fit: cover;"
+                                                            alt=""></a>
+                                                </td>
+                                                <div class="single_product_text">
+                                                    <h4>{{this.productId}}</h4>
+                                                    <h3>{{this.Price}}</h3>
+                                                    <a href="/addwishlist/{{this._id}}"><i
+                                                            class="ti-heart"></i></a> 
+                                                     <button onclick="addToCart('{{this._id}}')"
+                                                        class="btn btn-outline-dark">+ADD TO CART</button>
+                                                    <button onclick="addtoWishlist('{{this._id}}')"
+                                                        class="btn btn-outline-dark" style="border: none;"><i
+                                                            class="ti-heart"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
                     </div>
-                    {{!-- <div class="col-lg-4 col-sm-6">
-                        <div class="single_product_item">
-                            <img src="img/product/product_3.png" alt="">
-                            <div class="single_product_text">
-                                <h4>Quartz Belt Watch</h4>
-                                <h3>$150.00</h3>
-                                <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
-                            </div>
-                        </div>
-                    </div> --}}
-                    
-                    
-                    
-                    
-                    <div class="col-lg-12">
-                        <div class="pageination">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <i class="ti-angle-double-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <i class="ti-angle-double-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -100,7 +84,7 @@
 
 
 <!--::footer_part start::-->
-<footer class="footer_part">
+{{!-- <footer class="footer_part">
     <div class="container">
         <div class="row justify-content-around">
             <div class="col-sm-6 col-lg-2">
@@ -197,23 +181,23 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> --}}
 
 <script>
-  function addToCart(proId) {
-    $.ajax({
-      url: '/addcart/' + proId,
-      method: 'get',
-      success: (response) => {
-        if (response.status) {
-          $("#cartCount").load(location.href + " #cartCount");
-          swal("Good job!", "Item Will be Added To Your Cart!", "success");
-          let count = $('#cartCount').html()
-          count = parseInt(count) + 1
-          $('#cartCount').html(count)
-        }
+    function addToCart(proId) {
+        $.ajax({
+            url: '/addcart/' + proId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    $("#cartCount").load(location.href + " #cartCount");
+                    swal("Good job!", "Item Will be Added To Your Cart!", "success");
+                    let count = $('#cartCount').html()
+                    count = parseInt(count) + 1
+                    $('#cartCount').html(count)
+                }
 
-      }
-    })
-  }
+            }
+        })
+    }
 </script>

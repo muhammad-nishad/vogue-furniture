@@ -30,7 +30,7 @@
                             <div class="media">
                                 <div class="sq align-self-center "> <img
                                         class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
-                                        src="/product-images/{{this.image}}" width="135" height="135" />
+                                        src="/product-images/{{this.image.[0]}}" width="135" height="135" />
                                 </div>
                                 <div class="media-body my-auto text-right">
                                     <div class="row  my-auto flex-column flex-md-row">
@@ -92,6 +92,8 @@
                     </div>
                 </div>
             </div>
+            {{!-- <a href="/cancelorder/{{item..[0]._id}">CANCEL</a> --}}
+            <button onclick="cancelOrder('{{item.[0]._id}}')"  type="button" >cancel</button>
 
 
             {{!-- {{#each item}} --}}
@@ -136,5 +138,15 @@
                 <button class="btn btn-primary" onclick="downloadInvoice({{json order}})">Download Invoice</button>
             </div> --}}
         </div>
+        <script>
+            function cancelOrder(orderId){
+                console.log('fuction')
+                console.log('orderid',orderId)
+               axios.post('/cancelOrder/'+orderId,{}).then(e=>{
+                    console.log(e)
+                })
+
+            }
+        </script>
     </div>
 </div>

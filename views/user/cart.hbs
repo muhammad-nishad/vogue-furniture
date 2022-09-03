@@ -58,7 +58,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    
+
                 </div>
                 <div class="card-body cart">
                     <div class="col-sm-12 empty-cart-cls text-center">
@@ -66,7 +66,7 @@
                         <h3><strong>Your shopping cart is empty</strong></h3>
                         <div class="mw-100 d-flex justify-content-center ">
                             <p class="w-50 text-center ">
-                                 Return to the store to add items for your delivery slot. Before
+                                Return to the store to add items for your delivery slot. Before
                                 proceed to checkout you
                                 must
                                 add some products to your shopping cart. You will find a lot of interesting products on
@@ -76,8 +76,8 @@
 
                         </div>
 
-                        <a href="/view-allproducts" class="btn btn-primary cart-btn-transform m-3" style="  background-color: #ff5938;;"
-                            data-abc="true">Explore Products</a>
+                        <a href="/view-allproducts" class="btn btn-primary cart-btn-transform m-3"
+                            style="  background-color: #ff5938;;" data-abc="true">Explore Products</a>
 
 
                     </div>
@@ -152,6 +152,7 @@
                                 <td>
                                     <a href="/deletecart/{{product._id}}" class="btn btn-danger"
                                         onclick="return  confirm('Do You Want To Delete This Item')"> DELETE</a>
+
                                 </td>
                             </tr>
                             {{/each}}
@@ -160,6 +161,8 @@
                 </div>
             </div>
     </section>
+
+    
     <div class="col-md-4" style="margin-top: 190px;">
         <form class="mb-5" id="coupenarea">
             <div class="input-group">
@@ -232,7 +235,7 @@
                                 swal("Your item is remooved from the cart", {
                                     icon: "success",
                                 });
-                                location.reload()
+
                             } else {
                                 swal("Your imaginary file is safe!");
                             }
@@ -241,7 +244,7 @@
                 } else {
                     document.getElementById(proId).value = quantity + count
                     console.log(quantity, proId, count)
-                    window.location.reload()
+
                 }
             }
 

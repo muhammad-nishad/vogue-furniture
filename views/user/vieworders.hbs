@@ -28,7 +28,7 @@
                   <th scope="row">
                     <div class="media align-items-center">
                       <a href="/view-single-order/{{this._id}}" class="avatar rounded-circle mr-3">
-                        <img alt="Image placeholder"   src="/product-images/{{this.product_image}}"
+                        <img alt="Image placeholder"   src="/product-images/{{this.product_image.[0]}}"
                           style="width:100% ;height:5rem" >
                       </a>
                       <div class="media-body">
@@ -54,6 +54,7 @@
                   <td>
                     {{this.date}}
                   </td>
+                  
                 </tr>
                 {{/each}}
               </tbody>

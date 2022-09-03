@@ -145,6 +145,10 @@ router.get('/viewproduct',(req,res)=>{
 })
 
 router.post('/editproduct/:id',uploads.array('image',3),(req,res)=>{
+  const images=req.files
+  let array=[]
+  array=images.map((value)=>value.filename)
+  req.body.image=array
   producthelper.updateProduct(req.params.id,req.body).then((response)=>{
     res.redirect('/admin/viewproduct')
   }) 
@@ -248,5 +252,10 @@ router.get('/logout', (req, res) => {
 })
 
 
+router.use((req,res,next)=>{
+  let err={}
+  err.admin = true
+  next(err)
+})
 
 module.exports = router;  

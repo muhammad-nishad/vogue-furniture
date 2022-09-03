@@ -343,7 +343,7 @@ module.exports = {
     getCartProductlist: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectID(userId) })
-            resolve(cart.products)
+            resolve(cart)
         })
 
     },
@@ -512,6 +512,7 @@ module.exports = {
                         totalAmount: 1,
                         status: 1,
                         product_quantity: '$products.quantity',
+                        product_id:'$products.item',
                         date: 1
                     }
                 },
@@ -628,16 +629,16 @@ module.exports = {
         })
     },
 
-    getWishlistCount: (userId) => {
-        return new Promise(async (resolve, reject) => {
-            let wishlist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({ user: ObjectID(userId) })
-            let count = 0
-            if (wishlist) {
-                count = wishlist.products.length
-            }
-            resolve(count)
-        })
-    },
+    // getWishlistCount: (userId) => {
+    //     return new Promise(async (resolve, reject) => {
+    //         let wishlist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({ user: ObjectID(userId) })
+    //         let count = 0
+    //         if (wishlist) {
+    //             count = wishlist.products.length
+    //         }
+    //         resolve(count)
+    //     })
+    // },
 
 
     getAllOrders: () => {
@@ -721,17 +722,16 @@ module.exports = {
         })
     },
 
-
-    getWishlistCount: (userId) => {
-        return new Promise(async (resolve, reject) => {
-            let wishlist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({ _id: ObjectID(userId) })
-            let count = 0
-            if (wishlist) {
-                count = wishlist.products.length
-            }
-            resolve(count)
-        })
-    },
+    // getWishlistCount: (userId) => {
+    //     return new Promise(async (resolve, reject) => {
+    //         let wishlist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({ _id: ObjectID(userId) })
+    //         let count = 0
+    //         if (wishlist) {
+    //             count = wishlist.products.length
+    //         }
+    //         resolve(count)
+    //     })
+    
     getOneorder: (orderid) => {
         return new Promise(async (resolve, reject) => {
 
@@ -858,6 +858,40 @@ module.exports = {
             resolve(response)
 
         })
+    },
+
+    cancelOrder:(orderId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:ObjectID(orderId)},{
+
+                $set:{
+                    status:'cancel'
+                }
+
+
+            }).then(response=>{
+                resolve(response)
+            })
+        })
     }
+    // cancelOrder:(orderId)=>{
+    //     return new Promise(async(resolve,reject)=>{
+    //         let order=await db.get().collection(collection.ORDER_COLLECTION).find({_id:ObjectID(orderId)}).toArray()
+    //         if(order){
+    //             db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:ObjectID(orderId) },{
+
+    //                 $set:{
+    //                     status:'cancel'
+    //                 }
+
+
+
+    //             }).then((response)=>{
+    //                 resolve(respone)
+    //             })
+    //         }
+
+    //     })
+    // }
 
 }

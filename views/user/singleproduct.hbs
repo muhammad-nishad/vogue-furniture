@@ -89,17 +89,28 @@
                     <div class="d-flex">
                         <div class="s_product_text">
                             <h3>{{product.productId}}</h3>
-                            <h2>₹{{product.Price}}</h2>
+                            <div class="d-flex mb-3">
+                                <div class="text-secondary mr-2">
+                                    <small class="fas fa-star"></small>
+                                    <small class="fas fa-star"></small>
+                                    <small class="fas fa-star"></small>
+                                    <small class="fas fa-star-half-alt"></small>
+                                    <small class="far fa-star"></small>
+                                </div>
+                                <small class="pt-1">(50 Reviews)</small>
+                            </div>
+                            <h2> Rs {{product.Price}}</h2>
                             <ul class="list">
                             </ul>
-                            <p>
+                            <p class="font-weight-normal" >
                                 {{product.Description}}
                             </p>
                             <div class="card_area d-flex justify-content-between align-items-center">
-                                <button onclick="addToCart('{{product._id}}')" class="btn btn-outline-dark">+ADD TO
+                                <button onclick="addToCart('{{product._id}}')" class="btn btn-dark">+ADD TO
                                     CART</button>
 
-                                <a href="/addwishlist/{{product._id}}" class="btn btn-outline-dark"  ><i class="ti-heart"></i></a>
+                                <a href="/addwishlist/{{product._id}}" class="btn btn-outline-dark"><i
+                                        class="ti-heart"></i></a>
                             </div>
                         </div>
                     </div>
@@ -130,7 +141,7 @@
                                         <h3>{{this.Price}}</h3>
                                         <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">+ADD TO
                                             CART</button>
-                                        <button onclick="addtoWishlist('{{this._id}}')"class="btn btn-outline-dark"
+                                        <button onclick="addtoWishlist('{{this._id}}')" class="btn btn-outline-dark"
                                             style="border: none;"><i class="ti-heart"></i></button>
                                     </div>
                                 </div>
@@ -152,20 +163,20 @@
 
 
 <script>
-  function addToCart(proId) {
-    $.ajax({
-      url: '/addcart/' + proId,
-      method: 'get',
-      success: (response) => {
-        if (response.status) {
-          $("#cartCount").load(location.href + " #cartCount");
-          swal("Good job!", "Item Will be Added To Your Cart!", "success");
-          let count = $('#cartCount').html()
-          count = parseInt(count) + 1
-          $('#cartCount').html(count)
-        }
+    function addToCart(proId) {
+        $.ajax({
+            url: '/addcart/' + proId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    $("#cartCount").load(location.href + " #cartCount");
+                    swal("Good job!", "Item Will be Added To Your Cart!", "success");
+                    let count = $('#cartCount').html()
+                    count = parseInt(count) + 1
+                    $('#cartCount').html(count)
+                }
 
-      }
-    })
-  }
+            }
+        })
+    }
 </script>
