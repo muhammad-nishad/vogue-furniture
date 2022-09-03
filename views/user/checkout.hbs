@@ -115,7 +115,7 @@
                                             <div class="card"
                                                 style="max-height:250px; min-height:250px;overflow-y:hidden;width: 100%; ">
                                                 <div class="card-body shadow">
-                                                    <input type="radio" name="address" value="{{this._id}}" id="">
+                                                    <input type="radio" name="address" value="{{this._id}}" id="" {{#if @first}} checked{{/if}}>
                                                     <h5 class="card-title">{{this.address.Name}} <br></h5>
                                                     <p class="card-text">{{this.address.Address}},
                                                         <br>
@@ -194,7 +194,7 @@
                             </div>
                             <div class="">
                                 <div>
-                                    <input type="radio" name="payment" id="netBanking" value="netBanking">
+                                    <input type="radio" name="payment" id="netBanking" value="netBanking"checked >
                                     <label for="banktransfer">Net Banking</label>
                                     <input type="text" name="userId" value="{{user._id}}" hidden>
                                 </div>
@@ -202,7 +202,7 @@
                         </div>
                         <div class="card-footer border-secondary bg-transparent " >
                             <button type="submit"
-                                class="btn btn-lg btn-block btn_2 w-100 font-weight-bold my-3 py-3">Place
+                                class="btn btn-lg btn-block btn_2 w-100 font-weight-bold my-3 py-3" style="line-height: 32px;">Place
                                 Order</button>
                         </div>
                     </div>

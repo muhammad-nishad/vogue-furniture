@@ -236,7 +236,6 @@ router.get('/checkout', verifyLogin, async (req, res) => {
   let allAddress = await addresshelper.getAllAddress(req.session.user._id)
   let response = await userHelper.getCartProducts(req.session.user._id)
   let products=response.cartItems
-  console.log(products,'products');
   let totalAmount = await userHelper.getTotalAmount(req.session.user._id)
   let CartCount = await userHelper.getCartCount(req.session.user._id)
   res.render('user/checkout',{ user: req.session.user, allAddress, products, totalAmount, user_header: true, CartCount })
@@ -272,7 +271,9 @@ router.post('/verify-payment', (req, res) => {
 
 router.get('/ordersuccess', verifyLogin, (req, res) => {
   let orderId = req.session.order
-  userHelper.getOneorder(orderId).then(async (item) => {
+  console.log(orderId);
+  userHelper.getOrderProducts(orderId).then(async (item) => {
+    console.log(item,'item');
     let user = req.session.user
     let CartCount = await userHelper.getCartCount(req.session.user._id)
     res.render('user/ordersuccess', { item, user_header: true, user, CartCount })
@@ -301,7 +302,7 @@ router.get('/wishlist', verifyLogin, async (req, res) => {
 
 router.get('/view-orders', verifyLogin, async (req, res) => {
   let orders = await userHelper.getUserOrder(req.session.user._id)
-  console.log(orders,'ordersss');
+  
   let user = req.session.user
   let CartCount = await userHelper.getCartCount(user._id)
   let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
@@ -310,7 +311,7 @@ router.get('/view-orders', verifyLogin, async (req, res) => {
 
 router.get('/view-single-order/:id', verifyLogin, async (req, res) => {
   let item = await userHelper.getOrderProducts(req.params.id)
-  console.log(item,'item');
+  
   let user = req.session.user
   let CartCount = await userHelper.getCartCount(user._id)
   let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
@@ -359,7 +360,8 @@ router.get('/view-allproducts',verifyLogin, async (req, res) => {
   let products = await producthelper.getAllProduct()
   let user = req.session.user
   let CartCount = await userHelper.getCartCount(user._id)
-  res.render('user/viewallproduct', { allCategory, products, user_header: true, user, CartCount })
+  let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
+  res.render('user/viewallproduct', { allCategory, products, user_header: true, user, CartCount,WishlistCount })
 
 })
 

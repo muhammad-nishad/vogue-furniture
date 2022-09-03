@@ -39,6 +39,7 @@
                                 <h3>{{this.Price}}</h3>
                                 <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">+ADD TO
                                     CART</button>
+                                    <button onclick="addtoWishlist('{{this._id}}')" class="btn btn-outline-dark"  style="border: none;" ><i class="ti-heart"></i></button>
                             </div>
                         </div>
                     </div>
@@ -200,4 +201,23 @@
             }
         })
     }
+</script>
+<script>
+  function addtoWishlist(proId) {
+    $.ajax({
+      url: '/addwishlist/' + proId,
+      method: 'get',
+      success: (response) => {
+        if(response.status){
+          $('#WishlistCount').load(location.href +"#WishlistCount");
+          swal("Good job!", "Product Will be Added To Your Wishlist!", "success");
+          let count=$('#Wishlistcount').html()
+          count=parseInt(count)+1
+          $('#Wishlistcount').html(count)
+        }
+
+      }
+
+    })
+  }
 </script>

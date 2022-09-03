@@ -103,7 +103,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form action="/editprofile" method="post">
+                      <form action="/editprofile" method="post" id="editprofile">
                         <div class="mb-3">
                           <div class="col-md-12 form-group p_star ">
                             <input type="text" class="form-control" id="fname" name="fname"
@@ -361,14 +361,14 @@
             </div>
             <div class="modal-body">
               <div class="container">
-                <form action="/editpassword" method="post">
+                <form action="/editpassword" method="post" id="editpassword">
                   <div class="mb-3">
                     <div class="col-md-12 form-group p_star ">
-                      <input type="text" class="form-control" id="fname" name="currentpassword" value=""
+                      <input type="text" class="form-control" id="currentpassword" name="currentpassword" value=""
                         placeholder="Enter Your Current Password" />
                     </div>
                     <div class="col-md-12 form-group p_star ">
-                      <input type="text" class="form-control" id="fname" name="newpassword" value=""
+                      <input type="text" class="form-control" id="newpassword" name="newpassword" value=""
                         placeholder="Enter Your New Password" />
                     </div>
                     <div class="modal-footer">
@@ -382,11 +382,11 @@
           </div>
         </div>
       </div>
-      {{!-- {{! validation }}
+      {{! validation }}
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
- --}}
+
 
       <style>
         .error {
@@ -455,4 +455,41 @@
 
         })
 
+      </script>
+      <script>
+        $('#editprofile').validate({
+
+          rules:{
+            fname:{
+              required:true
+
+            },
+            lname:{
+              required:true
+            },
+            email:{
+              required:true
+            },
+            mobile:{
+              required:true
+            }
+
+          }
+        })
+
+      </script>
+      <script>
+        $('#editpassword').validate({
+
+          rules:{
+            currentpassword:{
+              required:true
+            },
+            newpassword:{
+              required:true
+            }
+
+          }
+
+        })
       </script>

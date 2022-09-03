@@ -252,10 +252,20 @@ router.get('/logout', (req, res) => {
 })
 
 
+
+
+router.get('/reportData',(req,res)=>{
+ userhelper.sampleorder().then((orders)=>{
+    console.log(orders,'orders');
+    res.json(orders);
+  })
+
+})
+
+////last
 router.use((req,res,next)=>{
   let err={}
   err.admin = true
   next(err)
 })
-
 module.exports = router;  
