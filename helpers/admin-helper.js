@@ -138,7 +138,6 @@ module.exports = {
                     userHelpers.getTotalAmount(userId).then((total) => {
                         response.discount = total - ((total * coupen.coupendiscount) / 100)
                         response.discountPrice = (total * coupen.coupendiscount) / 100
-                        console.log(response.discount, 'jgjgjgjgjgj');
                         resolve(response)
 
                     })

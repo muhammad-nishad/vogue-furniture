@@ -22,14 +22,15 @@
                 <td>{{this.coupencode}}</td>
                 <td>{{this.coupendescription}}</td>
                 <td>{{this.coupendiscount}}</td>
-                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenteryu{{this._id}}">
-                Edit
-            </button></td>
-                <td><a href="/admin/delete-coupen/{{this._id}}" class="btn btn-danger" >Delete</td></a>
+                <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModalCenteryu{{this._id}}">
+                        Edit
+                    </button></td>
+                <td><a href="/admin/delete-coupen/{{this._id}}" class="btn btn-danger">Delete</td></a>
 
             </tr>
             <!-- Button trigger modal -->
-            
+
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenteryu{{this._id}}" tabindex="-1" role="dialog"
@@ -66,8 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger"
-                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-success">Update</button>
                                     </div>
                                 </form>
@@ -92,29 +92,29 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">ADD COUPENS</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">ADD COUPONS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="container ">
-                    <form action="/admin/addcoupen" method="post" id="viewcoupen">
+                    <form action="/admin/addcoupen" method="post" id="viewcoupen1">
                         <div class="mb-3">
                             <div class="col-md-12 form-group ">
-                                <input type="text" class="form-control" id="coupenid" name="coupenid" value=""
+                                <input type="text" class="form-control" id="coupenid1" name="coupenid" value=""
                                     placeholder="COUPEN ID" />
                             </div>
                             <div class="col-md-12 form-group ">
-                                <input type="text" class="form-control" id="coupencode" name="coupencode" value=""
+                                <input type="text" class="form-control" id="coupencode1" name="coupencode" value=""
                                     placeholder="COUPEN CODE" />
                             </div>
                             <div class="col-md-12 form-group ">
-                                <input type="text" class="form-control" id="coupendescription" name="coupendescription"
+                                <input type="text" class="form-control" id="coupendescription1" name="coupendescription"
                                     value="" placeholder="COUPEN DESCRIPTION" />
                             </div>
                             <div class="col-md-12 form-group ">
-                                <input type="text" class="form-control" id="coupendiscount" name="coupendiscount"
+                                <input type="text" class="form-control" id="coupendiscount1" name="coupendiscount"
                                     value="" placeholder="COUPEN DISCOUNT" />
                             </div>
                         </div>
@@ -146,10 +146,10 @@
 
         var table = $('#productsTable').DataTable();
     </script>
-    
-    {{! validation }}
+
+   {{! validation }}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 
 
@@ -162,40 +162,25 @@
 
     <script>
 
+        $(document).ready(function () {
+             $('#viewcoupen1').validate({
+                rules: {
+                    coupenid: {
+                        required: true
+                    },
+                    coupencode: {
+                        required: true
+                    },
+                    coupendescription: {
+                        required: true
+                    },
+                    coupendiscount: {
+                        required: true
+                    }
 
-        $('#viewcoupen').validate({
-            rules: {
-                coupenid: {
-                    required: true
-                },
-                coupencode: {
-                    required: true
-                },
-                coupendescription: {
-                    required: true
-                },
-                coupendiscount: {
-                    required: true
                 }
 
-            },
-            messages: {
-                coupenid: {
-                    required: 'Please Enter coupen id'
-                },
-                coupencode: {
-                    required: 'Please Enter coupen code '
-                },
-                coupendescription: {
-                    required: 'Please Enter coupen Description'
-                },
-                coupendiscount: {
-                    required: 'Please Enter coupen Discount'
-                }
-
-
-            }
-
+            })
         })
 
     </script>

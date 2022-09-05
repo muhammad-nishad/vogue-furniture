@@ -241,6 +241,7 @@ router.get('/checkout', verifyLogin, async (req, res) => {
 
 
 router.post('/place-order',async (req, res) => {
+  console.log("route place order")
   let products = await userHelper.getCartProductlist(req.body.userId)
   let totalAmount = await userHelper.getTotalAmount(req.body.userId)
   userHelper.placeOrder(req.body, products, totalAmount, req.session.coupen, req.session.user._id).then((orderId) => {
@@ -249,6 +250,7 @@ router.post('/place-order',async (req, res) => {
       res.json({ codSuccess: true })
 
     } else {
+      console.log("online payment")
       userHelper.genrateRazorpay(orderId, totalAmount).then((response) => {
         res.json(response)
       })

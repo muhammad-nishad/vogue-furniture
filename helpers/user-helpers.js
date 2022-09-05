@@ -57,7 +57,6 @@ module.exports = {
             if (user) {
                 if (user.ActiveStatus) {
                     let status = await bcrypt.compare(userData.password, user.password)
-                    console.log(status, 'status');
                     if (status) {
                         response.user = user
                         response.status = true
@@ -189,7 +188,6 @@ module.exports = {
             if (cartItems.length > 0) {
                 // response.cartItems = true
                 response.cartItems = cartItems
-                console.log(response.cartItems);
                 resolve(response)
 
             } else {
@@ -280,7 +278,6 @@ module.exports = {
 
             ]).toArray()
             if (total[0]) {
-                console.log(total[0].total);
                 resolve(total[0].total)
             } else {
                 resolve()
@@ -311,8 +308,6 @@ module.exports = {
 
     placeOrder: (order, products, totalAmount, coupen, userId) => {
         return new Promise((resolve, reject) => {
-            console.log(products,'impros');
-            console.log(order, products, totalAmount);
             let status = order.payment === 'COD' ? 'placed' : 'pending'
             let now = new Date()
             let date = now.toLocaleDateString();
@@ -409,7 +404,6 @@ module.exports = {
             if (wishlist) {
                 let wishlistitemExist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({ 'products': item })
                 if (wishlistitemExist) {
-                    console.log('helo');
                     response.wishlistitemExist = true
                     resolve(response)
                 } else {
@@ -523,7 +517,6 @@ module.exports = {
                     $sort:{date:-1}
                 }
             ]).toArray()
-            console.log(orders);
             resolve(orders)
 
 
@@ -611,7 +604,6 @@ module.exports = {
 
 
             ]).toArray()
-            console.log(item,'item');
             resolve(item)
 
         })
@@ -625,9 +617,7 @@ module.exports = {
                     $pull: { products: { item: ObjectID(prodId) } }
                 }
             ).then((response) => {
-                console.log('here');
                 resolve({ removeProduct: true })
-                console.log(response);
             })
 
         })

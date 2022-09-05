@@ -58,29 +58,13 @@ module.exports = {
                 })
         })
     },
-    // getCategoryProduct:(category)=>{
-    //     return new Promise(async(resolvse,reject)=>{
-    //         console.log(category);
-    //        let cat=await  db.get().collection(collection.PRODUCT_COLLECTION).aggregate([
-    //             {
-    //                 $match:{ categoryName:categoryName(category)}
-
-    //             }
-
-    //         ]).toArray(cat)
-    //         console.log(cat ,'hi');
-    //         resolvse(cat)
-    //     })
-    // }
     getCategoryProduct:(category)=>{
-        console.log(category ,'category');
         return new Promise(async(resolve,reject)=>{
             let products=await db.get().collection(collection.PRODUCT_COLLECTION).aggregate([
                 {
                     $match:{'categoryName':category}
                 }
             ]).toArray()
-            console.log(products);
             resolve(products)
         
         })

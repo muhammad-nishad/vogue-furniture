@@ -215,8 +215,9 @@
 
 
 <script>
+    $(document).ready(function () {
 
-    $("#checkoutform").submit((e) => {
+         $("#checkoutform").submit((e) => {
         console.log('checkout')
         e.preventDefault()
         $.ajax({
@@ -235,6 +236,9 @@
             }
         })
     })
+    }
+
+   
 
     function razorpayPayment(order) {
         var options = {
