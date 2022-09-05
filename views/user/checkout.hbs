@@ -296,8 +296,7 @@
 
         }
 
-    }
-
+    })
 
 
 
@@ -305,61 +304,61 @@
 
 
    $('#shipaddress').validate({
-        rules: {
-            Name: {
-                required: true,
-                minlength: 3
-            },
-            Mobile: {
-                required: true,
-                minlength: 10,
-                maxlength: 10
-            },
-            Pincode: {
-                required: true,
-                minlength: 6,
-                maxlength: 10
-            },
-            Locality: {
-                required: true
-            },
-            Address: {
-                required: true,
-                minlength: 5
+       rules: {
+           Name: {
+               required: true,
+               minlength: 3
+           },
+           Mobile: {
+               required: true,
+               minlength: 10,
+               maxlength: 10
+           },
+           Pincode: {
+               required: true,
+               minlength: 6,
+               maxlength: 10
+           },
+           Locality: {
+               required: true
+           },
+           Address: {
+               required: true,
+               minlength: 5
 
-            },
-            Landmark: {
-                required: true
-            },
+           },
+           Landmark: {
+               required: true
+           },
 
 
 
-        },
-        messages: {
-            Name: {
-                required: ' Enter Your Name'
-            },
-            Mobile: {
-                required: ' Enter Your Mobile Number ',
-                minlength: 'The mobile number you entered does not seem to be valid',
-                maxlength: 'The mobile number you entered does not seem to be valid'
-            },
-            Pincode: {
-                required: ' Enter Your Pincode ',
-                minlength: 'The pincode you entered does not seem to be valid',
-                maxlength: 'The pincode you entered does not seem to be valid'
-            },
-            Locality: {
-                required: ' Enter Your Locality '
-            },
-            Address: {
-                required: ' Enter Your Address '
-            },
-            Landmark: {
-                required: ' Enter Your Landmark '
-            },
-        }
-    })
+       },
+       messages: {
+           Name: {
+               required: ' Enter Your Name'
+           },
+           Mobile: {
+               required: ' Enter Your Mobile Number ',
+               minlength: 'The mobile number you entered does not seem to be valid',
+               maxlength: 'The mobile number you entered does not seem to be valid'
+           },
+           Pincode: {
+               required: ' Enter Your Pincode ',
+               minlength: 'The pincode you entered does not seem to be valid',
+               maxlength: 'The pincode you entered does not seem to be valid'
+           },
+           Locality: {
+               required: ' Enter Your Locality '
+           },
+           Address: {
+               required: ' Enter Your Address '
+           },
+           Landmark: {
+               required: ' Enter Your Landmark '
+           },
+       }
+   })
 
 
 </script>
