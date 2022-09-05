@@ -221,7 +221,6 @@
             },
             method: 'post',
             success: (response) => {
-                console.log(response)
                 if (response.response.removeProduct) {
                     swal({
                         title: "Are you sure?",
@@ -232,12 +231,14 @@
                     })
                         .then((willDelete) => {
                             if (willDelete) {
+                                location.reload()
                                 swal("Your item is remooved from the cart", {
                                     icon: "success",
+        
                                 });
 
                             } else {
-                                swal("Your imaginary file is safe!");
+                                swal("Your item is here!");
                             }
                         });
 

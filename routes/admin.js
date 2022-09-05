@@ -139,6 +139,7 @@ router.post('/submit', uploads.array('image',3),(req, res)=> {
 router.get('/viewproduct',(req,res)=>{
   producthelper.getAllProduct().then(async(allProduct)=>{
     let allCategory=await categoryhelper.getAllCategory()
+    console.log(allCategory,'allcategory');
     res.render('admin/viewproducts',{allProduct,allCategory,layout:'dashboard-layout'})
 
   })

@@ -39,14 +39,14 @@
             </div>
             <div class="modal-body">
               <div class="container ">
-                <form action="/admin/editcategory/{{this._id}}" method="post">
+                <form action="/admin/editcategory/{{this._id}}" method="post" class="editcategory">
                   <div class="mb-3">
                     <div class="col-md-12 form-group p_star ">
-                      <input type="text" class="form-control" id="categoryName" name="categoryName"
+                      <input type="text" class="form-control" id="categoryy" name="categoryName"
                         value="{{this.categoryName}}" placeholder="Category Name" />
                     </div>
                     <div class="col-md-12 form-group p_star ">
-                      <input type="text" class="form-control" id="categoryDescription" name="categoryDescription"
+                      <input type="text" class="form-control" id="categoryyy" name="categoryDescription"
                         value="{{this.categoryDescription}}" placeholder="Category Description" />
                     </div>
                   </div>
@@ -171,4 +171,42 @@
 
       })
 
+    </script>
+    <style>
+      .error {
+        color: red;
+        border: 1px solid red;
+      }
+    </style>
+
+    <script>
+      $('#category').validate({
+        rules: {
+          categoryy: {
+            required: true
+          },
+          categoryyy: {
+            required: true
+          }
+
+        }
+
+      })
+
+    </script>
+
+    <script>
+      $('.editcategory').each(function () {
+        $(this).validate({
+
+          rules: {
+            categoryName: {
+              required: true
+            },
+            categoryDescription: {
+              required: true
+            }
+          }
+        })
+      })
     </script>

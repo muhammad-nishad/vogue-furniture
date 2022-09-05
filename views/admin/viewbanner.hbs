@@ -2,9 +2,9 @@
   <table class="table table-striped table-hover" id="bannerTable">
     <thead>
       <tr>
-        <th scope="col">BANNER NAME</th>
-        <th scope="col">BANNER DESCRIPTION</th>
-        <th scope="col">IMAGE</th>
+        {{!-- <th scope="col">BANNER NAME</th> --}}
+        {{!-- <th scope="col">BANNER DESCRIPTION</th> --}}
+        <th scope="col">BANNER IMAGE</th>
         <th scope="col">EDIT</th>
         <th scope="col">DELETE</th>
       </tr>
@@ -12,8 +12,8 @@
     <tbody>
       <tr>
         {{#each allbanner}}
-        <td>{{this.Bannername}}</td>
-        <td>{{this.Bannerdescription}}</td>
+        {{!-- <td>{{this.Bannername}}</td> --}}
+        {{!-- <td>{{this.Bannerdescription}}</td> --}}
         <td> <img src="/product-images/{{this.image}}" style="width: 80px;" alt=""></td>
         <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterrrr{{this._id}}">
         Edit
@@ -38,14 +38,14 @@
               <div class="container ">
                 <form action="/admin/editbanner/{{this._id}} " method="post" enctype="multipart/form-data">
                   <div class="mb-3">
-                    <div class="col-md-12 form-group p_star">
+                    {{!-- <div class="col-md-12 form-group p_star">
                       <input type="text" class="form-control" id="Bannername" name="Bannername"
                         value="{{this.Bannername}}" placeholder="Banner Name" />
                     </div>
                     <div class="col-md-12 form-group p_star ">
                       <input type="text" class="form-control" id="Bannerdescription" name="Bannerdescription"
                         value="{{this.Bannerdescription}}" placeholder="Banner Description" />
-                    </div>
+                    </div> --}}
                     <div class="col-md-12 form-group p_star ">
                       <label for="formFile" class="form-label"></label>
                       <input class="form-control" type="file" id="formFile" name="image" value="{{this.image}}">
@@ -87,13 +87,13 @@
           <div class="container ">
             <form action="/admin/addbanner" method="post" enctype="multipart/form-data" id="addbanner">
               <div class="mb-3">
-                <div class="col-md-12 form-group p_star ">
+                {{!-- <div class="col-md-12 form-group p_star ">
                   <input type="text" class="form-control" id="Bannername" name="Bannername" placeholder="Banner Name" />
                 </div>
                 <div class="col-md-12 form-group p_star ">
                   <input type="text" class="form-control" id="Bannerdescription" name="Bannerdescription"
                     placeholder="Banner Description" />
-                </div>
+                </div> --}}
                 <div class="col-md-12 form-group p_star ">
                   <label for="formFile" class="form-label"></label>
                   <input class="form-control" type="file" id="formFile" name="image">

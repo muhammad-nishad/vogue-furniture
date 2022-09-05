@@ -152,14 +152,13 @@ router.get('/userprofile', verifyLogin, async (req, res) => {
   let address = await addresshelper.getAddressDetails(user._id)
   let CartCount = await userHelper.getCartCount(user._id)
   let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
-  res.render('user/userprofile', { user_header: true, userdetails, user, address, CartCount, WishlistCount, wrongcurrentpass })
+  res.render('user/userprofile', { user_header: true, user_footer: true, userdetails, user, address, CartCount, WishlistCount, wrongcurrentpass })
 
 })
 
 
 router.post('/editprofile', (req, res) => {
   userHelper.updateUserdetails(req.session.user._id, req.body).then((response) => {
-    console.log(response,'userDetails');
     res.redirect('/userprofile')
   })
 })
@@ -187,7 +186,6 @@ router.get('/addcart/:id', (req, res) => {
 router.get('/cart', verifyLogin, (req, res) => {
   userHelper.getCartProducts(req.session.user._id).then(async (response) => {
     let products = response.cartItems
-    console.log(products,'products');
     let cartEmpty = response.cartEmpty
     let user=req.session.user
     let CartCount = await userHelper.getCartCount(req.session.user._id)
@@ -271,7 +269,6 @@ router.post('/verify-payment', (req, res) => {
 
 router.get('/ordersuccess', verifyLogin, (req, res) => {
   let orderId = req.session.order
-  console.log(orderId);
   userHelper.getOrderProducts(orderId).then(async (item) => {
     console.log(item,'item');
     let user = req.session.user
@@ -281,10 +278,16 @@ router.get('/ordersuccess', verifyLogin, (req, res) => {
 
 })
 
-router.get('/addwishlist/:id', verifyLogin, (req, res) => {
-  userHelper.addtoWishlist(req.params.id, req.session.user._id).then((response) => {
-    res.json({status:true})
-  })
+router.get('/addwishlist/:id', (req, res) => {
+  if(req.session.user){
+    userHelper.addtoWishlist(req.params.id, req.session.user._id).then((response) => {
+      res.json({response})
+    })
+
+  }else{
+    res.redirect('/login')
+  }
+  
 })
 
 router.get('/wishlist', verifyLogin, async (req, res) => {
@@ -302,7 +305,6 @@ router.get('/wishlist', verifyLogin, async (req, res) => {
 
 router.get('/view-orders', verifyLogin, async (req, res) => {
   let orders = await userHelper.getUserOrder(req.session.user._id)
-  
   let user = req.session.user
   let CartCount = await userHelper.getCartCount(user._id)
   let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
@@ -311,12 +313,10 @@ router.get('/view-orders', verifyLogin, async (req, res) => {
 
 router.get('/view-single-order/:id', verifyLogin, async (req, res) => {
   let item = await userHelper.getOrderProducts(req.params.id)
-  
   let user = req.session.user
   let CartCount = await userHelper.getCartCount(user._id)
   let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
-  console.log(item, 'item');
-  res.render('user/singleorder', { item, user_header: true, user, CartCount, WishlistCount })
+  res.render('user/singleorder', { item, user_header: true, user, CartCount, WishlistCount,user_footer:true })
 })
 
 router.get('/deletewishlist/:id', (req, res) => {
@@ -387,7 +387,6 @@ router.get('/logout', (req, res) => {
 
 
 router.post('/cancelOrder/:id',(req,res)=>{
-  console.log(req.params.id,'this is the id');
   userHelper.cancelOrder(req.params.id).then((response)=>{
     res.json({response})
   })

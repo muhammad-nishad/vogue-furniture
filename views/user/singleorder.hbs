@@ -40,7 +40,7 @@
                                         <div class="col-auto my-auto"> <small>Brand: {{this.product}}</small></div>
                                         {{!-- <div class="col my-auto"> <small>Size :
                                                 {{product.Category.CategoryName}}</small></div> --}}
-                                        <div class="col my-auto"> <small>Qty : {{this.quantitty.[0]}}</small></div>
+                                        <div class="col my-auto"> <small>Qty : {{this.quantitty}}</small></div>
                                         <div class="col my-auto">
                                             <h6 class="mb-0">Rs.{{this.price}}</h6>
                                         </div>
@@ -65,13 +65,19 @@
                                 <div class="col mt-auto">
                                     <div class="progress my-auto">
                                         <div class="progress-bar progress-bar  rounded" {{#isEqual item.[0].status "placed"
-                                            }} style="width: 13%" aria-valuenow="25" {{/isEqual}} {{#isEqual
+                                            }} style="width: 13%" aria-valuenow="25" {{/isEqual}}
+                                            
+                                        
+                                            {{#isEqual item.[0].status "cancel"}}  style="width: 100%" aria-valuenow="25" {{/isEqual}}
+                                           
+                                             {{#isEqual
                                             item.[0].status "shipped" }} style="width: 50%" aria-valuenow="25" {{/isEqual}}
                                             {{#isEqual item.[0].status "out for delivery" }} style="width: 73%" aria-valuenow="25"
                                             {{/isEqual}} {{#isEqual item.[0].status "delivered" }} style="width: 100%"
                                             aria-valuenow="25" {{/isEqual}} role="progressbar" aria-valuemin="0"
                                             aria-valuemax="100">
                                         </div>
+
                                     </div>
                                     <div class="media row justify-content-between ">
                                         <div class="col-auto text-right"><span> <small
@@ -92,8 +98,11 @@
                     </div>
                 </div>
             </div>
-            {{!-- <a href="/cancelorder/{{item..[0]._id}">CANCEL</a> --}}
-            <button onclick="cancelOrder('{{item.[0]._id}}')"  type="button" >cancel</button>
+            <div class="cancelbtn pt-3" style="display: flex; justify-content: flex-end;" >
+                <button class="btn btn-danger" onclick="cancelOrder('{{item.[0]._id}}')"  type="button" >cancel</button>
+
+            </div>
+            
 
 
             {{!-- {{#each item}} --}}
@@ -143,6 +152,7 @@
                 console.log('fuction')
                 console.log('orderid',orderId)
                axios.post('/cancelOrder/'+orderId,{}).then(e=>{
+                window.location.reload()
                     console.log(e)
                 })
 

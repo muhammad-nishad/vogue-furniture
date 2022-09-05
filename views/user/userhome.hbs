@@ -164,14 +164,17 @@
       url: '/addwishlist/' + proId,
       method: 'get',
       success: (response) => {
-        if(response.status){
-          $('#WishlistCount').load(location.href +"#WishlistCount");
+        console.log(response,' second response')
+        if(response.response.wishlistitemExist){
+
+          swal("Oops!", "Product Already existed in Wishlist!", "info");
+         
+        }else{
+           $('#WishlistCount').load(location.href +"#WishlistCount");
           swal("Good job!", "Product Will be Added To Your Wishlist!", "success");
           let count=$('#Wishlistcount').html()
           count=parseInt(count)+1
           $('#Wishlistcount').html(count)
-        }else{
-          swal("Good job!", "Product Already existed in Wishlist!", "success");
 
         }
 

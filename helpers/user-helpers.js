@@ -409,16 +409,18 @@ module.exports = {
             if (wishlist) {
                 let wishlistitemExist = await db.get().collection(collection.WISHLIST_COLLECTION).findOne({ 'products': item })
                 if (wishlistitemExist) {
+                    console.log('helo');
                     response.wishlistitemExist = true
                     resolve(response)
                 } else {
+                    response.wishlistitemExist = false
                     db.get().collection(collection.WISHLIST_COLLECTION).updateOne({ user: ObjectID(userId) },
                         {
 
                             $push: { products: item }
                         }
                     )
-                    response.wishlistitemExist = false
+                    
                     resolve(response)
                 }
 
@@ -562,7 +564,7 @@ module.exports = {
                 },
                 {
                     $lookup: {
-                        from: 'product',
+                        from: collection.PRODUCT_COLLECTION,
                         localField: 'products.item',
                         foreignField: '_id',
                         as: 'products'
@@ -572,7 +574,7 @@ module.exports = {
 
                 }, {
                     $lookup: {
-                        from: 'address',
+                        from: collection.ADDRESS_COLLECTION,
                         localField: 'deliverDetails',
                         foreignField: '_id',
                         as: 'addressDetails'
@@ -585,7 +587,7 @@ module.exports = {
 
                 {
                     $lookup: {
-                        from: 'user',
+                        from: collection.USER_COLLECTION,
                         localField: 'userId',
                         foreignField: '_id',
                         as: 'userDetails'
@@ -640,7 +642,7 @@ module.exports = {
 
                     }, {
                         $lookup: {
-                            from: 'product',
+                            from: collection.PRODUCT_COLLECTION,
                             localField: 'products.item',
                             foreignField: '_id',
                             as: 'result'
@@ -675,7 +677,7 @@ module.exports = {
                     },
                     {
                         $lookup: {
-                            from: 'address',
+                            from: collection.ADDRESS_COLLECTION,
                             localField: 'deliverDetails',
                             foreignField: '_id',
                             as: 'address'
@@ -721,7 +723,7 @@ module.exports = {
 
                     }, {
                         $lookup: {
-                            from: 'product',
+                            from: collection.PRODUCT_COLLECTION,
                             localField: 'products.item',
                             foreignField: '_id',
                             as: 'result'
@@ -744,7 +746,7 @@ module.exports = {
                     },
                     {
                         $lookup: {
-                            from: 'user',
+                            from: collection.USER_COLLECTION,
                             localField: 'userId',
                             foreignField: '_id',
                             as: 'userDetails'
@@ -756,7 +758,7 @@ module.exports = {
                     },
                     {
                         $lookup: {
-                            from: 'address',
+                            from: collection.ADDRESS_COLLECTION,
                             localField: 'deliverDetails',
                             foreignField: '_id',
                             as: 'address'

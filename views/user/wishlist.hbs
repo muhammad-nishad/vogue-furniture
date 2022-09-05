@@ -55,7 +55,7 @@
     <div class="row mt-5">
         <div class="col-md-12">
             <div class="card p-6">
-                <div class="card-header">   
+                <div class="card-header">
                 </div>
                 <div class="card-body cart">
                     <div class="col-sm-12 empty-cart-cls text-center">
@@ -66,8 +66,8 @@
                                 Explore more and shortlist some items
                                 .</p>
                         </div>
-                        <a href="/view-allproducts" class="btn btn-primary cart-btn-transform m-3" style="  background-color: #ff5938;;"
-                            data-abc="true">Start Shopping</a>
+                        <a href="/view-allproducts" class="btn btn-primary cart-btn-transform m-3"
+                            style="  background-color: #ff5938;;" data-abc="true">Start Shopping</a>
                     </div>
                 </div>
             </div>
@@ -100,8 +100,35 @@
                         </td>
                         <td>{{this.product.productId}}</td>
                         <td>{{this.product.Price}}</td>
-                        <td> <a href="/deletewishlist/{{this.product._id}}"><i class="fa fa-trash"
-                                    aria-hidden="true"></i></a></td>
+
+                        <td><i class="fa fa-trash" data-target="#exampleModal{{this.product._id}}"
+                                   data-toggle="modal" aria-hidden="true"></i>
+                            <!-- Button trigger modal -->
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{this.product._id}}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you Sure
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-danger"><a href="/deletewishlist/{{this.product._id}}" style="color: white;">Delete</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </td>
                     </tr>
                 </tbody>
                 {{/each}}

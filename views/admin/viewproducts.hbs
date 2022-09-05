@@ -45,31 +45,35 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="/admin/editproduct/{{this._id}}" method="post" enctype="multipart/form-data">
+              <form action="/admin/editproduct/{{this._id}}" method="post" enctype="multipart/form-data" id="editproduct">
                 <div class="mb-3">
                   <div class="col-md-12 form-group p_star ">
-                    <input type="text" class="form-control" id="productId" name="productId" value="{{this.productId}}"
+                    <input type="text" class="form-control" id="prodctname" name="productId" value="{{this.productId}}"
                       placeholder="Product Name" />
                   </div>
                   <div class="col-md-12 form-group p_star ">
-                    <input type="text" class="form-control" id="Description" name="Description"
+                    <input type="text" class="form-control" id="Descriptionname" name="Description"
                       value="{{this.Description}}" placeholder="Product Description" />
                   </div>
                   <div class="col-md-12 form-group p_star">
-                    <input type="number" class="form-control" id="Stock" name="Stock" value="{{this.Stock}}"
+                    <input type="number" class="form-control" id="Stocks" name="Stock" value="{{this.Stock}}"
                       placeholder="Stock" />
                   </div>
                   <div class="col-md-12 form-group p_star ">
-                    <input type="text" class="form-control" id="Price" name="Price" value="{{this.Price}}"
+                    <input type="text" class="form-control" id="Prices" name="Price" value="{{this.Price}}"
                       placeholder="Price" />
                   </div>
-                  <select class="custom-select tm-select-accounts" id="category" name="categoryName"
-                    onblur="selectSub()">
-                    <option selected="">Select category</option>
+                  <div class="col-md-12 form-group p_star ">
+                    <input type="text" class="form-control" id="category" name="categoryName" value="{{this.categoryName}}"
+                      placeholder="Price" />
+                  </div>
+                  {{!-- <select class="custom-select tm-select-accounts" id="category" name="categoryName"
+                    onblur="selectSub()"> --}}
+                    {{!-- <option selected="">Select category</option>
                     {{#each allCategory}}
-                    <option value="{{this.categoryName}}">{{this.categoryName}}</option>
+                    <option value="{{this.categoryName}}"></option>
                     {{/each}}
-                  </select>
+                  </select> --}}
 
                   {{!-- <div class="col-md-12 form-group p_star">
                     <input type="text" class="form-control" id="Discount" name="Discount" value="{{this.Discount}}"
@@ -148,7 +152,7 @@
                     <input class="form-control" type="file" id="formFile" name="image" multiple>
                   </div>
                   <div>
-                    <button class="btn-success" type="submit"> SUBMIT</button>
+                    <button class="btn btn-success" type="submit"> SUBMIT</button>
                   </div>
             </form>
           </div>
@@ -224,6 +228,34 @@
       })
 
 
-
-
     </script>
+    
+
+    <script>
+        $('#editproduct').validate({
+
+          rules:{
+            productname:{
+              required:true
+
+            },
+            Descriptionname:{
+              required:true
+            },
+            Stocks:{
+              required:true
+            },
+            Prices:{
+              required:true
+            },
+            category:{
+              required:true
+            },
+            formFile:{
+              required:true
+            }
+
+          }
+        })
+
+      </script>
