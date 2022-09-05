@@ -115,7 +115,8 @@
                                             <div class="card"
                                                 style="max-height:250px; min-height:250px;overflow-y:hidden;width: 100%; ">
                                                 <div class="card-body shadow">
-                                                    <input type="radio" name="address" value="{{this._id}}" id="" {{#if @first}} checked{{/if}}>
+                                                    <input type="radio" name="address" value="{{this._id}}" id="" {{#if
+                                                        @first}} checked{{/if}}>
                                                     <h5 class="card-title">{{this.address.Name}} <br></h5>
                                                     <p class="card-text">{{this.address.Address}},
                                                         <br>
@@ -150,7 +151,8 @@
                             {{#each products}}
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">{{this.product.productId}}</h6>
-                                <h6 class="font-weight-medium">Rs.<span id="subtotal">{{total this.product.Price this.quantity}}</span>
+                                <h6 class="font-weight-medium">Rs.<span id="subtotal">{{total this.product.Price
+                                        this.quantity}}</span>
                                 </h6>
                             </div>
 
@@ -194,15 +196,15 @@
                             </div>
                             <div class="">
                                 <div>
-                                    <input type="radio" name="payment" id="netBanking" value="netBanking"checked >
+                                    <input type="radio" name="payment" id="netBanking" value="netBanking" checked>
                                     <label for="banktransfer">Net Banking</label>
                                     <input type="text" name="userId" value="{{user._id}}" hidden>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer border-secondary bg-transparent " >
-                            <button type="submit"
-                                class="btn btn-lg btn-block btn_2 w-100 font-weight-bold my-3 py-3" style="line-height: 32px;">Place
+                        <div class="card-footer border-secondary bg-transparent ">
+                            <button type="submit" class="btn btn-lg btn-block btn_2 w-100 font-weight-bold my-3 py-3"
+                                style="line-height: 32px;">Place
                                 Order</button>
                         </div>
                     </div>
@@ -213,103 +215,96 @@
 </div>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-
-<script>
-    $(document).ready(function () {
-
-         $("#checkoutform").submit((e) => {
-        console.log('checkout')
-        e.preventDefault()
-        $.ajax({
-            url: '/place-order',
-            method: 'post',
-            data: $('#checkoutform').serialize(),//to get all data
-            success: function (response) {
-                console.log(response)
-                if (response.codSuccess) {
-                    location.href = '/ordersuccess'
-                } else {
-                    razorpayPayment(response)
-
-
-                }
-            }
-        })
-    })
-    }
-
-   
-
-    function razorpayPayment(order) {
-        var options = {
-            "key": "rzp_test_EszbVocoSJ8uJh", // Enter the Key ID generated from the Dashboard
-            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "vogue furniture",
-            "description": "Test Transaction",
-            "image": "https://example.com/your_logo",
-            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function (response) {
-
-                verifyPayment(response, order)
-
-            },
-            "prefill": {
-                "name": "Gaurav Kumar",
-                "email": "gaurav.kumar@example.com",
-                "contact": "9999999999"
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
-    }
-
-
-    function verifyPayment(payment, order) {
-        $.ajax({
-            url: '/verify-payment',
-            data: {
-                payment,
-                order
-            },
-            method: 'post',
-            success: (response) => {
-                if (response.status) {
-                    location.href = '/ordersuccess'
-                } else {
-                    alert('payment failed')
-                }
-            }
-        })
-
-    }
-
-</script>
-{{!--
-
-{{! validation }}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script> --}}
-
-
 <style>
     .error {
         color: red;
         border: 1px solid red;
     }
 </style>
-
 <script>
+    $(document).ready(function () {
+
+        $("#checkoutform").submit((e) => {
+            console.log('checkout')
+            e.preventDefault()
+            $.ajax({
+                url: '/place-order',
+                method: 'post',
+                data: $('#checkoutform').serialize(),//to get all data
+                success: function (response) {
+                    console.log(response)
+                    if (response.codSuccess) {
+                        location.href = '/ordersuccess'
+                    } else {
+                        razorpayPayment(response)
 
 
-    $('#shipaddress').validate({
+                    }
+                }
+            })
+        })
+
+
+
+        function razorpayPayment(order) {
+            var options = {
+                "key": "rzp_test_EszbVocoSJ8uJh", // Enter the Key ID generated from the Dashboard
+                "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "vogue furniture",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response) {
+
+                    verifyPayment(response, order)
+
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+
+
+        function verifyPayment(payment, order) {
+            $.ajax({
+                url: '/verify-payment',
+                data: {
+                    payment,
+                    order
+                },
+                method: 'post',
+                success: (response) => {
+                    if (response.status) {
+                        location.href = '/ordersuccess'
+                    } else {
+                        alert('payment failed')
+                    }
+                }
+            })
+
+        }
+
+    }
+
+
+
+
+
+
+
+   $('#shipaddress').validate({
         rules: {
             Name: {
                 required: true,
@@ -366,8 +361,8 @@
         }
     })
 
-</script>
 
+</script>
 
 
 
