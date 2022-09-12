@@ -31,9 +31,8 @@ module.exports = {
     },
     getAllCategory: () => {
         return new Promise(async (resolve, reject) => {
-            let allCategory = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray().then(allCategory => {
+            let allCategory = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()
                 resolve(allCategory)
-            })
 
         })
 

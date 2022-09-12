@@ -195,7 +195,7 @@
                         <h5 class="mb-0">Delivery Address</h5>
                       </div>
                       <div class="card-body">
-                        <form action="/editaddress/{{this._id}}" method="post">
+                        <form action="/editaddress/{{this._id}}" method="post" id="editaddress">
                           <!-- 2 column grid layout with text inputs for the first and last names -->
                           <div class="row mb-4">
                             <div class="col">
@@ -459,19 +459,19 @@
       <script>
         $('#editprofile').validate({
 
-          rules:{
-            fname:{
-              required:true
+          rules: {
+            fname: {
+              required: true
 
             },
-            lname:{
-              required:true
+            lname: {
+              required: true
             },
-            email:{
-              required:true
+            email: {
+              required: true
             },
-            mobile:{
-              required:true
+            mobile: {
+              required: true
             }
 
           }
@@ -481,15 +481,45 @@
       <script>
         $('#editpassword').validate({
 
-          rules:{
-            currentpassword:{
-              required:true
+          rules: {
+            currentpassword: {
+              required: true
             },
-            newpassword:{
-              required:true
+            newpassword: {
+              required: true
             }
 
           }
+
+        })
+      </script>
+      <script>
+        $('#editaddress').validate({
+          rules: {
+            Name: {
+              required: true
+            },
+            Mobile: {
+              required: true
+            },
+            Pincode: {
+              required: true
+
+            },
+            Locality: {
+              required: true
+
+            },
+            Address: {
+              required: true
+            },
+            Landmark: {
+              required: true
+            }
+
+          }
+
+
 
         })
       </script>

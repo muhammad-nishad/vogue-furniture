@@ -27,72 +27,73 @@
         <td> <img src="/product-images/{{this.images.[0]}}" style="width: 80px;" alt=""></td>
         <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{this._id}}">
             EDIT
-          </button></td>
+          </button>
+          <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="/admin/editproduct/{{this._id}}" class="editproduct" method="post"
+                    id="editproduct{{this._id}}">
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="prodctname{{this._id}}" name="productId"
+                        value="{{this.productId}}" placeholder="Product Name" />
+                    </div>
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="Descriptionname{{this._id}}" name="Description"
+                        value="{{this.Description}}" placeholder="Product Description" />
+                    </div>
+                    {{!-- <div class="col-md-12 form-group p_star">
+                      <input type="number" class="form-control" id="Stocks{{this._id}}" name="Stock"
+                        value="{{this.Stock}}" placeholder="Stock" />
+                    </div> --}}
+                    <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="Prices{{this._id}}" name="editPrice"
+                        value="{{this.Price}}" placeholder="Price" />
+                    </div>
+
+                     <div class="form-group mb-3">
+                  <label for="category">Category</label>
+                  <select class="custom-select tm-select-accounts" id="category" name="categoryName"
+                    onblur="selectSub()">
+                    <option selected="">{{this.categoryName}}</option>
+                    {{#each ../allCategory}}
+                    <option value="{{this.categoryName}}">{{this.categoryName}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+                    
+                    {{!-- <div class="col-md-12 form-group p_star ">
+                      <input type="text" class="form-control" id="category{{this._id}}" name="categoryName"
+                        value="{{this.categoryName}}" placeholder="Price" />
+                    </div> --}}
+                    <div class="col-md-12 form-group p_star ">
+                      <input class="form-control" type="file" id="formFile{{this._id}}" value="" name="editimage">
+                      <img src="{{this.editimage.[0]}}" style="width: 30%; height: 10vh;" alt="">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button class="btn btn-primary" type="submit">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
         <td><a href="/admin/deleteproduct/{{this._id}}" class="btn btn-danger text-white"
             onclick=" return  confirm('Do You Want To Delete {{this.productId}} ')">Delete</a> </td>
       </tr>
       <!-- Button trigger modal -->
 
       <!-- Modal -->
-      <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="/admin/editproduct/{{this._id}}" method="post" enctype="multipart/form-data" id="editproduct">
-                <div class="mb-3">
-                  <div class="col-md-12 form-group p_star ">
-                    <input type="text" class="form-control" id="prodctname" name="productId" value="{{this.productId}}"
-                      placeholder="Product Name" />
-                  </div>
-                  <div class="col-md-12 form-group p_star ">
-                    <input type="text" class="form-control" id="Descriptionname" name="Description"
-                      value="{{this.Description}}" placeholder="Product Description" />
-                  </div>
-                  <div class="col-md-12 form-group p_star">
-                    <input type="number" class="form-control" id="Stocks" name="Stock" value="{{this.Stock}}"
-                      placeholder="Stock" />
-                  </div>
-                  <div class="col-md-12 form-group p_star ">
-                    <input type="text" class="form-control" id="Prices" name="Price" value="{{this.Price}}"
-                      placeholder="Price" />
-                  </div>
-                  <div class="col-md-12 form-group p_star ">
-                    <input type="text" class="form-control" id="category" name="categoryName" value="{{this.categoryName}}"
-                      placeholder="Price" />
-                  </div>
-                  {{!-- <select class="custom-select tm-select-accounts" id="category" name="categoryName"
-                    onblur="selectSub()"> --}}
-                    {{!-- <option selected="">Select category</option>
-                    {{#each allCategory}}
-                    <option value="{{this.categoryName}}"></option>
-                    {{/each}}
-                  </select> --}}
 
-                  {{!-- <div class="col-md-12 form-group p_star">
-                    <input type="text" class="form-control" id="Discount" name="Discount" value="{{this.Discount}}"
-                      placeholder="Discount Price" />
-                  </div> --}}
-                  <div class="col-md-12 form-group p_star ">
-                    <label for="formFile" class="form-label"></label>
-                    <input class="form-control" type="file" id="formFile" value="" name="image">
-                    <img src="{{this.images.[0]}}"  style="width: 30%; height: 10vh;"  alt="" >
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Update</button>
-                  </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
       {{/each}}
     </tbody>
   </table>
@@ -124,9 +125,9 @@
                   <input type="text" class="form-control" id="Description" name="Description" value=""
                     placeholder="Product Description" />
                 </div>
-                <div class="col-md-12 form-group p_star ">
+                {{!-- <div class="col-md-12 form-group p_star ">
                   <input type="number" class="form-control" id="Stock" name="Stock" value="" placeholder="Stock" />
-                </div>
+                </div> --}}
                 <div class="col-md-12 form-group p_star">
                   <input type="text" class="form-control" id="Price" name="Price" value="" placeholder="Price" />
                 </div>
@@ -135,25 +136,25 @@
                     placeholder="Discount Price" />
                 </div> --}}
 
-                <div class="col-md-12 form-group p_star ">
-                  <div class="form-group mb-3">
-                    <label for="category">Category</label>
-                    <select class="custom-select tm-select-accounts" id="category" name="categoryName"
-                      onblur="selectSub()">
-                      <option selected="">Select category</option>
-                      {{#each allCategory}}
-                      <option value="{{this.categoryName}}">{{this.categoryName}}</option>
-                      {{/each}}
-                    </select>
-                  </div>
 
-                  <div class="col-md-12 form-group p_star w-50">
-                    <label for="formFile" class="form-label"></label>
-                    <input class="form-control" type="file" id="formFile" name="image" multiple>
-                  </div>
-                  <div>
-                    <button class="btn btn-success" type="submit"> SUBMIT</button>
-                  </div>
+                <div class="form-group mb-3">
+                  <label for="category">Category</label>
+                  <select class="custom-select tm-select-accounts" id="category" name="categoryName"
+                    onblur="selectSub()">
+                    <option selected="">Select category</option>
+                    {{#each allCategory}}
+                    <option value="{{this.categoryName}}">{{this.categoryName}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+
+                <div class="col-md-12 form-group p_star w-50">
+                  <label for="formFile" class="form-label"></label>
+                  <input class="form-control" type="file" id="formFile" name="image" multiple>
+                </div>
+                <div>
+                  <button class="btn btn-success" type="submit"> SUBMIT</button>
+                </div>
             </form>
           </div>
         </div>
@@ -229,33 +230,30 @@
 
 
     </script>
-    
+
 
     <script>
-        $('#editproduct').validate({
-
-          rules:{
-            productname:{
-              required:true
-
+      $('.editproduct').each(function () {
+        $(this).validate({
+          rules: {
+            productId: {
+              required: true
             },
-            Descriptionname:{
-              required:true
+            Description: {
+              required: true
             },
-            Stocks:{
-              required:true
+            Stocks: {
+              required: true
             },
-            Prices:{
-              required:true
+            editPrice: {
+              required: true
             },
-            category:{
-              required:true
-            },
-            formFile:{
-              required:true
+            categoryName: {
+              required: true
             }
-
           }
         })
+      })
 
-      </script>
+
+    </script>

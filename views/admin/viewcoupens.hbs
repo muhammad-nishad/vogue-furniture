@@ -25,57 +25,59 @@
                 <td><button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#exampleModalCenteryu{{this._id}}">
                         Edit
-                    </button></td>
-                <td><a href="/admin/delete-coupen/{{this._id}}" class="btn btn-danger">Delete</td></a>
-
-            </tr>
-            <!-- Button trigger modal -->
-
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenteryu{{this._id}}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Coupens</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container ">
-                                <form action="/admin/update-coupen/{{this._id}}" method="post" id="viewcoupen">
-                                    <div class="mb-3">
-                                        <div class="col-md-12 form-group ">
-                                            <input type="text" class="form-control" id="coupenid" name="coupenid"
-                                                value="{{this.coupenid}}" placeholder="COUPEN ID" />
-                                        </div>
-                                        <div class="col-md-12 form-group ">
-                                            <input type="text" class="form-control" id="coupencode" name="coupencode"
-                                                value="{{this.coupencode}}" placeholder="COUPEN CODE" />
-                                        </div>
-                                        <div class="col-md-12 form-group ">
-                                            <input type="text" class="form-control" id="coupendescription"
-                                                name="coupendescription" value="{{this.coupendescription}}"
-                                                placeholder="COUPEN DESCRIPTION" />
-                                        </div>
-                                        <div class="col-md-12 form-group ">
-                                            <input type="text" class="form-control" id="coupendiscount"
-                                                name="coupendiscount" value="{{this.coupendiscount}}"
-                                                placeholder="COUPEN DISCOUNT" />
-                                        </div>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenteryu{{this._id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Coupens</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container ">
+                                        <form action="/admin/update-coupen/{{this._id}}" method="post"
+                                            class="editcoupen" id="editcoupen{{this._id}}">
+                                            <div class="mb-3">
+                                                <div class="col-md-12 form-group ">
+                                                    <input type="text" class="form-control" id="coupenid{{this._id}}"
+                                                        name="coupenid" value="{{this.coupenid}}"
+                                                        placeholder="COUPEN ID" />
+                                                </div>
+                                                <div class="col-md-12 form-group ">
+                                                    <input type="text" class="form-control" id="coupencode{{this._id}}"
+                                                        name="coupencode" value="{{this.coupencode}}"
+                                                        placeholder="COUPEN CODE" />
+                                                </div>
+                                                <div class="col-md-12 form-group ">
+                                                    <input type="text" class="form-control"
+                                                        id="coupendescription{{this._id}}" name="coupendescription"
+                                                        value="{{this.coupendescription}}"
+                                                        placeholder="COUPEN DESCRIPTION" />
+                                                </div>
+                                                <div class="col-md-12 form-group ">
+                                                    <input type="text" class="form-control"
+                                                        id="coupendiscount{{this._id}}" name="coupendiscount"
+                                                        value="{{this.coupendiscount}}" placeholder="COUPEN DISCOUNT" />
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success">Update</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success">Update</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </td>
+                <td><a href="/admin/delete-coupen/{{this._id}}" class="btn btn-danger">Delete</td></a>
+            </tr>
             {{/each}}
         </tbody>
     </table>
@@ -147,9 +149,9 @@
         var table = $('#productsTable').DataTable();
     </script>
 
-   {{! validation }}
+    {{! validation }}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 
 
@@ -163,7 +165,7 @@
     <script>
 
         $(document).ready(function () {
-             $('#viewcoupen1').validate({
+            $('#viewcoupen1').validate({
                 rules: {
                     coupenid: {
                         required: true
@@ -183,4 +185,28 @@
             })
         })
 
+    </script>
+    <script>
+        $('.editcoupen').each(function () {
+            $(this).validate({
+                rules: {
+                    coupenid: {
+                        required: true
+                    },
+                    coupencode: {
+                        required: true
+                    },
+                    coupendescription: {
+                        required: true
+                    },
+                    coupendiscount: {
+                        required: true
+                    }
+
+                }
+            })
+
+
+
+        })
     </script>

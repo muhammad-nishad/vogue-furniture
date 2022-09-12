@@ -17,7 +17,43 @@
         <td> <img src="/product-images/{{this.image}}" style="width: 80px;" alt=""></td>
         <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleeModal{{this._id}}">
             Edit
-          </button></td>
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleeModal{{this._id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Edit Category</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="container ">
+                    <form action="/admin/editcategory/{{this._id}}" method="post" class="editcategory"
+                      id="editcategory{{this._is}}">
+                      <div class="mb-3">
+                        <div class="col-md-12 form-group p_star ">
+                          <input type="text" class="form-control" id="categoryy1{{this._id}}" name="categoryName"
+                            value="{{this.categoryName}}" placeholder="Category Name" />
+                        </div>
+                        <div class="col-md-12 form-group p_star ">
+                          <input type="text" class="form-control" id="categoryyy2{{this._id}}"
+                            name="categoryDescription" value="{{this.categoryDescription}}"
+                            placeholder="Category Description" />
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
         <td><a href="/admin/deletecategory/{{this._id}}" class="btn btn-danger text-white"
             onclick=" return  confirm('Do You Want To Delete {{this.categoryName}} ')">Delete</a> </td>
       </tr>
@@ -26,39 +62,8 @@
       {{/if}}
 
 
-      <!-- Modal -->
-      <div class="modal fade" id="exampleeModal{{this._id}}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Edit Category</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="container ">
-                <form action="/admin/editcategory/{{this._id}}" method="post" class="editcategory">
-                  <div class="mb-3">
-                    <div class="col-md-12 form-group p_star ">
-                      <input type="text" class="form-control" id="categoryy" name="categoryName"
-                        value="{{this.categoryName}}" placeholder="Category Name" />
-                    </div>
-                    <div class="col-md-12 form-group p_star ">
-                      <input type="text" class="form-control" id="categoryyy" name="categoryDescription"
-                        value="{{this.categoryDescription}}" placeholder="Category Description" />
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {{/each}}
+
+      {{/each}}
     </tbody>
   </table>
 </div>
@@ -82,15 +87,14 @@
       </div>
       <div class="modal-body">
         <div class="container ">
-          <form action="/admin/addcategory/{{category._id}}" method="post" id="viewcategory"
-            enctype="multipart/form-data">
+          <form action="/admin/addcategory" method="post" id="addcategory" enctype="multipart/form-data">
             <div class="mb-3">
               <div class="col-md-12 form-group ">
-                <input type="text" class="form-control" id="categoryName" name="categoryName" value=""
+                <input type="text" class="form-control" id="categoryName1" name="categoryName" value=""
                   placeholder="Category Name" />
               </div>
               <div class="col-md-12 form-group ">
-                <input type="text" class="form-control" id="categoryDescription" name="categoryDescription" value=""
+                <input type="text" class="form-control" id="categoryDescription1" name="categoryDescription" value=""
                   placeholder="Category Description" />
               </div>
               <div class="col-md-12 form-group p_star w-50">
@@ -142,7 +146,7 @@
     <script>
 
 
-      $('#viewcategory').validate({
+      $('#addcategory').validate({
         rules: {
           categoryName: {
             required: true
@@ -172,28 +176,9 @@
       })
 
     </script>
-    <style>
-      .error {
-        color: red;
-        border: 1px solid red;
-      }
-    </style>
 
-    <script>
-      $('#category').validate({
-        rules: {
-          categoryy: {
-            required: true
-          },
-          categoryyy: {
-            required: true
-          }
 
-        }
 
-      })
-
-    </script>
 
     <script>
       $('.editcategory').each(function () {

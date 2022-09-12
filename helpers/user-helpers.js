@@ -6,6 +6,7 @@ let ObjectID = require('mongodb').ObjectId
 let Razorpay = require('razorpay')
 const { resolve } = require('path')
 const env=require('dotenv').config()
+const moment = require('moment')
 
 
 
@@ -309,17 +310,17 @@ module.exports = {
     placeOrder: (order, products, totalAmount, coupen, userId) => {
         return new Promise((resolve, reject) => {
             let status = order.payment === 'COD' ? 'placed' : 'pending'
-            let now = new Date()
-            let date = now.toLocaleDateString();
+            let now = moment().format('DD/MM/YYYY')   
+            // let date = now.toLocaleDateString();
             // let time = now.toLocaleTimeString();
             let orderObj = {
                 deliverDetails: ObjectID(order.address),
                 userId: ObjectID(order.userId),
                 payment: order.payment,
-                products: products.products[0],
-                totalAmount: totalAmount,
+                products: products.products,
+                totalAmount: order.GrandTotal,
                 status: status,
-                date: date
+                date: now
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
@@ -774,88 +775,14 @@ module.exports = {
                             date: 1
                         }
                     },
-                    // {
-                    //     $sort:{date:-1}
-                    // }
+                    {
+                        $sort:{date:1}
+                    }
 
                 ]).toArray()
             resolve(allOrders)
         })
     },
-    // getOneorder: (orderid) => {
-    //     console.log(orderid,'orderid');
-    //     return new Promise(async (resolve, reject) => {
-
-    //         let item = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
-
-    //             {
-    //                 $match: {_id: ObjectID(orderid) }
-    //             },
-
-    //             {
-    //                 $project: {
-    //                     quantitty: '$products.quantity',
-    //                     totalAmount: 1,
-    //                     products: 1,
-    //                     deliverDetails: 1,
-    //                     userId: 1
-
-    //                 }
-    //             },
-
-
-    //             {
-    //                 $unwind: '$products'
-
-    //             }, {
-    //                 $lookup: {
-    //                     from: 'product',
-    //                     localField: 'products.item',
-    //                     foreignField: '_id',
-    //                     as: 'products'
-    //                 }
-    //             }, {
-    //                 $unwind: '$products'
-
-    //             }, {
-    //                 $lookup: {
-    //                     from: 'address',
-    //                     localField: 'deliverDetails',
-    //                     foreignField: '_id',
-    //                     as: 'addressDetails'
-    //                 }
-    //             }, {
-    //                 $unwind: '$addressDetails'
-
-    //             }, {
-    //                 $lookup: {
-    //                     from: 'user',
-    //                     localField: 'userId',
-    //                     foreignField: '_id',
-    //                     as: 'userDetails'
-    //                 }
-    //             }, {
-    //                 $unwind: '$userDetails'
-
-    //             }, {
-    //                 $project: {
-    //                     product: '$products.productId',
-    //                     address: '$addressDetails.address',
-    //                     user: '$userDetails.fname',
-    //                     lname: '$userDetails.lname',
-    //                     image: '$products.images',
-    //                     totalAmount: 1,
-    //                     price: '$products.Price',
-    //                     quantitty: 1
-    //                 }
-    //             }
-
-    //         ]).toArray()
-    //         console.log(item,'before resolve');
-    //         resolve(item)
-
-    //     })
-    // },
     changeOrderStatus: (data) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectID(data.orderId) }, {

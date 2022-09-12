@@ -162,7 +162,7 @@
             </div>
     </section>
 
-    
+
     <div class="col-md-4" style="margin-top: 190px;">
         <form class="mb-5" id="coupenarea">
             <div class="input-group">
@@ -231,11 +231,13 @@
                     })
                         .then((willDelete) => {
                             if (willDelete) {
-                                location.reload()
+
                                 swal("Your item is remooved from the cart", {
                                     icon: "success",
-        
+                                    
+
                                 });
+                                location.reload()
 
                             } else {
                                 swal("Your item is here!");
@@ -244,6 +246,7 @@
 
                 } else {
                     document.getElementById(proId).value = quantity + count
+                    locaton.reload()
                     console.log(quantity, proId, count)
 
                 }
@@ -266,7 +269,7 @@
                     document.getElementById('GrandTotal').innerHTML = response.discount + 100
 
                 } else {
-                    swal("invalid", "this coupon invalidfggggfkgfgfhgfhgghfghfhgfjkdhgkjfdhghgfhgfhgkdfh", "warning")
+                    swal("invalid", "this coupon invalid", "warning")
                 }
             }
         })

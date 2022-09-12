@@ -43,9 +43,9 @@
       {{#each allCategory}}
       <div class="col-lg-6 col-sm-6">
         <div class="single_feature_post_text">
-          <h3 class="" >{{this.categoryName}}</h3>
+          <h3 class="">{{this.categoryName}}</h3>
           <p>{{this.categoryDescription}}</p>
-          
+
           <a href="/view-allproducts" class="feature_btn">EXPLORE NOW
             <i class="fas fa-play"></i></a>
           <a href="/view-allproducts/{{this.categoryName}}"><img src="/product-images/{{this.image}}"
@@ -76,13 +76,24 @@
               {{#each allProduct}}
               <div class="col-lg-3 col-sm-6 align-items-center justify-content-between">
                 <div class="single_product_item">
-                  <td> <a href="/singleproduct/{{this._id}}"> <img src="/product-images/{{this.images.[0]}} " style="width: 100%; height: 25vh;object-fit: cover;" alt=""></a>
+                  <td> <a href="/singleproduct/{{this._id}}"> <img src="/product-images/{{this.images.[0]}} "
+                        style="width: 100%; height: 25vh;object-fit: cover;" alt=""></a>
                   </td>
                   <div class="single_product_text">
                     <h4>{{this.productId}}</h4>
                     <h3 class="font-weight-normal"> Rs {{this.Price}}</h3>
-                      <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">+ADD TO CART</button>
-                    <button onclick="addtoWishlist('{{this._id}}')" class="btn btn-outline-dark"  style="border: none;" ><i class="ti-heart"></i></button>
+                    {{#if ../userloggedin}}
+                    <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">+ADD TO CART</button>
+                    <button onclick="addtoWishlist('{{this._id}}')" class="btn btn-outline-dark"
+                      style="border: none;"><i class="ti-heart"></i></button>
+                    {{else}}
+                    
+                    <a href="/login"><button class="btn btn-outline-dark">+ADD TO CART</button></a>
+                    <a href="/login"> <button class="btn btn-outline-dark" style="border: none; "><i
+                          class="ti-heart"></i></button></a>
+
+                    {{/if}}
+
                   </div>
                 </div>
               </div>
@@ -140,6 +151,7 @@
 
 
 
+
 <script>
   function addToCart(proId) {
     $.ajax({
@@ -164,16 +176,16 @@
       url: '/addwishlist/' + proId,
       method: 'get',
       success: (response) => {
-        console.log(response,' second response')
-        if(response.response.wishlistitemExist){
+        console.log(response, ' second response')
+        if (response.response.wishlistitemExist) {
 
           swal("Oops!", "Product Already existed in Wishlist!", "info");
-         
-        }else{
-           $('#WishlistCount').load(location.href +"#WishlistCount");
+
+        } else {
+          $('#WishlistCount').load(location.href + "#WishlistCount");
           swal("Good job!", "Product Will be Added To Your Wishlist!", "success");
-          let count=$('#Wishlistcount').html()
-          count=parseInt(count)+1
+          let count = $('#Wishlistcount').html()
+          count = parseInt(count) + 1
           $('#Wishlistcount').html(count)
 
         }

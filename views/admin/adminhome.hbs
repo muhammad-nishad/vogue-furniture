@@ -1,14 +1,126 @@
+<style>
+	body {
+		margin-top: 20px;
+		background: #FAFAFA;
+	}
+
+	.order-card {
+		color: #fff;
+	}
+
+	.bg-c-blue {
+		background: linear-gradient(45deg, #4099ff, #73b4ff);
+	}
+
+	.bg-c-green {
+		background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+	}
+
+	.bg-c-yellow {
+		background: linear-gradient(45deg, #FFB64D, #ffcb80);
+	}
+
+	.bg-c-pink {
+		background: linear-gradient(45deg, #FF5370, #ff869a);
+	}
+
+
+	.card {
+		border-radius: 5px;
+		-webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+		box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+		border: none;
+		margin-bottom: 30px;
+		-webkit-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+	}
+
+	.card .card-block {
+		padding: 25px;
+	}
+
+	.order-card i {
+		font-size: 26px;
+	}
+
+	.f-left {
+		float: left;
+	}
+
+	.f-right {
+		float: right;
+	}
+</style>
+
+
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-xl-3">
+			{{#each totalRevenue}}
+			<div class="card bg-c-blue order-card">
+				<div class="card-block">
+					<h6 class="m-b-20">Total Revenue</h6>
+					<h5 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>Rs.{{this.sum}}</span></h5>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+
+		<div class="col-md-4 col-xl-3">
+			{{#each cashOnDelivery}}
+			<div class="card bg-c-green order-card">
+				<div class="card-block">
+					<h6 class="m-b-20">Cash On Delivery</h6>
+					<h5 class="text-right"><i class="fa fa-rocket f-left"></i><span>{{this.count}}</span></h5>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+
+		<div class="col-md-4 col-xl-3">
+			{{#each onlinebanking}}
+			<div class="card bg-c-yellow order-card">
+				<div class="card-block">
+					<h6 class="m-b-20">Razor Pay</h6>
+					<h5 class="text-right"><i class="fa fa-refresh f-left"></i><span>{{this.count}}</span></h5>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+
+		<div class="col-md-4 col-xl-3">
+			{{#each allorders}}
+			<div class="card bg-c-pink order-card">
+				<div class="card-block">
+					<h6 class="m-b-20">Tota Orders</h6>
+					<h5 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{this.count}}</span></h5>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</div>
+
+
+
 <section class="main-container mb-3" style="margin-top: 4rem;">
-	<div>
-		<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6 container-fluid">
 			<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+		</div>
+		<div class="col-md-6">
+			<canvas id="pieChart" style="width:100%;max-width:600px"></canvas>
 		</div>
 	</div>
 </section>
 
+ 
 
-<div class="text-center p-4" >
-<button  class="btn btn-success" id="MyButton" >Download Report</button>
+<div class="text-center p-4">
+	<button class="btn btn-success" id="MyButton">Download Report</button>
 </div>
 
 <script>
@@ -60,7 +172,42 @@
 				options: {
 					legend: { display: false },
 					scales: {
-						yAxes: [{ ticks: { min: 100, max: 5000000} }],
+						yAxes: [{ ticks: { min: 100, max: 5000000 } }],
+					}
+				}
+			});
+
+
+
+			var xValues = [];
+			var yValues = [];
+
+			result.map((curr) => {
+				xValues.unshift(curr.date)
+				yValues.unshift(parseInt(curr.totalPrice))
+
+			})
+			var barColors = [
+				"#b91d47",
+				"#00aba9",
+				"#2b5797",
+				"#e8c3b9",
+				"#1e7145"
+			];
+
+			new Chart("pieChart", {
+				type: "doughnut",
+				data: {
+					labels: xValues,
+					datasets: [{
+						backgroundColor: barColors,
+						data: yValues
+					}]
+				},
+				options: {
+					title: {
+						display: true,
+						text: "World Wide Wine Production 2018"
 					}
 				}
 			});
@@ -69,60 +216,65 @@
 		})
 	}
 
+
+
+
+
+
 </script>
 <script>
-    //=========== report Generae csv and Download it  =========== //
+	//=========== report Generae csv and Download it  =========== //
 
 
-            const objectToCsv = function (data) {
-                const csvRows = [];
-                //get the headers 
-                const headers = Object.keys(data[0]);
-                csvRows.push(headers.join(','));
+	const objectToCsv = function (data) {
+		const csvRows = [];
+		//get the headers 
+		const headers = Object.keys(data[0]);
+		csvRows.push(headers.join(','));
 
-                //loop over the rows
+		//loop over the rows
 
-                for (const row of data) {
-                    const values = headers.map(header => {
-                        const escaped = ('' + row[header]).replace(/"/g, '\\"')
-                        return `"${escaped}"`
-                    })
-                    csvRows.push(values.join(','))
-                }
-                return csvRows.join('\n')
-            }
-            const download = function (data) {
-                const blob = new Blob([data], { type: 'text/csv' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.setAttribute('hidden', '');
-                a.setAttribute('href', url);
-                a.setAttribute('download', 'download.csv');
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+		for (const row of data) {
+			const values = headers.map(header => {
+				const escaped = ('' + row[header]).replace(/"/g, '\\"')
+				return `"${escaped}"`
+			})
+			csvRows.push(values.join(','))
+		}
+		return csvRows.join('\n')
+	}
+	const download = function (data) {
+		const blob = new Blob([data], { type: 'text/csv' });
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.setAttribute('hidden', '');
+		a.setAttribute('href', url);
+		a.setAttribute('download', 'download.csv');
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
 
-            }
-            async function getReport() {
-                let e = await fetch('/admin/reportData')
-                e = await e.json()
-                console.table(e)
-                const data = e.map(row => ({
-                    ProductName: row.productname,
-					CustomerName:row.Name,
-					Payment:row.payment,
-					Quantity:row.quantity,
-					Price:row.price,
-					Mobile:row.Mobile,
-					DateOfPurchase:row.date
-
-                   
-                }));
-                const csvData = objectToCsv(data)
-                download(csvData)
-            }
+	}
+	async function getReport() {
+		let e = await fetch('/admin/reportData')
+		e = await e.json()
+		console.table(e)
+		const data = e.map(row => ({
+			ProductName: row.productname,
+			CustomerName: row.Name,
+			Payment: row.payment,
+			Quantity: row.quantity,
+			Price: row.price,
+			Mobile: row.Mobile,
+			DateOfPurchase: row.date
 
 
-            const button = document.getElementById('MyButton');
-            button.addEventListener('click', getReport)
+		}));
+		const csvData = objectToCsv(data)
+		download(csvData)
+	}
+
+
+	const button = document.getElementById('MyButton');
+	button.addEventListener('click', getReport)
 </script>

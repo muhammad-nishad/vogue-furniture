@@ -41,6 +41,10 @@ app.engine('hbs', hbs.engine({
       }
       return options.inverse(this)
     },
+
+    
+
+
     handlebars: allowInsecurePrototypeAccess(Handlebars) 
   }
 }));

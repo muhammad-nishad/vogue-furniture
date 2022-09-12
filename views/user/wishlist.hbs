@@ -97,12 +97,17 @@
                             <a href="/singleproduct/{{this.product._id}}"><img
                                     src="/product-images/{{this.product.images.[0]}}" alt=""
                                     style=" width: 7rem;height: 100px;"> </a>
+                            <div class="btn">
+                                <button onclick="addToCart('{{this.product._id}}')" class="btn btn-outline-dark">+ADD TO
+                                    CART</button>
+
+                            </div>
                         </td>
                         <td>{{this.product.productId}}</td>
                         <td>{{this.product.Price}}</td>
 
-                        <td><i class="fa fa-trash" data-target="#exampleModal{{this.product._id}}"
-                                   data-toggle="modal" aria-hidden="true"></i>
+                        <td><i class="fa fa-trash" data-target="#exampleModal{{this.product._id}}" data-toggle="modal"
+                                aria-hidden="true"></i>
                             <!-- Button trigger modal -->
 
                             <!-- Modal -->
@@ -111,23 +116,26 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
+                                            <h5>Delete Wishlist</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you Sure
+                                            <h5> Are You Sure </h5>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-danger"><a href="/deletewishlist/{{this.product._id}}" style="color: white;">Delete</a></button>
+                                            <button type="button" class="btn btn-danger"><a
+                                                    href="/deletewishlist/{{this.product._id}}"
+                                                    style="color: white;">Delete</a></button>
+
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-
-
                         </td>
                     </tr>
                 </tbody>
@@ -137,3 +145,21 @@
     </div>
 </div>
 {{/if}}
+<script>
+    function addToCart(proId) {
+        $.ajax({
+            url: '/addcart/' + proId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    $("#cartCount").load(location.href + " #cartCount");
+                    swal("Good job!", "Item Will be Added To Your Cart!", "success");
+                    let count = $('#cartCount').html()
+                    count = parseInt(count) + 1
+                    $('#cartCount').html(count)
+                }
+
+            }
+        })
+    }
+</script>

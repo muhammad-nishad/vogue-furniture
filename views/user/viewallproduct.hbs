@@ -12,7 +12,7 @@
                         <div class="widgets_inner">
                             <ul>
                                 <li>
-                                    <a href="/view-allproducts" class="">All</a>
+                                    <a href="/view-allproducts" class="text-secondary">All</a>
                                 </li>
                             </ul>
                             {{#each allCategory}}
@@ -32,8 +32,9 @@
                     {{#each products}}
                     <div class="col-md-4">
                         <div class="single_product_item">
-                            <img src="/product-images/{{this.images.[0]}}"
-                                style="width: 100%; height: 25vh;object-fit: cover;" alt="">
+                            <a href="/singleproduct/{{this._id}}"> <img src="/product-images/{{this.images.[0]}}"
+                                style="width: 100%; height: 25vh;object-fit: cover;" alt=""></a>
+                           
                             <div class="single_product_text">
                                 <h4>{{this.productId}}</h4>
                                 <h3>{{this.Price}}</h3>

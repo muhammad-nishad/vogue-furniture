@@ -48,9 +48,9 @@ module.exports = {
                         productId: proDetails.productId,
                         Description: proDetails.Description,
                         Stock: proDetails.Stock,
-                        Price: parseInt(proDetails.Price),
-                        Discount: proDetails.Discount,
-                        image: proDetails.image
+                        Price: parseInt(proDetails.editPrice),
+                        image1: proDetails.image1,
+                        categoryName:proDetails.categoryName
                     }
 
                 }).then((response) => {

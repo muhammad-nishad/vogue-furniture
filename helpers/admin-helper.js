@@ -121,7 +121,6 @@ module.exports = {
     },
 
     ApplyCoupen: (coupenData, userId) => {
-        console.log('hi');
         return new Promise(async (resolve, reject) => {
             let response = {}
             let coupen = await db.get().collection(collection.COUPEN_COLLECTION).findOne({ coupencode: coupenData.coupencode })
@@ -147,6 +146,120 @@ module.exports = {
                 response.status = false
                 resolve(response)
             }
+        })
+    },
+    totalRevenue: () => {
+        return new Promise(async (resolve, reject) => {
+            let totalRevenue = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    '$project': {
+                        'totalAmount': 1,
+                        'status': 1
+                    }
+                }, {
+                    '$match': {
+                        'status': {
+                            '$ne': 'cancel'
+                        }
+                    }
+                }, {
+                    '$set': {
+                        'totalAmount': {
+                            '$toInt': '$totalAmount'
+                        }
+                    }
+                }, {
+                    '$group': {
+                        '_id': null,
+                        'sum': {
+                            '$sum': '$totalAmount'
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(totalRevenue)
+
+        })
+    },
+    cashOndeivery: () => {
+        return new Promise(async (resolve, reject) => {
+            let cashOndeivery = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    '$project': {
+                        'payment': 1
+                    }
+                }, {
+                    '$match': {
+                        'payment': {
+                            '$eq': 'COD'
+                        }
+                    }
+                }, {
+                    '$group': {
+                        '_id': null,
+                        'count': {
+                            '$sum': 1
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(cashOndeivery)
+        })
+    },
+    netBanking: () => {
+        return new Promise(async (resolve, reject) => {
+            let netBanking = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    '$project': {
+                        'payment': 1
+                    }
+                }, {
+                    '$match': {
+                        'payment': {
+                            '$eq': 'netBanking'
+                        }
+                    }
+                }, {
+                    '$group': {
+                        '_id': null,
+                        'count': {
+                            '$sum': 1
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(netBanking)
+
+        })
+    },
+    allOrders: () => {
+        return new Promise(async (resolve, reject) => {
+            let allorders = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    '$unwind': {
+                        'path': '$products'
+                    }
+                }, {
+                    '$project': {
+                        'status': 1,
+                        'quantity': '$products.quantity'
+                    }
+                }, {
+                    '$match': {
+                        'status': {
+                            '$ne': 'cancel'
+                        }
+                    }
+                }, {
+                    '$group': {
+                        '_id': null,
+                        'count': {
+                            '$sum': '$quantity'
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(allorders)
         })
     }
 
