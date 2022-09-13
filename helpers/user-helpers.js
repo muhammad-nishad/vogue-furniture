@@ -5,7 +5,7 @@ let { response } = require('express')
 let ObjectID = require('mongodb').ObjectId
 let Razorpay = require('razorpay')
 const { resolve } = require('path')
-const env=require('dotenv').config()
+const env = require('dotenv').config()
 const moment = require('moment')
 
 
@@ -28,10 +28,10 @@ module.exports = {
             }
             if (!user) {
                 userData.password = await bcrypt.hash(userData.password, 10)
-                db.get().collection(collection.USER_COLLECTION).insertOne({ fname: userData.fname, lname: userData.lname, email: userData.email, mobile: userData.mobile, password: userData.password, ActiveStatus: true }).then(async(data) => {
+                db.get().collection(collection.USER_COLLECTION).insertOne({ fname: userData.fname, lname: userData.lname, email: userData.email, mobile: userData.mobile, password: userData.password, ActiveStatus: true }).then(async (data) => {
                     state.userexist = false
                     // state.usernotefound=true
-                    let newuser= await db.get().collection(collection.USER_COLLECTION).findOne(data.insertedId)
+                    let newuser = await db.get().collection(collection.USER_COLLECTION).findOne(data.insertedId)
                     state.user = newuser
                     console.log(state, 'state');
                     resolve(state)
@@ -235,6 +235,7 @@ module.exports = {
 
                         }
                     ).then((response) => {
+                        console.log(response,'response');
                         resolve(true)
                     })
             }
@@ -310,7 +311,7 @@ module.exports = {
     placeOrder: (order, products, totalAmount, coupen, userId) => {
         return new Promise((resolve, reject) => {
             let status = order.payment === 'COD' ? 'placed' : 'pending'
-            let now = moment().format('DD/MM/YYYY')   
+            let now = moment().format('DD/MM/YYYY')
             // let date = now.toLocaleDateString();
             // let time = now.toLocaleTimeString();
             let orderObj = {
@@ -415,7 +416,7 @@ module.exports = {
                             $push: { products: item }
                         }
                     )
-                    
+
                     resolve(response)
                 }
 
@@ -480,7 +481,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let orders = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
-                    $match: {userId: ObjectID(userId) }
+                    $match: { userId: ObjectID(userId) }
                 },
 
                 {
@@ -510,12 +511,12 @@ module.exports = {
                         totalAmount: 1,
                         status: 1,
                         product_quantity: '$products.quantity',
-                        product_id:'$products.item',
+                        product_id: '$products.item',
                         date: 1
                     }
                 },
                 {
-                    $sort:{date:-1}
+                    $sort: { date: -1 }
                 }
             ]).toArray()
             resolve(orders)
@@ -628,6 +629,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let allOrders = await db.get().collection(collection.ORDER_COLLECTION).aggregate(
                 [
+
                     {
                         $unwind: '$products'
 
@@ -641,7 +643,8 @@ module.exports = {
                     }, {
                         $unwind: '$result'
 
-                    }, {
+                    },
+                     {
                         $project: {
                             productname: '$result.productId',
                             quantity: '$products.quantity',
@@ -654,6 +657,15 @@ module.exports = {
                             date: 1
                         }
                     },
+                    {
+                        '$match': {
+                            'status': {
+                                '$ne': 'cancel'
+                            }
+                        }
+                    },
+
+
                     {
                         $lookup: {
                             from: 'user',
@@ -694,8 +706,9 @@ module.exports = {
                             date: 1
                         }
                     },
+
                     {
-                        $sort:{date:-1}
+                        $sort: { date: -1 }
                     }
 
                 ]).toArray()
@@ -776,7 +789,7 @@ module.exports = {
                         }
                     },
                     {
-                        $sort:{date:1}
+                        $sort: { date: 1 }
                     }
 
                 ]).toArray()
@@ -837,16 +850,16 @@ module.exports = {
         })
     },
 
-    cancelOrder:(orderId)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:ObjectID(orderId)},{
+    cancelOrder: (orderId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectID(orderId) }, {
 
-                $set:{
-                    status:'cancel'
+                $set: {
+                    status: 'cancel'
                 }
 
 
-            }).then(response=>{
+            }).then(response => {
                 resolve(response)
             })
         })

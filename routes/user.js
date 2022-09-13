@@ -204,13 +204,15 @@ router.get('/cart', verifyLogin, (req, res) => {
   req.session.coupen = null;
   userHelper.getCartProducts(req.session.user._id).then(async (response) => {
     let products = response.cartItems
+    console.log(products,'products');
     let cartEmpty = response.cartEmpty
     let user = req.session.user
     let CartCount = await userHelper.getCartCount(req.session.user._id)
     let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
     let totalAmount = 0
     totalAmount = await userHelper.getTotalAmount(req.session.user._id)
-    res.render('user/cart', { totalAmount, user_header: true, products, user: req.session.user, CartCount, cartEmpty, user,WishlistCount })
+    console.log(totalAmount,'total');
+    res.render('user/cart', { totalAmount, user_header: true,user_footer: true, products, user: req.session.user, CartCount, cartEmpty, user,WishlistCount })
 
   })
 
@@ -266,15 +268,16 @@ router.get('/checkout', verifyLogin, async (req, res) => {
   let products = response.cartItems
   let totalAmount = await userHelper.getTotalAmount(req.session.user._id)
   let CartCount = await userHelper.getCartCount(req.session.user._id)
+  let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
   if(req.session.coupen){
     let coupendiscount= req.session.discount
     let discountPrice=req.session.discountprice
-    res.render('user/checkout', { user: req.session.user, allAddress,totalAmount, products, user_header: true, CartCount ,coupendiscount, discountPrice})
+    res.render('user/checkout', { user: req.session.user, allAddress,totalAmount, products, user_header: true, CartCount ,coupendiscount,WishlistCount, discountPrice})
   }else{
   let products = response.cartItems
   let totalAmount = await userHelper.getTotalAmount(req.session.user._id)
   let CartCount = await userHelper.getCartCount(req.session.user._id)
-  res.render('user/checkout', { user: req.session.user, allAddress, products, totalAmount, user_header: true, CartCount})
+  res.render('user/checkout', { user: req.session.user, allAddress, products, totalAmount, user_header: true, CartCount,WishlistCount})
   }
 })
 
@@ -313,7 +316,8 @@ router.get('/ordersuccess', verifyLogin, (req, res) => {
   userHelper.getOrderProducts(orderId).then(async (item) => {
     let user = req.session.user
     let CartCount = await userHelper.getCartCount(req.session.user._id)
-    res.render('user/ordersuccess', { item, user_header: true, user, CartCount })
+    let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
+    res.render('user/ordersuccess', { item, user_header: true, user, CartCount,WishlistCount })
   })
 
 })
@@ -342,7 +346,7 @@ router.get('/wishlist', verifyLogin, async (req, res) => {
     let user = req.session.user
     let CartCount = await userHelper.getCartCount(user._id)
     let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)
-    res.render('user/wishlist', { Products, user_header: true, user, CartCount, wishlistEmpty, WishlistCount })
+    res.render('user/wishlist', { Products, user_header: true, user_footer: true, user, CartCount, wishlistEmpty, WishlistCount })
   })
 })
 

@@ -126,7 +126,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>{{this.product.Price}}</h5>
+                                    <h5 id="{{this.product._id}}-price">{{this.product.Price}}</h5>
                                 </td>
                                 <td>
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -147,9 +147,11 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>{{total this.product.Price this.quantity}}</h5>
+                                    <h5 id="{{this.product._id}}-total">{{total this.product.Price this.quantity}} </h5>
                                 </td>
                                 <td>
+                                    
+                                    
                                     <a href="/deletecart/{{product._id}}" class="btn btn-danger"
                                         onclick="return  confirm('Do You Want To Delete This Item')"> DELETE</a>
 
@@ -193,8 +195,8 @@
             </div>
             <div class="card-footer border-secondary bg-transparent">
                 <div class="d-flex justify-content-between mt-2">
-                    <h5 class="font-weight-bold">Total</h5>
-                    <h5 class="font-weight-bold">Rs.<span id="GrandTotal">{{subtotal totalAmount 100 }}</span></h5>
+                    <h5 class="font-weight-bold">Totall</h5>
+                    <h5 class="font-weight-bold">Rs.<span id="tot">{{subtotal totalAmount 100 }}</span></h5>
                 </div>
                 <a href="/checkout" class="btn btn-block btn-primary my-3 py-3"
                     style="background-color: #ff3368">Proceed To Checkout</a>
@@ -210,6 +212,7 @@
 <script>
     function changeQuantity(cartId, proId, count) {
         let quantity = parseInt(document.getElementById(proId).value)
+        const productPrice = parseInt(document.getElementById(proId+ '-price').innerHTML)
         count = parseInt(count)
         $.ajax({
             url: '/change-product-quantity',
@@ -246,8 +249,12 @@
 
                 } else {
                     document.getElementById(proId).value = quantity + count
+                    document.getElementById(proId+'-total').innerHTML= productPrice * (quantity + count)
+                    let subtotal = parseInt(document.getElementById('subtotal').innerHTML)
+                    document.getElementById('subtotal').innerHTML= subtotal + (productPrice * count)
+                    let total = parseInt(document.getElementById('tot').innerHTML)
+                    document.getElementById('tot').innerHTML = total + (productPrice * count)
                     locaton.reload()
-                    console.log(quantity, proId, count)
 
                 }
             }

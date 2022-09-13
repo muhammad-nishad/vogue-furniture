@@ -57,7 +57,17 @@
 
 
 <div class="container">
-	<div class="row">
+	<div class="row shadow-lg p-3 mb-5  rounded">
+		<div class="col-md-4 col-xl-3">
+			{{#each allorders}}
+			<div class="card bg-c-pink order-card">
+				<div class="card-block">
+					<h6 class="m-b-20">Tota Orders</h6>
+					<h5 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{this.count}}</span></h5>
+				</div>
+			</div>
+			{{/each}}
+		</div>
 		<div class="col-md-4 col-xl-3">
 			{{#each totalRevenue}}
 			<div class="card bg-c-blue order-card">
@@ -90,34 +100,26 @@
 			</div>
 			{{/each}}
 		</div>
-
-		<div class="col-md-4 col-xl-3">
-			{{#each allorders}}
-			<div class="card bg-c-pink order-card">
-				<div class="card-block">
-					<h6 class="m-b-20">Tota Orders</h6>
-					<h5 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{this.count}}</span></h5>
-				</div>
-			</div>
-			{{/each}}
-		</div>
 	</div>
 </div>
 
 
 
-<section class="main-container mb-3" style="margin-top: 4rem;">
-	<div class="row">
-		<div class="col-md-6 container-fluid">
-			<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+<section class="main-container mb-3 ">
+	<div class="row ml-5">
+		<div class="col-md-6 container-fluid  row shadow-lg p-3 mb-5 bg-white rounded ">
+			<div class="text-center">
+				<h5>Daily Revenue</h5>
+			</div>
+			<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6 ">
 			<canvas id="pieChart" style="width:100%;max-width:600px"></canvas>
 		</div>
 	</div>
 </section>
 
- 
+
 
 <div class="text-center p-4">
 	<button class="btn btn-success" id="MyButton">Download Report</button>
@@ -129,7 +131,7 @@
 
 	async function charts() {
 		const res = await axios.get('/admin//salesReportChart').then((e) => {
-			//console.log(e.data.orders,'getttttttt')
+			console.log(e.data,'getttttttt')
 
 			var result = [];
 			e.data.orders.reduce(function (acc, curr) {
@@ -157,7 +159,7 @@
 			//console.log(xValues, yValues)
 
 			new Chart("myChart", {
-				type: "line",
+				type: "bar",
 				data: {
 					labels: xValues,
 					datasets: [{
@@ -172,7 +174,7 @@
 				options: {
 					legend: { display: false },
 					scales: {
-						yAxes: [{ ticks: { min: 100, max: 5000000 } }],
+						yAxes: [{ ticks: { min: 100, max: 300000 } }],
 					}
 				}
 			});
@@ -182,9 +184,9 @@
 			var xValues = [];
 			var yValues = [];
 
-			result.map((curr) => {
-				xValues.unshift(curr.date)
-				yValues.unshift(parseInt(curr.totalPrice))
+			e.data.category.map((curr) => {
+				xValues.unshift(curr._id)
+				yValues.unshift(parseInt(curr.sum))
 
 			})
 			var barColors = [
@@ -207,7 +209,7 @@
 				options: {
 					title: {
 						display: true,
-						text: "World Wide Wine Production 2018"
+						text: "Category Based Sales"
 					}
 				}
 			});

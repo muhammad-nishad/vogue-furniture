@@ -34,9 +34,15 @@
                     <form action="/admin/editcategory/{{this._id}}" method="post" class="editcategory"
                       id="editcategory{{this._is}}">
                       <div class="mb-3">
-                        <div class="col-md-12 form-group p_star ">
-                          <input type="text" class="form-control" id="categoryy1{{this._id}}" name="categoryName"
-                            value="{{this.categoryName}}" placeholder="Category Name" />
+                        <div class="form-group mb-3">
+                          <label for="category">Category</label>
+                          <select class="custom-select tm-select-accounts" id="category" name="categoryName"
+                            onblur="selectSub()">
+                            <option selected="">{{this.categoryName}}</option>
+                            {{#each ../allCategory}}
+                            <option value="{{this.categoryName}}">{{this.categoryName}}</option>
+                            {{/each}}
+                          </select>
                         </div>
                         <div class="col-md-12 form-group p_star ">
                           <input type="text" class="form-control" id="categoryyy2{{this._id}}"
@@ -105,7 +111,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Update</button>
+              <button type="submit" class="btn btn-primary">Add</button>
             </div>
           </form>
         </div>

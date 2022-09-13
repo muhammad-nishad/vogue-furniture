@@ -152,27 +152,27 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let totalRevenue = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
-                    '$project': {
-                        'totalAmount': 1,
-                        'status': 1
+                    $project: {
+                        totalAmount: 1,
+                        status: 1
                     }
                 }, {
-                    '$match': {
-                        'status': {
+                    $match: {
+                        status: {
                             '$ne': 'cancel'
                         }
                     }
                 }, {
-                    '$set': {
-                        'totalAmount': {
-                            '$toInt': '$totalAmount'
+                    $set: {
+                        totalAmount: {
+                            $toInt: '$totalAmount'
                         }
                     }
                 }, {
-                    '$group': {
-                        '_id': null,
-                        'sum': {
-                            '$sum': '$totalAmount'
+                    $group: {
+                        _id: null,
+                        sum: {
+                            $sum: '$totalAmount'
                         }
                     }
                 }
@@ -185,20 +185,20 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let cashOndeivery = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
-                    '$project': {
-                        'payment': 1
+                    $project: {
+                        payment: 1
                     }
                 }, {
-                    '$match': {
-                        'payment': {
-                            '$eq': 'COD'
+                    $match: {
+                        payment: {
+                            $eq: 'COD'
                         }
                     }
                 }, {
-                    '$group': {
-                        '_id': null,
-                        'count': {
-                            '$sum': 1
+                    $group: {
+                        _id: null,
+                        count: {
+                            $sum: 1
                         }
                     }
                 }
@@ -210,20 +210,21 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let netBanking = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
-                    '$project': {
-                        'payment': 1
+                    $project: {
+                        payment: 1
                     }
-                }, {
-                    '$match': {
-                        'payment': {
-                            '$eq': 'netBanking'
+                },
+                {
+                    $match: {
+                        payment: {
+                            $eq: 'netBanking'
                         }
                     }
                 }, {
-                    '$group': {
-                        '_id': null,
-                        'count': {
-                            '$sum': 1
+                    $group: {
+                        _id: null,
+                        count: {
+                            $sum: 1
                         }
                     }
                 }
@@ -236,30 +237,89 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let allorders = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
-                    '$unwind': {
-                        'path': '$products'
+                    $unwind: {
+                        path: '$products'
                     }
                 }, {
-                    '$project': {
-                        'status': 1,
-                        'quantity': '$products.quantity'
+                    $project: {
+                        status: 1,
+                        quantity: '$products.quantity'
                     }
-                }, {
-                    '$match': {
-                        'status': {
-                            '$ne': 'cancel'
+                },
+                {
+                    $match: {
+                        status: {
+                            $ne: 'cancel'
                         }
                     }
                 }, {
-                    '$group': {
-                        '_id': null,
-                        'count': {
-                            '$sum': '$quantity'
+                    $group: {
+                        _id: null,
+                        count: {
+                            $sum: '$quantity'
                         }
                     }
                 }
             ]).toArray()
             resolve(allorders)
+        })
+    },
+    categorysale: () => {
+        return new Promise(async (resolve, reject) => {
+            let categorySale = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $project: {
+                        products: 1,
+                        status: 1,
+                        date: 1,
+                        totalAmount: 1,
+                        payment: 1,
+                        userId: 1
+                    }
+                }, {
+                    $lookup: {
+                        from: 'product',
+                        localField: 'products.item',
+                        foreignField: '_id',
+                        as: 'productDetails'
+                    }
+                }, {
+                    $unwind: {
+                        path: '$productDetails'
+                    }
+                }, {
+                    $project: {
+                        date: 1,
+                        totalAmount: 1,
+                        payment: 1,
+                        userId: 1,
+                        category: '$productDetails.categoryName',
+                        price: '$productDetails.Price',
+                        Product: '$productDetails.productId',
+                        status: 1
+                    }
+                }, {
+                    $match: {
+                        status: {
+                            $ne: 'cancel'
+                        }
+                    }
+                }, {
+                    $set: {
+                        totalAmount: {
+                            $toInt: '$totalAmount'
+                        }
+                    }
+                }, {
+                    $group: {
+                        _id: '$category',
+                        sum: {
+                            $sum: '$totalAmount'
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(categorySale)
         })
     }
 
