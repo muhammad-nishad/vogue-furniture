@@ -15,14 +15,15 @@
         {{!-- <td>{{this.Bannername}}</td> --}}
         {{!-- <td>{{this.Bannerdescription}}</td> --}}
         <td> <img src="/product-images/{{this.image}}" style="width: 80px;" alt=""></td>
-        <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterrrr{{this._id}}">
-        Edit
-      </button></td>
+        <td> <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#exampleModalCenterrrr{{this._id}}">
+            Edit
+          </button></td>
         {{!-- <td><a href="/admin/editbanner/{{this._id}}" class="btn btn-primary  text-white">Edit</a> </td> --}}
         <td><a href="/admin/deletebanner/{{this._id}}" class="btn btn-danger  text-white"
             onclick="return confirm('Do you want to Delete {{this.Bannername}}') ">Delete</a> </td>
       </tr>
-     
+
       <!-- Modal -->
       <div class="modal fade" id="exampleModalCenterrrr{{this._id}}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -110,7 +111,7 @@
 
 
 
-
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
       <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
       <script>

@@ -631,6 +631,14 @@ module.exports = {
                 [
 
                     {
+                        '$match': {
+                            'status': {
+                                '$ne': 'cancel'
+                            }
+                        }
+                    },
+
+                    {
                         $unwind: '$products'
 
                     }, {
@@ -657,13 +665,7 @@ module.exports = {
                             date: 1
                         }
                     },
-                    {
-                        '$match': {
-                            'status': {
-                                '$ne': 'cancel'
-                            }
-                        }
-                    },
+
 
 
                     {
