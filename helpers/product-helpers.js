@@ -41,6 +41,7 @@ module.exports = {
 
 
     updateProduct: (prodId, proDetails) => {
+        console.log(proDetails,'req.body');
         return new Promise((resolve, reject) => {
             db.get().collection(collection.PRODUCT_COLLECTION)
                 .updateOne({ _id: ObjectID(prodId) }, {
@@ -49,8 +50,8 @@ module.exports = {
                         Description: proDetails.Description,
                         Stock: proDetails.Stock,
                         Price: parseInt(proDetails.editPrice),
-                        image1: proDetails.image1,
-                        categoryName:proDetails.categoryName
+                        categoryName:proDetails.categoryName,
+                        // image:proDetails.editimage
                     }
 
                 }).then((response) => {

@@ -175,6 +175,9 @@
             </div>
           </div>
         </div>
+        {{#if wrongcurrentpass}}
+        <p class="text-danger"> Your Current Password is Invalid</p>
+        {{/if}}
         <!-- Button trigger modal -->
         <div class="modal fade" id="exampleModalCenterr{{this._id}}" tabindex="-1" role="dialog"
           aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -266,6 +269,7 @@
         </div>
       </div>
       {{/each}}
+
       <!-- Modal -->
       <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
         aria-hidden="true">
@@ -342,9 +346,7 @@
         </div>
       </div>
 
-      {{#if wrongcurrentpass}}
-      <p class="text-danger"> Your Current Password is Invalid</p>
-      {{/if}}
+
       <!-- Button trigger modal -->
 
 

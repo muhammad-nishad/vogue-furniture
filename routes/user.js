@@ -204,7 +204,6 @@ router.get('/cart', verifyLogin, (req, res) => {
   req.session.coupen = null;
   userHelper.getCartProducts(req.session.user._id).then(async (response) => {
     let products = response.cartItems
-    console.log(products,'products');
     let cartEmpty = response.cartEmpty
     let user = req.session.user
     let CartCount = await userHelper.getCartCount(req.session.user._id)
@@ -282,14 +281,14 @@ router.get('/checkout', verifyLogin, async (req, res) => {
 })
 
 
-router.post('/place-order', async (req, res) => {
+router.post('/place-order', verifyLogin,async (req, res) => {
   let products = await userHelper.getCartProductlist(req.body.userId)
   let totalAmount = await userHelper.getTotalAmount(req.body.userId)
-  console.log(req.body,'body');
   userHelper.placeOrder(req.body, products, totalAmount, req.session.coupen, req.session.user._id).then((orderId) => {
 
     req.session.order = orderId
     if (req.body.payment == 'COD') {
+      console.log('hi');
       res.json({ codSuccess: true })
 
     } else {

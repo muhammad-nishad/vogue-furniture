@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </td>
-                <td><a href="/admin/delete-coupen/{{this._id}}" class="btn btn-danger">Delete</td></a>
+                <td><a href="/admin/delete-coupen/{{this._id}}" class="btn btn-danger" onclick="return  confirm('Do You Want To Delete This Coupon') "  >Delete</td></a>
             </tr>
             {{/each}}
         </tbody>

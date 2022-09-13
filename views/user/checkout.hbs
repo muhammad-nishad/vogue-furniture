@@ -1,4 +1,3 @@
-
 <style>
     hr {
         border: none;
@@ -13,7 +12,8 @@
         border: none;
         pointer-events: none;
     }
-    a{
+
+    a {
         text-decoration: none;
     }
 </style>
@@ -180,12 +180,14 @@
                             <hr class="mt-0">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium"><input class="inp" id="subtotal">RS.{{totalAmount}}</input>
+                                <h6 class="font-weight-medium"><input class="inp"
+                                        id="subtotal">RS.{{totalAmount}}</input>
                                 </h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Coupon Discount</h6>
-                                <h6 class=" font-weight-medium"><input class="inp" id="shipping" name="shipping" Rs. value="{{discountPrice}}"/>
+                                <h6 class=" font-weight-medium"><input class="inp" id="shipping" name="shipping" 
+                                        value="{{discountPrice}}" />
                                 </h6>
                             </div>
                             <div class="d-flex justify-content-between">
@@ -195,9 +197,13 @@
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
-                            <div class="d-flex justify-content-between mt-2">
+                            <div class="d-flex justify-content-end mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold"><input class="inp" id="GrandTotal" name="GrandTotal"{{#if discountPrice}} value="Rs.{{subtotal coupendiscount 100}}" {{else}} value="{{subtotal totalAmount 100}}"{{/if}}/>
+                                
+                                    <h5 class="font-weight-bold"><input class="inp" id="GrandTotal" name="GrandTotal"
+                                            {{#if discountPrice}} value="{{subtotal coupendiscount 100}}" {{else}}
+                                            value="{{subtotal totalAmount 100}}" {{/if}} />
+
                                 </h5>
                             </div>
                         </div>
@@ -244,16 +250,21 @@
     $(document).ready(function () {
 
         $("#checkoutform").submit((e) => {
-             
+
             e.preventDefault()
             $.ajax({
                 url: '/place-order',
+                
                 method: 'post',
                 data: $('#checkoutform').serialize(),//to get all data
                 success: function (response) {
+                    console.log(response)
+                    console.log('uygjhg')
+                    
                     if (response.codSuccess) {
-                        location.href = '/ordersuccess'
+                       // location.href = '/ordersuccess'
                     } else {
+                        console.log('asdf')
                         razorpayPayment(response)
 
 
@@ -318,65 +329,62 @@
 
 
 
+    $('#shipaddress').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 3
+            },
+            Mobile: {
+                required: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            Pincode: {
+                required: true,
+                minlength: 6,
+                maxlength: 10
+            },
+            Locality: {
+                required: true
+            },
+            Address: {
+                required: true,
+                minlength: 5
+
+            },
+            Landmark: {
+                required: true
+            },
 
 
 
-   $('#shipaddress').validate({
-       rules: {
-           Name: {
-               required: true,
-               minlength: 3
-           },
-           Mobile: {
-               required: true,
-               minlength: 10,
-               maxlength: 10
-           },
-           Pincode: {
-               required: true,
-               minlength: 6,
-               maxlength: 10
-           },
-           Locality: {
-               required: true
-           },
-           Address: {
-               required: true,
-               minlength: 5
-
-           },
-           Landmark: {
-               required: true
-           },
-
-
-
-       },
-       messages: {
-           Name: {
-               required: ' Enter Your Name'
-           },
-           Mobile: {
-               required: ' Enter Your Mobile Number ',
-               minlength: 'The mobile number you entered does not seem to be valid',
-               maxlength: 'The mobile number you entered does not seem to be valid'
-           },
-           Pincode: {
-               required: ' Enter Your Pincode ',
-               minlength: 'The pincode you entered does not seem to be valid',
-               maxlength: 'The pincode you entered does not seem to be valid'
-           },
-           Locality: {
-               required: ' Enter Your Locality '
-           },
-           Address: {
-               required: ' Enter Your Address '
-           },
-           Landmark: {
-               required: ' Enter Your Landmark '
-           },
-       }
-   })
+        },
+        messages: {
+            Name: {
+                required: ' Enter Your Name'
+            },
+            Mobile: {
+                required: ' Enter Your Mobile Number ',
+                minlength: 'The mobile number you entered does not seem to be valid',
+                maxlength: 'The mobile number you entered does not seem to be valid'
+            },
+            Pincode: {
+                required: ' Enter Your Pincode ',
+                minlength: 'The pincode you entered does not seem to be valid',
+                maxlength: 'The pincode you entered does not seem to be valid'
+            },
+            Locality: {
+                required: ' Enter Your Locality '
+            },
+            Address: {
+                required: ' Enter Your Address '
+            },
+            Landmark: {
+                required: ' Enter Your Landmark '
+            },
+        }
+    })
 
 
 </script>
