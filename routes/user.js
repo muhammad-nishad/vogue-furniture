@@ -388,6 +388,7 @@ router.post('/apply-coupen', verifyLogin, (req, res) => {
     if (response.status) {
       req.session.coupen = response.coupen
       req.session.discount = response.discount
+      console.log(req.session.discount,'discount');
       req.session.discountprice=response.discountPrice
     }
     res.json(response)
