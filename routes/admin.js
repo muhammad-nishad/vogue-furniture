@@ -296,7 +296,7 @@ router.get('/vieworders', verifyLogin, async (req, res) => {
 
 
 router.get("/salesReportChart", verifyLogin, (req, res) => {
-  userhelper.getAllOrders().then((orders) => {
+  adminhelper.Newfunction().then((orders) => {
    adminhelper.categorysale().then((category)=>{
     res.json({ orders,category });
 

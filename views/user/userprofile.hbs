@@ -198,19 +198,20 @@
                         <h5 class="mb-0">Delivery Address</h5>
                       </div>
                       <div class="card-body">
-                        <form action="/editaddress/{{this._id}}" method="post" id="editaddress">
+                        <form action="/editaddress/{{this._id}}" class="editaddress" method="post"
+                          id="editaddress{{this._id}}">
                           <!-- 2 column grid layout with text inputs for the first and last names -->
                           <div class="row mb-4">
                             <div class="col">
                               <div class="form-outline">
-                                <input type="text" id="Name" name="Name" value="{{address.Name}}"
+                                <input type="text" id="Name{{this._id}}" name="Name" value="{{address.Name}}"
                                   class="form-control" />
                                 <label class="form-label" for="form7Example1"> Name</label>
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-outline">
-                                <input type="number" id="Mobile" name="Mobile" value="{{address.Mobile}}"
+                                <input type="number" id="Mobile{{this._id}}" name="Mobile" value="{{address.Mobile}}"
                                   class="form-control" />
                                 <label class="form-label" for="form7Example2"> 10-digit mobile number</label>
                               </div>
@@ -219,37 +220,37 @@
                           <div class="row mb-4">
                             <div class="col">
                               <div class="form-outline">
-                                <input type="number" id="Pincode" name="Pincode" value="{{address.Pincode}}"
+                                <input type="number" id="Pincode{{this._id}}" name="Pincode" value="{{address.Pincode}}"
                                   class="form-control" />
                                 <label class="form-label" for="form7Example1"> Pincode</label>
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-outline">
-                                <input type="text" id="Locality" name="Locality" value="{{address.Locality}}"
-                                  class="form-control" />
+                                <input type="text" id="Locality{{this._id}}" name="Locality"
+                                  value="{{address.Locality}}" class="form-control" />
                                 <label class="form-label" for="form7Example2">Locality</label>
                               </div>
                             </div>
                           </div>
                           <!-- Message input -->
                           <div class="form-outline mb-4">
-                            <textarea class="form-control" id="Address" name="Address"
+                            <textarea class="form-control" id="Address{{this._id}}" name="Address"
                               rows="4">{{address.Address}} </textarea>
                             <label class="form-label" for="form7Example7">Address(Area & Street)</label>
                           </div>
                           <div class="row mb-4">
                             <div class="col">
                               <div class="form-outline">
-                                <input type="text" id="Landmark" name="Landmark" value="{{address.Landmark}}"
-                                  class="form-control" />
+                                <input type="text" id="Landmark{{this._id}}" name="Landmark"
+                                  value="{{address.Landmark}}" class="form-control" />
                                 <label class="form-label" for="form7Example1"> Landmark(Optional)</label>
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-outline">
-                                <input type="number" id="Alternate Phone" name="Phone" value="{{address.Phone}}"
-                                  class="form-control" />
+                                <input type="number" id="Alternate Phone{{this._id}}" name="Phone"
+                                  value="{{address.Phone}}" class="form-control" />
                                 <label class="form-label" for="form7Example2">Alternate Phone (Optional)</label>
                               </div>
                             </div>
@@ -496,32 +497,45 @@
         })
       </script>
       <script>
-        $('#editaddress').validate({
-          rules: {
-            Name: {
-              required: true
-            },
-            Mobile: {
-              required: true
-            },
-            Pincode: {
-              required: true
+        $('.editaddress').each(function () {
+          $(this).validate({
+            rules: {
+              Name: {
+                required: true
+              },
+              Mobile: {
+                required: true
+              },
+              Pincode: {
+                required: true
 
-            },
-            Locality: {
-              required: true
+              },
+              Locality: {
+                required: true
 
-            },
-            Address: {
-              required: true
-            },
-            Landmark: {
-              required: true
+              },
+              Address: {
+                required: true
+              },
+              Landmark: {
+                required: true
+              }
+
             }
 
-          }
 
 
-
+          })
         })
+
+
+
+
+
+
+
+
+
+
+
       </script>

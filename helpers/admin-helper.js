@@ -284,7 +284,17 @@ module.exports = {
     categorysale: () => {
         return new Promise(async (resolve, reject) => {
             let categorySale = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                
                 {
+                    '$match': {
+                        'status': {
+                            '$ne': 'cancel'
+                        }
+                    }
+                },
+                
+                {
+
                     '$project': {
                         'products': 1,
                         'status': 1,
@@ -315,13 +325,9 @@ module.exports = {
                         'Product': '$productDetails.productId',
                         'status': 1
                     }
-                }, {
-                    '$match': {
-                        'status': {
-                            '$ne': 'cancel'
-                        }
-                    }
-                }, {
+                },
+       
+                 {
                     '$set': {
                         'totalAmount': {
                             '$toInt': '$totalAmount'
@@ -336,7 +342,44 @@ module.exports = {
                     }
                 }
             ]).toArray()
+            console.log(categorySale,'cat');
             resolve(categorySale)
+        })
+    },
+    Newfunction:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let New=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                  '$match': {
+                    'status': {
+                      '$ne': 'cancel'
+                    }
+                  }
+                }, {
+                  '$project': {
+                    'payment': 1, 
+                    'totalAmount': 1, 
+                    'status': 1, 
+                    'date': 1, 
+                    'quantity': '$products.quantity'
+                  }
+                }, {
+                  '$set': {
+                    'totalAmount': {
+                      '$toInt': '$totalAmount'
+                    }
+                  }
+                }, 
+                // {
+                //   '$group': {
+                //     '_id': null, 
+                //     'sum': {
+                //       '$sum': '$totalAmount'
+                //     }
+                //   }
+                // }
+              ]).toArray()
+              resolve(New)
         })
     }
 
