@@ -361,7 +361,8 @@ module.exports = {
                     'totalAmount': 1, 
                     'status': 1, 
                     'date': 1, 
-                    'quantity': '$products.quantity'
+                    'quantity': '$products.quantity',
+
                   }
                 }, {
                   '$set': {

@@ -60,7 +60,7 @@
 
                     <div class="form-group mb-3">
                       <label for="category">Category</label>
-                      <select class="custom-select tm-select-accounts" id="category" name="categoryName"
+                      <select class="custom-select tm-select-accounts" id="category" name="categoryName" 
                         onblur="selectSub()">
                         <option selected="">{{this.categoryName}}</option>
                         {{#each ../allCategory}}
@@ -73,10 +73,10 @@
                       <input type="text" class="form-control" id="category{{this._id}}" name="categoryName"
                         value="{{this.categoryName}}" placeholder="Price" />
                     </div> --}}
-                    <div class="col-md-12 form-group p_star ">
+                    {{!-- <div class="col-md-12 form-group p_star ">
                       <input class="form-control" type="file" id="formFile{{this._id}}" value="" name="editimage">
                       <img src="{{this.editimage.[0]}}" style="width: 30%; height: 10vh;" alt="">
-                    </div>
+                    </div> --}}
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       <button class="btn btn-primary" type="submit">Update</button>
@@ -139,7 +139,7 @@
 
                 <div class="form-group mb-3">
                   <label for="category">Category</label>
-                  <select class="custom-select tm-select-accounts" id="category" name="categoryName"
+                  <select class="custom-select tm-select-accounts" id="category" name="categoryName" required
                     onblur="selectSub()">
                     <option selected="">Select category</option>
                     {{#each allCategory}}

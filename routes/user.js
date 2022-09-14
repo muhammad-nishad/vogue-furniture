@@ -285,10 +285,8 @@ router.post('/place-order', verifyLogin,async (req, res) => {
   let products = await userHelper.getCartProductlist(req.body.userId)
   let totalAmount = await userHelper.getTotalAmount(req.body.userId)
   userHelper.placeOrder(req.body, products, totalAmount, req.session.coupen, req.session.user._id).then((orderId) => {
-
     req.session.order = orderId
     if (req.body.payment == 'COD') {
-      console.log('hi');
       res.json({ codSuccess: true })
 
     } else {
@@ -313,6 +311,7 @@ router.post('/verify-payment', (req, res) => {
 router.get('/ordersuccess', verifyLogin, (req, res) => {
   let orderId = req.session.order
   userHelper.getOrderProducts(orderId).then(async (item) => {
+    console.log(item,'items');
     let user = req.session.user
     let CartCount = await userHelper.getCartCount(req.session.user._id)
     let WishlistCount = await userHelper.getWishlistCount(req.session.user._id)

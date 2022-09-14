@@ -316,6 +316,7 @@ router.post('/changeOrderStatus', verifyLogin, (req, res) => {
 
 router.get('/reportData', verifyLogin, (req, res) => {
   userhelper.sampleorder().then((orders) => {
+    console.log(orders,'orders');
     res.json(orders);
   })
 

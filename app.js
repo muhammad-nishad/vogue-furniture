@@ -41,6 +41,13 @@ app.engine('hbs', hbs.engine({
       }
       return options.inverse(this)
     },
+    quantityShowing:(quantity,index)=>{
+      return quantity[index]
+    },
+    quantitymulty:(quantity,index,price)=>{
+      return quantity[index]*price
+    },
+
 
     
 

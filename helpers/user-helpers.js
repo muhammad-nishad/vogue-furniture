@@ -184,6 +184,7 @@ module.exports = {
                 }
 
             ]).toArray()
+            
 
 
             if (cartItems.length > 0) {
@@ -519,6 +520,8 @@ module.exports = {
                     $sort: { date: -1 }
                 }
             ]).toArray()
+            console.log(orders,'order');
+
             resolve(orders)
 
 
@@ -590,7 +593,8 @@ module.exports = {
                 }, {
                     $unwind: '$userDetails'
 
-                }, {
+                },
+                 {
                     $project: {
                         product: '$products.productId',
                         address: '$addressDetails.address',
@@ -662,7 +666,8 @@ module.exports = {
                             status: 1,
                             deliverDetails: 1,
                             userId: 1,
-                            date: 1
+                            date: 1,
+                            
                         }
                     },
 
@@ -676,22 +681,22 @@ module.exports = {
                             as: 'userDetails'
                         }
                     },
-                    {
-                        $unwind: '$userDetails'
+                    // {
+                    //     $unwind: '$userDetails'
 
-                    },
-                    {
-                        $lookup: {
-                            from: collection.ADDRESS_COLLECTION,
-                            localField: 'deliverDetails',
-                            foreignField: '_id',
-                            as: 'address'
-                        }
-                    },
-                    {
-                        $unwind: '$address'
+                    // },
+                    // {
+                    //     $lookup: {
+                    //         from: collection.ADDRESS_COLLECTION,
+                    //         localField: 'deliverDetails',
+                    //         foreignField: '_id',
+                    //         as: 'address'
+                    //     }
+                    // },
+                    // {
+                    //     $unwind: '$address'
 
-                    },
+                    // },
                     {
                         $project: {
                             totalAmount: 1,
@@ -699,7 +704,7 @@ module.exports = {
                             status: 1,
                             payment: 1,
                             price: 1,
-                            address: '$address.address.Address',
+                            // address: '$address.address.Address',
                             Name: '$userDetails.fname',
                             lastname: '$userDetails.lname',
                             email: '$userDetails.email',
