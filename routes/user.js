@@ -172,7 +172,7 @@ router.post('/editprofile', (req, res) => {
   })
 })
 
-router.get('/singleproduct/:id', verifyLogin, async (req, res, next) => {
+router.get('/singleproduct/:id',verifyLogin, async (req, res, next) => {
   try {
     let allProduct = await productHelpers.getAllProduct()
     let CartCount = await userHelper.getCartCount(req.session.user._id)

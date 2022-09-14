@@ -51,7 +51,7 @@ module.exports = {
                         Stock: proDetails.Stock,
                         Price: parseInt(proDetails.editPrice),
                         categoryName:proDetails.categoryName,
-                        // image:proDetails.editimage
+                        images:proDetails.images
                     }
 
                 }).then((response) => {

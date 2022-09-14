@@ -4,7 +4,7 @@
       <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="#" class="brand-logo"><i
           class="fas fa-anchor"></i> <span>VOGUE </span></a>
     </header>
-    <nav class="dashboard-nav-list"><a href="/admin/" class="dashboard-nav-item"><i class="fas fa-home"></i>
+    <nav class="dashboard-nav-list"><a href="/admin/" class="dashboard-nav-item  {{#if homeActive}} active{{/if}}" ><i class="fas fa-home"></i>
         Home</a>
       <a href="/admin/userdetails"
           class="dashboard-nav-item {{#if users}} active {{/if}}   dashboard-nav-dropdown-toggle"><i
@@ -29,6 +29,11 @@
             class="fas fa-money-check-alt"></i>
           Orders </a>
       </div>
+       {{!-- <div class='dashboard-nav-dropdown'><a href="/admin/viewcancelorders"
+          class="dashboard-nav-item {{#if Canceled }} active {{/if}}dashboard-nav-dropdown-toggle"><i
+            class="fas fa-money-check-alt"></i>
+          Canceled Orders </a>
+      </div> --}}
       <div class='dashboard-nav-dropdown'><a href="/admin/viewbanner"
           class="dashboard-nav-item{{#if banners}} active {{/if}}  dashboard-nav-dropdown-toggle"><i
             class="fas fa-photo-video"></i> Banners

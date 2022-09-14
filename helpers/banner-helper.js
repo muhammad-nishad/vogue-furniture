@@ -39,7 +39,8 @@ module.exports = {
 
                     $set: {
                         Bannername: bannerdetails.Bannername,
-                        Bannerdescription: bannerdetails.Bannerdescription
+                        Bannerdescription: bannerdetails.Bannerdescription,
+                        image:bannerdetails.image
 
                     }
                 }).then((response) => {

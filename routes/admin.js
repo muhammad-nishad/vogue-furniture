@@ -43,7 +43,7 @@ router.get('/',async(req, res) => {
    let cashOnDelivery=await adminhelper.cashOndeivery()
    let onlinebanking=await adminhelper.netBanking()
    let allorders=await adminhelper.allOrders()
-    res.render('admin/adminhome', { layout: 'dashboard-layout',totalRevenue,cashOnDelivery,onlinebanking ,allorders})
+    res.render('admin/adminhome', { layout: 'dashboard-layout',homeActive:true, totalRevenue,cashOnDelivery,onlinebanking ,allorders})
   } else {
     let invalid = req.session.invalid
     let notfound = req.session.notfound
@@ -175,19 +175,18 @@ router.post('/submit', verifyLogin, uploads.array('image', 3), (req, res) => {
 
 router.get('/viewproduct', verifyLogin, (req, res) => {
   producthelper.getAllProduct().then(async (allProduct) => {
-    console.log(allProduct,'allproduct');
     let allCategory = await categoryhelper.getAllCategory()
     res.render('admin/viewproducts', { allProduct, products: true, allCategory, layout: 'dashboard-layout' })
 
   })
 })
 
-router.post('/editproduct/:id', verifyLogin, uploads.array('image', 3), (req, res, next) => {
+router.post('/editproduct/:id', verifyLogin, uploads.array('images', 3), (req, res, next) => {
   try {
-    // const images = req.files
-    // let array = []
-    // array = images.map((value) => value.filename)
-    // req.body.image = array
+    const images = req.files
+    let array = []
+    array = images.map((value) => value.filename)
+    req.body.images = array
     producthelper.updateProduct(req.params.id, req.body).then(async (response) => {
       res.redirect('/admin/viewproduct')
     })
@@ -222,7 +221,7 @@ router.get('/viewbanner', verifyLogin, (req, res) => {
 })
 
 
-router.post('/editbanner/:id', verifyLogin, (req, res, next) => {
+router.post('/editbanner/:id', verifyLogin,uploads.single('image'), (req, res, next) => {
   try {
     req.body.image = req.file.filename
     bannerhelper.updateBanner(req.params.id, req.body).then(() => {
@@ -291,6 +290,7 @@ router.get('/delete-coupen/:id', verifyLogin, (req, res, next) => {
 
 router.get('/vieworders', verifyLogin, async (req, res) => {
   let allOrders = await userhelper.getAllOrders()
+  console.log(allOrders,'all');
   res.render('admin/vieworders', { allOrders, orders: true, layout: 'dashboard-layout' })
 })
 
@@ -326,6 +326,16 @@ router.get('/logout', (req, res) => {
   req.session.destroy()
   res.redirect('/admin')
 })
+
+
+// router.get('/viewcancelorders',(req,res)=>{
+//   userhelper.viewCancelOrders().then((response)=>{
+//     res.render('admin/cancelorders',{layout: 'dashboard-layout',Canceled:true,response})
+
+//   })
+
+  
+// })
 
 
 

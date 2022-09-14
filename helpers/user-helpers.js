@@ -184,7 +184,7 @@ module.exports = {
                 }
 
             ]).toArray()
-            
+
 
 
             if (cartItems.length > 0) {
@@ -236,7 +236,7 @@ module.exports = {
 
                         }
                     ).then((response) => {
-                        console.log(response,'response');
+                        console.log(response, 'response');
                         resolve(true)
                     })
             }
@@ -520,7 +520,7 @@ module.exports = {
                     $sort: { date: -1 }
                 }
             ]).toArray()
-            console.log(orders,'order');
+            console.log(orders, 'order');
 
             resolve(orders)
 
@@ -594,7 +594,7 @@ module.exports = {
                     $unwind: '$userDetails'
 
                 },
-                 {
+                {
                     $project: {
                         product: '$products.productId',
                         address: '$addressDetails.address',
@@ -656,7 +656,7 @@ module.exports = {
                         $unwind: '$result'
 
                     },
-                     {
+                    {
                         $project: {
                             productname: '$result.productId',
                             quantity: '$products.quantity',
@@ -667,7 +667,7 @@ module.exports = {
                             deliverDetails: 1,
                             userId: 1,
                             date: 1,
-                            
+
                         }
                     },
 
@@ -715,11 +715,11 @@ module.exports = {
                     },
 
                     {
-                        $sort: { date: -1 }
+                        $sort: {date:-1 }
                     }
 
                 ]).toArray()
-                console.log(allOrders,'all');
+            console.log(allOrders, 'all');
             resolve(allOrders)
         })
     },
@@ -870,6 +870,61 @@ module.exports = {
             }).then(response => {
                 resolve(response)
             })
+        })
+    },
+    viewCancelOrders:  () => {
+        return new Promise(async(resolve,reject)=>{
+            let cancelOrders = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    '$match': {
+                        'status': {
+                            '$eq': 'cancel'
+                        }
+                    }
+                }, {
+                    '$project': {
+                        'totalAmount': 1,
+                        'status': 1,
+                        'userId': 1,
+                        'date': 1,
+                        'products': 1
+                    }
+                }, {
+                    '$lookup': {
+                        'from': 'user',
+                        'localField': 'userId',
+                        'foreignField': '_id',
+                        'as': 'userDetails'
+                    }
+                }, {
+                    '$unwind': {
+                        'path': '$userDetails'
+                    }
+                }, {
+                    '$lookup': {
+                        'from': 'product',
+                        'localField': 'products.item',
+                        'foreignField': '_id',
+                        'as': 'productDetails'
+                    }
+                }, {
+                    '$unwind': {
+                        'path': '$productDetails'
+                    }
+                }, {
+                    '$project': {
+                        'totalAmount': 1,
+                        'status': 1,
+                        'customer': '$userDetails.fname',
+                        'Name': '$userDetails.lname',
+                        'MbileNo': '$userDetails.mobile',
+                        'product': '$productDetails.productId'
+                    }
+                }
+            ]).toArray()
+            console.log(cancelOrders,'cancel');
+            resolve(cancelOrders)
+
         })
     }
 

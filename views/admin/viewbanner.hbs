@@ -49,7 +49,8 @@
                     </div> --}}
                     <div class="col-md-12 form-group p_star ">
                       <label for="formFile" class="form-label"></label>
-                      <input class="form-control" type="file" id="formFile" name="image" value="{{this.image}}">
+                      <input class="form-control" type="file" id="formFile" name="image" value="{{this.image}}" >
+                      <img src="/product-images/{{this.image}}" style="width: 30%; height: 10vh;" alt="">
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -97,7 +98,7 @@
                 </div> --}}
                 <div class="col-md-12 form-group p_star ">
                   <label for="formFile" class="form-label"></label>
-                  <input class="form-control" type="file" id="formFile" name="image">
+                  <input class="form-control" type="file" id="formFile"  name="image" multiple  required>
                 </div>
               </div>
               <div class="modal-footer">
